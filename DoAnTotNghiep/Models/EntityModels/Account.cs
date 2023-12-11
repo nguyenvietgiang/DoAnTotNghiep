@@ -1,0 +1,26 @@
+﻿using DoAnTotNghiep.Models.Enum;
+using System.ComponentModel.DataAnnotations;
+
+namespace DoAnTotNghiep.Models.EntityModels
+{
+    public class Account
+    {
+        [Key]
+        public Guid UserID { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        public string Password { get; set; }
+
+        [Required]
+        public AccountRole AccountRole { get; set; }
+
+        public Candidate Candidate { get; set; }
+        public Employer Employer { get; set; }
+
+        public bool Status { get; set; }
+    }
+}
