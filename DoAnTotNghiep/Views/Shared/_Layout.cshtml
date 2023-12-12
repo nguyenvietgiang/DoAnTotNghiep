@@ -15,6 +15,7 @@
     <link href="~/css/magnific-popup.css" rel="stylesheet" />
     <link href="~/css/animate.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/DoAnTotNghiep.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .slider-active .single-slider {
             background-size: cover;
@@ -55,24 +56,23 @@
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
                                             <li><a asp-controller="Home" asp-action="index">Trang Chủ</a></li>
-                                            <li><a href="job_listing.html">Việc Làm </a></li>
-                                            <li><a href="about.html">About</a></li>
+                                            <li><a asp-controller="Home" asp-action="Hiring">Tuyển Dụng </a></li>
+                                            <li><a asp-controller="Home" asp-action="Forum">Diễn Đàn</a></li>
                                             <li>
-                                                <a href="#">Page</a>
+                                                <a href="#">Hồ Sơ</a>  
                                                 <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-blog.html">Blog Details</a></li>
-                                                    <li><a href="elements.html">Elements</a></li>
-                                                    <li><a href="job_details.html">job Details</a></li>
+                                                    <li><a href="blog.html">Tạo mới CV</a></li>
+                                                    <li><a href="single-blog.html">Tham khảo CV</a></li>
+                                                    <li><a href="elements.html">Tư vấn CV</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="contact.html">Liên Hệ</a></li>
+                                            <li><a asp-controller="Home" asp-action="Contact">Liên Hệ</a></li>
                                         </ul>
                                     </nav>
                                 </div>
                                 <!-- Header-btn -->
                                 <div class="header-btn d-none f-right d-lg-block">
-                                    <a asp-controller="Auth" asp-action="Login" class="btn head-btn1">Đăng Ký</a>
+                                    <a asp-controller="Auth" asp-action="Register" class="btn head-btn1">Đăng Ký</a>
                                     <a asp-controller="Auth" asp-action="Login" class="btn head-btn2">Đăng Nhập</a>
                                 </div>
                             </div>

@@ -18,7 +18,17 @@ namespace DoAnTotNghiep.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Contact() 
+        {
+            return View();
+        }
+
+        public IActionResult Forum()
+        {
+            return View();
+        }
+
+        public IActionResult Hiring() 
         {
             return View();
         }

@@ -13,5 +13,10 @@ namespace DoAnTotNghiep.Controllers.MvcController
         {
             return View();
         }
+
+        public IActionResult ForgotPass() 
+        {
+            return View();
+        }
     }
 }
