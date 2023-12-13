@@ -87,6 +87,7 @@
         </div>
         <!-- Header End -->
     </header>
+    <partial name="_Breadcrumb" />
       <main>
             @RenderBody()
       </main>
@@ -178,5 +179,11 @@
     <script src="~/js/plugins.js"></script>
     <script src="~/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger chat-icon="https:&#x2F;&#x2F;img.freepik.com&#x2F;premium-vector&#x2F;chat-logo-with-robot-face_1124-277.jpg"
+                  intent="WELCOME"
+                  chat-title="JobFinder"
+                  agent-id="91759a92-8689-4994-98eb-d55c1ede131d"
+                  language-code="vi"></df-messenger>
 </body>
 </html>

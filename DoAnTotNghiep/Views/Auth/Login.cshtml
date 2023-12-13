@@ -1,6 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model DoAnTotNghiep.Models.DTO.LoginModels
+
 @{
     ViewData["Title"] = "Đăng nhập";
 }
@@ -24,22 +23,23 @@
                 <div class="col-lg-6 mb-5 mb-lg-0">
                     <div class="card">
                         <div class="card-body py-5 px-md-5">
-                            <form>
+                            <form asp-action="Login" asp-controller="Auth" method="post">
                                 <!-- Email input -->
                                 <div class="form-outline mb-4">
-                                    <input type="email" id="form3Example3" class="form-control" />
+                                    <input asp-for="Email" id="form3Example3" class="form-control" />
                                     <label class="form-label" for="form3Example3">Địa chỉ Email</label>
                                 </div>
 
                                 <!-- Password input -->
                                 <div class="form-outline mb-4">
-                                    <input type="password" id="form3Example4" class="form-control" />
+                                    <input asp-for="Password" type="password" id="form3Example4" class="form-control" />
                                     <label class="form-label" for="form3Example4">Mật khẩu</label>
                                 </div>
                                 <!-- Submit button -->
                                 <button type="submit" class="btn btn-primary btn-block mb-4">
                                     Đăng nhập
                                 </button>
+                                 <p style="color: red">@ViewBag.thongbao</p>
                             </form>
                               <div class="text-center">
                                 <p class="mb-2">Bạn chưa có tài khoản? <a asp-controller="Auth" asp-action="Register" style="color: red;">Đăng ký ngay</a></p>

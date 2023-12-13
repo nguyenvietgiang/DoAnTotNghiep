@@ -11,8 +11,6 @@
     <Folder Include="Areas\Manage\Models\" />
     <Folder Include="Areas\Manage\Views\Shared\" />
     <Folder Include="Controllers\ApisController\" />
-    <Folder Include="Models\DTO\" />
-    <Folder Include="Common\" />
     <Folder Include="Middleware\" />
     <Folder Include="Services\" />
     <Folder Include="Repository\" />
