@@ -1,0 +1,41 @@
+﻿﻿@{
+    ViewData["Title"] = "Đổi mật khẩu";
+}
+﻿<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h2 class="heading-section">Đổi Mật Khẩu</h2>
+                <p style="color: red">@ViewBag.thongbao</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="login-wrap p-4 p-md-5">
+                    <form method="post" asp-controller="Auth" asp-action="Changepass" class="login-form">
+                        <div class="form-group">
+                            <input type="password" class="form-control rounded-left" name="oldpass" placeholder="Mật Khẩu Cũ" required>
+                        </div>
+                        <div class="form-group d-flex">
+                            <input type="password" class="form-control rounded-left" name="pass" placeholder="Mật Khẩu" required>
+                        </div>
+                        <div class="form-group d-flex">
+                            <input type="password" class="form-control rounded-left" name="repass" placeholder="Xác Nhận Mật Khẩu" required>
+                        </div>
+                        <div class="form-group d-md-flex">
+                            <div class="w-50 text-md-left">
+                                <a href="">Đổi Thông Tin</a>
+                            </div>
+                            <div class="w-50 text-md-right">
+                                <a href="">Quay Lại</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary rounded submit p-3 px-5">Thay Đổi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

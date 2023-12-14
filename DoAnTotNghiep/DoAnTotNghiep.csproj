@@ -12,9 +12,9 @@
     <Folder Include="Areas\Manage\Views\Shared\" />
     <Folder Include="Controllers\ApisController\" />
     <Folder Include="Middleware\" />
-    <Folder Include="Services\" />
     <Folder Include="Repository\" />
     <Folder Include="wwwroot\css\Manage\" />
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
   <ItemGroup>

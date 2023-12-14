@@ -26,14 +26,12 @@
                             <form asp-action="Login" asp-controller="Auth" method="post">
                                 <!-- Email input -->
                                 <div class="form-outline mb-4">
-                                    <input asp-for="Email" id="form3Example3" class="form-control" />
-                                    <label class="form-label" for="form3Example3">Địa chỉ Email</label>
+                                    <input asp-for="Email" placeholder="Địa chỉ Email" class="form-control" />
                                 </div>
 
                                 <!-- Password input -->
                                 <div class="form-outline mb-4">
-                                    <input asp-for="Password" type="password" id="form3Example4" class="form-control" />
-                                    <label class="form-label" for="form3Example4">Mật khẩu</label>
+                                    <input asp-for="Password" placeholder="Mật Khẩu" type="password" class="form-control" />
                                 </div>
                                 <!-- Submit button -->
                                 <button type="submit" class="btn btn-primary btn-block mb-4">

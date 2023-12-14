@@ -37,12 +37,14 @@ namespace DoAnTotNghiep.Controllers.MvcController
                     {
                         if (rowuser.AccountRole == AccountRole.EmployerFree)
                         {
-                            HttpContext.Session.SetString("Employerid", rowuser.UserID.ToString());
+                            HttpContext.Session.SetString("EmployerName", model.Email);
+                            HttpContext.Session.SetString("Accountid", rowuser.UserID.ToString());
                             return RedirectToAction("Index", "Home");
                         }
-                        else
+                        else if ((rowuser.AccountRole == AccountRole.CandidateFree))
                         {
-                            HttpContext.Session.SetString("Candidateid", rowuser.Candidate.ToString());
+                            HttpContext.Session.SetString("CandidateName", model.Email);
+                            HttpContext.Session.SetString("Accountid", rowuser.UserID.ToString());
                             return RedirectToAction("Index", "Home");
                         }    
                     }
@@ -65,6 +67,12 @@ namespace DoAnTotNghiep.Controllers.MvcController
         [HttpPost]
         public IActionResult Register(RegisterViewModel model)
         {
+            Account rowuser = _dbContext.Accounts.Where(m => m.Email == model.Email).FirstOrDefault();
+            if (rowuser != null)
+            {
+                ViewBag.thongbao = "Email này đã được dùng bởi một tài khoản khác";
+                return View(model);
+            }
             if (ModelState.IsValid)
             {
                 string hashedPassword = Encrypt.MD5Hash(model.Password);
@@ -73,9 +81,9 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 {
                     var candidate = new Candidate
                     {
-                        Name = "Chưa cập nhật",
+                        Name = model.Name,
                         Descrpitons = "Chưa cập nhật",
-                        UrlImage = "Chưa cập nhật",
+                        UrlImage = "/local-img/default.jpg",
                         DateOfBirth = null,
                         PhoneNumber = 0,
                         Industry = "Chưa cập nhật",
@@ -94,12 +102,12 @@ namespace DoAnTotNghiep.Controllers.MvcController
 
                     _dbContext.Accounts.Add(account);
                 }
-                else if (model.AccountRole == AccountRole.EmployerFree)
+                else if(model.AccountRole == AccountRole.EmployerFree)
                 {
                     var employer = new Employer
                     {
-                        CompanyName = "Chưa cập nhật",
-                        UrlImage = "Chưa cập nhật",
+                        CompanyName = model.Name,
+                        UrlImage = "/local-img/default.jpg",
                         Industry = "Chưa cập nhật",
                         CompanySize = null,
                         Location = "Chưa cập nhật"
@@ -117,11 +125,8 @@ namespace DoAnTotNghiep.Controllers.MvcController
                     _dbContext.Accounts.Add(account);
                 }
                 _dbContext.SaveChanges();
-
-                // Redirect hoặc thực hiện các hành động khác sau khi đăng ký thành công
-                return RedirectToAction("Index", "Home");
+                ViewBag.thongbao = "Tài khoản đã được đăng ký thành công!!!";
             }
-            // Nếu ModelState không hợp lệ, quay lại trang đăng ký với thông tin lỗi
             return View(model);
         }
 
@@ -129,5 +134,54 @@ namespace DoAnTotNghiep.Controllers.MvcController
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("EmployerName");
+            HttpContext.Session.Remove("CandidateName");
+            HttpContext.Session.Remove("Accountid");
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+        public IActionResult ChangePass()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Changepass(IFormCollection fielt)
+        {
+            var accountIdClaim = HttpContext.Session.GetString("Accountid");
+            if(accountIdClaim == null)
+            {
+                return RedirectToAction("Login");
+            }
+            string old = fielt["oldpass"];
+            string newpass = fielt["pass"];
+            string repass = fielt["repass"];
+            var userchangpass = await _dbContext.Accounts
+                .FirstOrDefaultAsync(m => m.UserID.ToString() == accountIdClaim);
+            if (Encrypt.MD5Hash(old) == userchangpass.Password)
+            {
+                if (newpass == repass)
+                {
+                    userchangpass.Password = Encrypt.MD5Hash(newpass);
+                    _dbContext.Update(userchangpass);
+                    await _dbContext.SaveChangesAsync();
+                    ViewBag.thongbao = "Thay Đổi Mật Khẩu Thành Công, Áp Dụng Cho Lần Tiếp Theo !!!";
+                }
+                else
+                {
+                    ViewBag.thongbao = "Mật Khẩu Nhập Lại Không Chính Xác";
+                }
+            }
+            else
+            {
+                ViewBag.thongbao = "Mật Khẩu Cũ Không Chính Xác !!!";
+            }
+            return View();
+        }
+
     }
 }

@@ -1,4 +1,6 @@
 using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Services.EmailServices;
+using DoAnTotNghiep.Services.ImageServices;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DataContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("Connect")));
+
+//services
+builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IEmailServices, EmailServices>();
+
 
 
 builder.Services.AddDistributedMemoryCache();
