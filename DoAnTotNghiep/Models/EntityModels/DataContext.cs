@@ -12,6 +12,7 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Candidate> Candidates { get; set; }
         public DbSet<Employer> Employers { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

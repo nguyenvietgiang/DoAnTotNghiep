@@ -1,4 +1,6 @@
 using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Repository.BaseRepo;
+using DoAnTotNghiep.Repository.ContactRepo;
 using DoAnTotNghiep.Services.EmailServices;
 using DoAnTotNghiep.Services.ImageServices;
 using Microsoft.EntityFrameworkCore;
@@ -13,8 +15,9 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("Connect")));
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IEmailServices, EmailServices>();
 
-
-
+//repo
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -46,6 +49,20 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+
+    endpoints.MapControllerRoute(
+        name: "error",
+        pattern: "/Error/{statusCode}",
+        defaults: new { controller = "Error", action = "HttpStatusCodeHandler" }
+    );
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+});
 
 app.MapControllerRoute(
     name: "default",

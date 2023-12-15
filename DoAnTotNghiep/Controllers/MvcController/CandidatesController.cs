@@ -8,5 +8,10 @@ namespace DoAnTotNghiep.Controllers.MvcController
         {
             return View();
         }
+
+        public IActionResult Survey()
+        {
+            return View(); 
+        }
     }
 }

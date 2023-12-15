@@ -1,0 +1,28 @@
+﻿@model IEnumerable<DoAnTotNghiep.Models.EntityModels.Contact>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+}
+<h2>Danh sách Phản hồi / Góp ý</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tên</th>
+            <th>Vấn đề</th>
+            <th>Góp ý</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var contact in Model)
+        {
+                <tr>
+                    <td>@contact.Name</td>
+                    <td>@contact.Subject</td>
+                    <td>@contact.Message</td>
+                    <td><a class="btn btn-danger">Xóa</a></td>
+                </tr>
+        }
+    </tbody>
+</table>
