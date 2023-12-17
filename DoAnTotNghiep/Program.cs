@@ -14,7 +14,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("Connect")));
 
 //services
-builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IEmailServices, EmailServices>();
 
 //repo

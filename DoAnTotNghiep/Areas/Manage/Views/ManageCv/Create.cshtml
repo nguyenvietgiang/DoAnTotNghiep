@@ -1,0 +1,35 @@
+﻿@model DoAnTotNghiep.Models.DTO.CvLibraryViewModel
+
+@{
+    ViewData["Title"] = "Tạo mới danh CV";
+   ViewData["Title"] = "Create";
+    Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @addTagHelper *, AuthoringTagHelpers
+}
+<h2>Tạo mới Hồ Sơ Mẫu</h2>
+
+<form asp-controller="ManageCv" asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="CvName">Tên CV</label>
+        <input asp-for="CvName" class="form-control" />
+        <span asp-validation-for="CvName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CvType">Kiểu Mẫu</label>
+        <input asp-for="CvType" class="form-control" />
+        <span asp-validation-for="CvType" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageFile">Ảnh Mô Tả</label>
+        <input asp-for="ImageFile" type="file" class="form-control" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PdfFile">File CV</label>
+        <input asp-for="PdfFile" type="file" class="form-control" />
+        <span asp-validation-for="PdfFile" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Tạo mới</button>
+</form>
+

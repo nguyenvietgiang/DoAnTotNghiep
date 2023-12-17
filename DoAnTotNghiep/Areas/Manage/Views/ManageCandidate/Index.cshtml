@@ -1,28 +1,30 @@
-﻿@model IPagedList<DoAnTotNghiep.Models.EntityModels.Contact>
+﻿@model IPagedList<DoAnTotNghiep.Models.EntityModels.Candidate>
 @using X.PagedList
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
 }
-<h2>Danh sách Phản hồi / Góp ý</h2>
+<h2>Quản lý Ứng viên</h2>
 
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Tên</th>
-            <th>Vấn đề</th>
-            <th>Góp ý</th>
+            <th>Tên ứng viên</th>
+            <th>Ảnh đại diện</th>
+            <th>Số điện</th>
             <th>Thao tác</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var contact in Model)
+        @foreach (var candidate in Model)
         {
             <tr>
-                <td>@contact.Name</td>
-                <td>@contact.Subject</td>
-                <td>@contact.Message</td>
-                <td><a class="btn btn-danger">Xóa</a></td>
+                <td>@candidate.Name</td>
+                <td>
+                    <img src="@candidate.UrlImage" alt="Logo" class="img-thumbnail" style="width: 70px; height: 70px;" />
+                </td>
+                <td>@candidate.PhoneNumber</td>
+                <td><button class="btn btn-danger">Khóa</button></td>
             </tr>
         }
     </tbody>
@@ -49,4 +51,3 @@
         </ul>
     </nav>
 </div>
-

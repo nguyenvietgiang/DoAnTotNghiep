@@ -109,7 +109,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
                         CompanyName = model.Name,
                         UrlImage = "/local-img/default.jpg",
                         Industry = "Chưa cập nhật",
-                        CompanySize = null,
+                        CompanySize = 0,
                         Location = "Chưa cập nhật"
                     };
 

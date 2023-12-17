@@ -11,6 +11,7 @@
     <Folder Include="Areas\Manage\Models\" />
     <Folder Include="Controllers\ApisController\" />
     <Folder Include="Middleware\" />
+    <Folder Include="wwwroot\cvFile\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 

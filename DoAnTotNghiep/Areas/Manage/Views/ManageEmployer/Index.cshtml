@@ -1,28 +1,30 @@
-﻿@model IPagedList<DoAnTotNghiep.Models.EntityModels.Contact>
+﻿@model IPagedList<DoAnTotNghiep.Models.EntityModels.Employer>
 @using X.PagedList
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
 }
-<h2>Danh sách Phản hồi / Góp ý</h2>
+<h2>Quản lý Doanh Nghiệp</h2>
 
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Tên</th>
-            <th>Vấn đề</th>
-            <th>Góp ý</th>
+            <th>Tên công ty</th>
+            <th>Logo công ty</th>
+            <th>Địa chỉ</th>
             <th>Thao tác</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var contact in Model)
+        @foreach (var employer in Model)
         {
             <tr>
-                <td>@contact.Name</td>
-                <td>@contact.Subject</td>
-                <td>@contact.Message</td>
-                <td><a class="btn btn-danger">Xóa</a></td>
+                <td>@employer.CompanyName</td>
+                <td>
+                    <img src="@employer.UrlImage" alt="Logo" class="img-thumbnail" style="width: 70px; height: 70px;" />
+                </td>
+                <td>@employer.Location</td>
+                <td><button class="btn btn-danger">Xóa</button></td>
             </tr>
         }
     </tbody>
@@ -37,9 +39,9 @@
             </li>
             @for (int i = 1; i <= Model.PageCount; i++)
             {
-                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
-                </li>
+                    <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                    </li>
             }
             <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
                 <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber + 1 })" aria-label="Next">

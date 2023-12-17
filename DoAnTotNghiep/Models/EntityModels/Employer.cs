@@ -14,6 +14,7 @@ namespace DoAnTotNghiep.Models.EntityModels
         public string? Industry { get; set; } 
         public int? CompanySize { get; set; }
         public string? Location { get; set; }
+       // public string? Descrpitons { get; set; }
 
         [ForeignKey("EmployerID")]
         public Account Account { get; set; }

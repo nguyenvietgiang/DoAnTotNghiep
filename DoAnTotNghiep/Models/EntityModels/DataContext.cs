@@ -14,6 +14,8 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<Employer> Employers { get; set; }
         public DbSet<Contact> Contacts { get; set; }
 
+        public DbSet<CvLibrary> CvLibraries { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

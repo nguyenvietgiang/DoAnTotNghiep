@@ -18,12 +18,14 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
         }
         public async Task<IActionResult> Index(int? page)
         {
-            int pageSize = 1;
+            int pageSize = 10;
             int pageNumber = page ?? 1;
             var contacts = await _contactRepository.GetAllAsync();
-            int totalItemCount = await _contactRepository.CountAsync();
-            var pagedList = new StaticPagedList<Contact>(contacts, pageNumber, pageSize, totalItemCount);
+            int totalItemCount = contacts.Count(); 
+            var pagedList = new StaticPagedList<Contact>(contacts.Skip((pageNumber - 1) * pageSize).Take(pageSize), pageNumber, pageSize, totalItemCount);
             return View(pagedList);
         }
+
+
     }
 }
