@@ -84,11 +84,11 @@ namespace DoAnTotNghiep.Controllers.MvcController
                         Name = model.Name,
                         Descrpitons = "Chưa cập nhật",
                         UrlImage = "/local-img/default.jpg",
-                        DateOfBirth = null,
+                        DateOfBirth = new DateTime(2000, 1, 1),
                         PhoneNumber = 0,
                         Industry = "Chưa cập nhật",
                         Experience = 0,
-                        EducationLevel = null
+                        EducationLevel = "Chưa cập nhật"
                     };
 
                     var account = new Account

@@ -1,9 +1,11 @@
-using DoAnTotNghiep.Models.EntityModels;
+﻿using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.BaseRepo;
+using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.ContactRepo;
 using DoAnTotNghiep.Services.EmailServices;
 using DoAnTotNghiep.Services.ImageServices;
 using Microsoft.EntityFrameworkCore;
+using Syncfusion.Licensing;
 
 var builder = WebApplication.CreateBuilder(args);
  
@@ -18,6 +20,11 @@ builder.Services.AddScoped<IEmailServices, EmailServices>();
 //repo
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<ICandidatesRepo, CandidatesRepocs>();
+
+// khai báo mã syncfusion phục vụ nhập/xuất file-extend
+SyncfusionLicenseProvider.RegisterLicense("MTQwNUAzMTM4MmUzNDJlMzBGT29sdENza2kyME1jUHpPNVd5enVXY1AvNVZ1SVdPQlVMNUE4R1c1M0FvPQ==");
+
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {

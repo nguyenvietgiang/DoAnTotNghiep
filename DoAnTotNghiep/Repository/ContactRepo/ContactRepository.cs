@@ -1,6 +1,7 @@
 ﻿using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.BaseRepo;
 using Microsoft.EntityFrameworkCore;
+using Syncfusion.XlsIO.Implementation.Security;
 
 namespace DoAnTotNghiep.Repository.ContactRepo
 {
@@ -50,6 +51,11 @@ namespace DoAnTotNghiep.Repository.ContactRepo
         public async Task<Contact> GetByEmailAsync(string email)
         {
             return await _dbSet.FirstOrDefaultAsync(c => c.Email == email);
+        }
+
+        public async Task<int> CountAsync()
+        {
+            return await _context.Contacts.CountAsync();
         }
     }
 }

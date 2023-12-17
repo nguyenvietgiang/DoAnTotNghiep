@@ -1,13 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DoAnTotNghiep.Repository.CandidatesRepo;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DoAnTotNghiep.Controllers.MvcController
 {
-    public class CandidatesController : Controller
+    public class CandidatesController : BaseController
     {
-        public IActionResult Profile() 
+        private readonly ICandidatesRepo _candidateRepository;
+        public CandidatesController(ICandidatesRepo candidateRepository)
         {
-            return View();
+            _candidateRepository = candidateRepository;
         }
+        public IActionResult Profile()
+        {
+            var userId = GetUserIdFromClaim();
+
+            if (userId == null)
+            {
+                return BadRequest("User Id not found");
+            }
+
+            var candidate = _candidateRepository.GetCandidateByIdAsync(Guid.Parse(userId)).Result;
+
+            if (candidate == null)
+            {
+                return NotFound();
+            }
+            return View(candidate);
+        }
+
 
         public IActionResult Survey()
         {
