@@ -2,6 +2,7 @@
 using DoAnTotNghiep.Repository.BaseRepo;
 using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.ContactRepo;
+using DoAnTotNghiep.Repository.EmployerRepo;
 using DoAnTotNghiep.Services.EmailServices;
 using DoAnTotNghiep.Services.ImageServices;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ builder.Services.AddScoped<IEmailServices, EmailServices>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<ICandidatesRepo, CandidatesRepocs>();
+builder.Services.AddScoped<IEmployerRepository, EmployerRepository>();
 
 // khai báo mã syncfusion phục vụ nhập/xuất file-extend
 SyncfusionLicenseProvider.RegisterLicense("MTQwNUAzMTM4MmUzNDJlMzBGT29sdENza2kyME1jUHpPNVd5enVXY1AvNVZ1SVdPQlVMNUE4R1c1M0FvPQ==");
