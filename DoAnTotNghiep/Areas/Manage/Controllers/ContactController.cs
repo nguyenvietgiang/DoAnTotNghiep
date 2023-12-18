@@ -8,7 +8,7 @@ using X.PagedList;
 namespace DoAnTotNghiep.Areas.Manage.Controllers
 {
     [Area("Manage")]
-    public class ContactController : Controller
+    public class ContactController : ManageBaseController
     {
         private readonly IContactRepository _contactRepository;
 

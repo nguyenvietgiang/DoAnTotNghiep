@@ -5,7 +5,7 @@ using X.PagedList;
 namespace DoAnTotNghiep.Areas.Manage.Controllers
 {
     [Area("Manage")]
-    public class ManageEmployerController : Controller
+    public class ManageEmployerController : ManageBaseController
     {
         private readonly DataContext _context;
 

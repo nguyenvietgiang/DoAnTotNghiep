@@ -7,7 +7,7 @@ using X.PagedList;
 namespace DoAnTotNghiep.Areas.Manage.Controllers
 {
     [Area("Manage")]
-    public class ManageCvController : Controller
+    public class ManageCvController : ManageBaseController
     {
         private readonly DataContext _context;
         private readonly IFileService _fileService;

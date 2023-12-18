@@ -13,8 +13,11 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<Candidate> Candidates { get; set; }
         public DbSet<Employer> Employers { get; set; }
         public DbSet<Contact> Contacts { get; set; }
-
         public DbSet<CvLibrary> CvLibraries { get; set; }
+        public DbSet<Discuss> Discusses { get; set; }
+        public DbSet<Like> Likes { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

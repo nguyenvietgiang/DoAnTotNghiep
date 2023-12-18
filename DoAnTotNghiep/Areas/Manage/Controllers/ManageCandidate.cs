@@ -6,7 +6,7 @@ using X.PagedList;
 namespace DoAnTotNghiep.Areas.Manage.Controllers
 {
     [Area("Manage")]
-    public class ManageCandidate : Controller
+    public class ManageCandidate : ManageBaseController
     {
         private readonly DataContext _context;
 

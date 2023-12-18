@@ -3,7 +3,7 @@
 namespace DoAnTotNghiep.Areas.Manage.Controllers
 {
     [Area("Manage")]
-    public class ManageDashbroadController : Controller
+    public class ManageDashbroadController : ManageBaseController
     {
         public IActionResult Index()
         {

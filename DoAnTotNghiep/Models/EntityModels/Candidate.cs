@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Extensions.Hosting;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DoAnTotNghiep.Models.EntityModels
@@ -18,10 +19,15 @@ namespace DoAnTotNghiep.Models.EntityModels
         public int PhoneNumber { get; set; }
         // ngành nghề quan tâm
         public string? Industry { get; set; } 
-        public int Experience { get; set; }
+        public int Experience { get; set; } 
         public string? EducationLevel { get; set; }
 
         [ForeignKey("CandidateID")]
         public Account Account { get; set; }
+
+        public List<Discuss> Discuss { get; set; }
+
+        public List<Comment> Comments { get; set; }
+        public List<Like> Likes { get; set; }
     }
 }
