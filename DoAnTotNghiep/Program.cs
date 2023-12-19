@@ -5,6 +5,7 @@ using DoAnTotNghiep.Repository.ContactRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
 using DoAnTotNghiep.Services.EmailServices;
 using DoAnTotNghiep.Services.ImageServices;
+using DoAnTotNghiep.Services.PaymentServices;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.Licensing;
 
@@ -17,7 +18,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("Connect")));
 //services
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IEmailServices, EmailServices>();
-
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 //repo
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IContactRepository, ContactRepository>();

@@ -35,13 +35,13 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 {
                     if ((rowuser.Password) == Encrypt.MD5Hash(model.Password))
                     {
-                        if (rowuser.AccountRole == AccountRole.EmployerFree)
+                        if (rowuser.AccountRole == AccountRole.EmployerFree || rowuser.AccountRole == AccountRole.EmployerPaid)
                         {
                             HttpContext.Session.SetString("EmployerName", model.Email);
                             HttpContext.Session.SetString("Accountid", rowuser.UserID.ToString());
                             return RedirectToAction("Index", "Home");
                         }
-                        else if ((rowuser.AccountRole == AccountRole.CandidateFree))
+                        else if ((rowuser.AccountRole == AccountRole.CandidateFree || rowuser.AccountRole == AccountRole.CandidatePaid))
                         {
                             HttpContext.Session.SetString("CandidateName", model.Email);
                             HttpContext.Session.SetString("Accountid", rowuser.UserID.ToString());
