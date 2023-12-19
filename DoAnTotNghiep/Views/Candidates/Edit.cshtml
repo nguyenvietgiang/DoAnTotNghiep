@@ -1,5 +1,76 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model DoAnTotNghiep.Models.DTO.CandidateEditViewModels
+
 @{
+    ViewData["Title"] = "Thay đổi thông tin";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h2>Thay đổi thông tin</h2>
+
+        <form asp-action="Edit" asp-controller="Candidates" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="CandidateID" />
+
+            <div class="form-group">
+                <label asp-for="Name">Tên ứng viên</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EducationLevel">Học vấn</label>
+                <input asp-for="EducationLevel" class="form-control" />
+                <span asp-validation-for="EducationLevel" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <p>Ngày sinh</p>
+                <input asp-for="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NewImage">Ảnh đại diện</label>
+                <input type="file" asp-for="NewImage" class="form-control" />
+                <span asp-validation-for="NewImage" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+            <label asp-for="PhoneNumber">Số điện thoại</label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="Experience" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Industry">Lĩnh vực hoạt động</label>
+                <input asp-for="Industry" class="form-control" />
+                <span asp-validation-for="Industry" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Experience">Số năm kinh nghiệm</label>
+                <input asp-for="Experience" class="form-control" />
+                <span asp-validation-for="Experience" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Descrpitons">Mô tả chi tiết</label>
+                <textarea id="editor1" asp-for="Descrpitons" class="form-control"></textarea>
+                <span asp-validation-for="Descrpitons" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Lưu</button>
+            <a class="btn btn-primary" asp-action="Profile">Hủy bỏ</a>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        CKEDITOR.replace('Descrpitons');
+    </script>
 }

@@ -79,7 +79,7 @@
                                                         <a href="#">Chào: @Context.Session.GetString("CandidateName")</a>
                                                         <ul class="submenu">
                                                             <li><a asp-controller="Candidates" asp-action="Profile">Thông tin cá nhân</a></li>
-                                                            <li><a href="single-blog.html">Tạo CV online</a></li>
+                                                            <li><a asp-controller="Candidates" asp-action="CreateCV">Tạo CV online</a></li>
                                                             <li><a href="single-blog.html">Danh sách công việc</a></li>
                                                             <li><a asp-controller="Auth" asp-action="ChangePass">Đổi mật khẩu</a></li>
                                                             <li><a asp-controller="Auth" asp-action="Logout">Đăng xuất</a></li>

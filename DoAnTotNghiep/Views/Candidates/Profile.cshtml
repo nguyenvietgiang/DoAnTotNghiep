@@ -1,5 +1,5 @@
 ﻿@model DoAnTotNghiep.Models.EntityModels.Candidate
- 
+
 @{
     ViewData["Title"] = "Hồ Sơ Cá Nhân";
 }
@@ -15,7 +15,16 @@
                         <p class="text-muted mb-1">@Model.Industry</p>
                         <p class="text-muted mb-4">@Model.DateOfBirth</p>
                         <div class="d-flex justify-content-center mb-2">
-                            <button type="button" class="btn btn-primary">Sửa hồ sơ</button>
+                            <a asp-action="Edit" class="btn btn-primary">Sửa hồ sơ</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <p class="text-dark font-weight-medium mb-0 mr-2">Mã QR Code:</p>
+                        <div class="d-inline-flex">
+                            <img id="qrcode" src="" alt="QR Code">
                         </div>
                     </div>
                 </div>
@@ -55,7 +64,7 @@
                                 <p class="mb-0">Số điện thoại</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0">@Model.PhoneNumber</p>
+                                <p class="text-muted mb-0">+ 84 @Model.PhoneNumber</p>
                             </div>
                         </div>
                         <hr>
@@ -64,7 +73,7 @@
                                 <p class="mb-0">Mô tả:</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0">@Model.Descrpitons</p>
+                                @Html.Raw(Model.Descrpitons)
                             </div>
                         </div>
                     </div>
@@ -73,3 +82,24 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+        // tạo QR code đến trang hiện tại
+        var previousPageUrl = window.location.href;
+        var url = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(previousPageUrl);
+        document.getElementById("qrcode").src = url;
+        // chia sẻ với facebook (pushlish lên mới được nha)
+        function shareOnFacebook() {
+            var currentURL = window.location.href;
+            var facebookShareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(currentURL);
+            window.open(facebookShareURL, '_blank');
+        }
+        // chia sẻ với twitter
+        function shareOnTwitter() {
+            var currentURL = window.location.href;
+            var twitterShareURL = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(currentURL);
+            window.open(twitterShareURL, '_blank');
+        }
+    </script>
+}

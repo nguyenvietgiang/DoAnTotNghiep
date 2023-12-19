@@ -50,10 +50,16 @@ namespace DoAnTotNghiep.Controllers
             return View();
         }
 
-        public IActionResult Hiring() 
+        public IActionResult Hiring()  
         {
             return View();
         }
+
+        public IActionResult NoPermistion()
+        {
+            return View();
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
