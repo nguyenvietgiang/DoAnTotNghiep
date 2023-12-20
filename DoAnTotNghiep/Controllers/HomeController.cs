@@ -37,7 +37,8 @@ namespace DoAnTotNghiep.Controllers
                     Name = contactViewModel.Name,
                     Email = contactViewModel.Email,
                     Subject = contactViewModel.Subject,
-                    Message = contactViewModel.Message
+                    Message = contactViewModel.Message,
+                    Status = false
                 };
                 await _contactRepository.CreateAsync(contact);
                 ViewBag.thongbao = "Thành công, cảm ơn bạn đã đóng góp phản hồi !!!";

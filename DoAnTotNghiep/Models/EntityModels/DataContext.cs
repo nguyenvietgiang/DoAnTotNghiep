@@ -17,13 +17,23 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<Discuss> Discusses { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<Comment> Comments { get; set; }
-
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Message>()
+        .HasOne(m => m.Sender)
+        .WithMany(a => a.SentMessages)
+        .HasForeignKey(m => m.SenderID)
+        .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Receiver)
+                .WithMany(a => a.ReceivedMessages)
+                .HasForeignKey(m => m.ReceiverID)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
     }
 }
-     

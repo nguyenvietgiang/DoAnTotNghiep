@@ -11,5 +11,6 @@ namespace DoAnTotNghiep.Repository.ContactRepo
         Task CreateAsync(Contact entity);
         Task UpdateAsync(Contact entity);
         Task DeleteAsync(Guid id);
+        Task ToggleStatusAsync(Guid id);
     }
 }

@@ -19,5 +19,9 @@ namespace DoAnTotNghiep.Models.EntityModels
 
         [Required(ErrorMessage = "Vui lòng nhập nội dung góp ý.")]
         public string Message { get; set; }
+
+        public bool Status { get; set; }
     }
+
+
 }

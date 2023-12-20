@@ -16,7 +16,7 @@ namespace DoAnTotNghiep.Services.EmailServices
             bodyBuilder.HtmlBody = $@"
                 <html>
                     <head>
-                        <title>Bức Thư</title>
+                        <title>Hòm Thư</title>
                         <style>
                             body {{
                                 font-family: Arial, sans-serif;
@@ -51,8 +51,8 @@ namespace DoAnTotNghiep.Services.EmailServices
                     <body>
                         <div class=""container"">
                             <div class=""content"">
-                                <p>Hello!</p>
-                                <p>Cảm ơn bạn đã trở thành hội viên của chúng tôi.</p>
+                                <p>Xin chào!</p>
+                                <p>Chúng tôi là đội ngũ phát triển của Job Finder.</p>
                                 <p>{content}</p>
                                 <p>Chúc bạn một ngày mới tốt lành!</p>
                             </div>

@@ -57,5 +57,17 @@ namespace DoAnTotNghiep.Repository.ContactRepo
         {
             return await _context.Contacts.CountAsync();
         }
+
+        public async Task ToggleStatusAsync(Guid id)
+        {
+            var entity = await _dbSet.FindAsync(id);
+            if (entity != null)
+            {
+                entity.Status = !entity.Status;
+
+                _dbSet.Update(entity);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

@@ -1,0 +1,20 @@
+﻿@model DoAnTotNghiep.Models.EntityModels.Contact
+@{
+    ViewData["Title"] = "Phản hồi";
+    Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @addTagHelper *, AuthoringTagHelpers
+}
+
+<p>Phản hồi ý kiến của: @Model.Name</p>
+<p>Về vấn đề: @Model.Subject</p>
+<p>@Model.Message</p>
+<form asp-action="ContactResponse" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <textarea name="repcontent" placeholder="Nhập phản hồi" rows="5" cols="100"></textarea>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Gửi Ngay</button>
+    </div>
+</form>
+

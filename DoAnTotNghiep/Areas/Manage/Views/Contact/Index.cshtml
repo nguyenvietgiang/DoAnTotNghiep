@@ -12,6 +12,7 @@
             <th>Tên</th>
             <th>Vấn đề</th>
             <th>Góp ý</th>
+            <th>Trạng thái</th>
             <th>Thao tác</th>
         </tr>
     </thead>
@@ -22,7 +23,20 @@
                 <td>@contact.Name</td>
                 <td>@contact.Subject</td>
                 <td>@contact.Message</td>
-                <td><a class="btn btn-danger">Xóa</a></td>
+                @if(contact.Status == true)
+                {
+                    <td>Đã Phản Hồi</td>
+                }
+                else
+                {
+                    <td>Chưa Phản Hồi</td>
+                }
+                <td>
+                    <a href="@Url.Action("Delete", "Contact", new { @id = contact.Id })" class="btn btn-danger">Xóa</a>
+                    <a href="@Url.Action("ContactResponse", "Contact", new { @id = contact.Id })" class="btn btn-info">
+                        Phản hồi
+                    </a>
+                </td>
             </tr>
         }
     </tbody>

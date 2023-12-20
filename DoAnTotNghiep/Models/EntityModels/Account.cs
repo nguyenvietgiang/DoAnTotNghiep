@@ -22,5 +22,9 @@ namespace DoAnTotNghiep.Models.EntityModels
         public Employer Employer { get; set; }
 
         public bool Status { get; set; }
+
+        public ICollection<Message> SentMessages { get; set; }
+
+        public ICollection<Message> ReceivedMessages { get; set; }
     }
 }
