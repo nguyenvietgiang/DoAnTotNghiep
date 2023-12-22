@@ -12,6 +12,7 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
         private readonly DataContext _context;
         private readonly IFileService _fileService;
 
+
         public ManageCvController(DataContext context, IFileService fileService)
         {
             _context = context;
@@ -59,5 +60,30 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
 
             return View(cvViewModel);
         }
+
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                var cv = await _context.CvLibraries.FindAsync(id);
+
+                if (cv == null)
+                {
+                    ViewBag.ErrorMessage = $"Không tìm thấy CV với ID {id}";
+                    return View("Error");
+                }
+
+                _context.CvLibraries.Remove(cv);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = $"Lỗi xóa CV: {ex.Message}";
+                return View("Error");
+            }
+        }
+
     }
 }

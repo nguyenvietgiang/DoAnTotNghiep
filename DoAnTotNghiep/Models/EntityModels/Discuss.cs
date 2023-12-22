@@ -6,7 +6,7 @@ namespace DoAnTotNghiep.Models.EntityModels
     public class Discuss
     {
         [Key]
-        public Guid DiscussID { get; set; }
+        public Guid DiscussID { get; set; } = Guid.NewGuid();
 
         [Required(ErrorMessage = "Vui lòng nhập tiêu đề")]
         public string? Title { get; set; }

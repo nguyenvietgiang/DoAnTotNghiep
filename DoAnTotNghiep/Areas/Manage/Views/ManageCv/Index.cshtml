@@ -28,7 +28,9 @@
                 <td>@cv.CvName</td>
                 <td>@cv.CvType</td>
                 <td><img src="@cv.CvImage" alt="Cv Image" width="100" height="100" /></td>
-                <td><btn class="btn btn-danger">Xóa</btn></td>
+                <td>
+                     <a href="@Url.Action("Delete", "ManageCv", new { @id = cv.CvID })" class="btn btn-danger">Xóa</a>
+                </td>
             </tr>
         }
     </tbody>

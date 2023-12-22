@@ -2,8 +2,11 @@
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Models.Enum;
 using DoAnTotNghiep.Repository.CandidatesRepo;
+using DoAnTotNghiep.Repository.DisscussRepo;
 using DoAnTotNghiep.Services.ImageServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using X.PagedList;
 
 namespace DoAnTotNghiep.Controllers.MvcController
 {
@@ -12,12 +15,15 @@ namespace DoAnTotNghiep.Controllers.MvcController
         private readonly ICandidatesRepo _candidateRepository;
         private readonly DataContext _dataContext;
         private readonly IFileService _fileService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IDiscussRepository _discussRepository;
 
-        public CandidatesController(ICandidatesRepo candidateRepository, DataContext dataContext, IFileService fileService)
+        public CandidatesController(ICandidatesRepo candidateRepository, DataContext dataContext, IFileService fileService, IWebHostEnvironment webHostEnvironment)
         {
             _candidateRepository = candidateRepository;
             _dataContext = dataContext;
             _fileService = fileService;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Profile()
         {
@@ -43,16 +49,36 @@ namespace DoAnTotNghiep.Controllers.MvcController
             return View(); 
         }
 
-        public IActionResult CreateCV() 
+        public IActionResult CreateCV(int? page) 
         {
             var userId = GetUserIdFromClaim();
             var account = _dataContext.Accounts.Where(m => m.UserID == Guid.Parse(userId)).FirstOrDefault();
             if(account.AccountRole == AccountRole.CandidateFree)
             {
                 return RedirectToAction("NoPermistion", "Home");
-            }    
+            }
 
-            return View();
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            var cvs = _dataContext.CvLibraries.ToList();
+            int totalItemCount = _dataContext.CvLibraries.Count();
+            var pagedList = new StaticPagedList<CvLibrary>(cvs.Skip((pageNumber - 1) * pageSize).Take(pageSize), pageNumber, pageSize, totalItemCount);
+            return View(pagedList);
+        }
+
+        public async Task<IActionResult> DownloadCv(Guid cvId)
+        {
+            var cvLibrary = await _dataContext.CvLibraries.FindAsync(cvId);
+
+            if (cvLibrary == null)
+            {
+                return NotFound();
+            }
+
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, cvLibrary.CvFile.TrimStart('/'));
+
+            byte[] fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+            return File(fileBytes, "application/pdf", cvLibrary.CvName + ".pdf");
         }
 
         public IActionResult Edit()
@@ -120,6 +146,36 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 return RedirectToAction("Profile");
             }
 
+            return View(model);
+        }
+
+        // Action để hiển thị form tạo mới Discussion
+        public IActionResult CreateDiscuss() 
+        {
+            return View();
+        }
+
+        // Action để xử lý việc gửi dữ liệu từ form tạo mới Discussion
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateDiscuss(DiscussViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = GetUserIdFromClaim();
+                var newDiscussion = new Discuss
+                {
+                   
+                    Title = model.Title,
+                    Content = model.Content,
+                    UserId = new Guid(userId),
+                    CreatedAt = DateTime.Now,
+                    Status = false
+                };
+                _dataContext.Discusses.Add(newDiscussion);
+                await _dataContext.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
             return View(model);
         }
     }
