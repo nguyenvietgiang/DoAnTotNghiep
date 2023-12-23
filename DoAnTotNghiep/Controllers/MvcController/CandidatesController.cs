@@ -170,6 +170,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
                     Content = model.Content,
                     UserId = new Guid(userId),
                     CreatedAt = DateTime.Now,
+                    Type = model.Type,
                     Status = false
                 };
                 _dataContext.Discusses.Add(newDiscussion);

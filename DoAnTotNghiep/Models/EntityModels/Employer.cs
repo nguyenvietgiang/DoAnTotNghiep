@@ -18,5 +18,6 @@ namespace DoAnTotNghiep.Models.EntityModels
 
         [ForeignKey("EmployerID")]
         public Account Account { get; set; }
+   
     }
 }

@@ -4,6 +4,7 @@ using DoAnTotNghiep.Models.EntityModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DoAnTotNghiep.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231223031648_AddTypeDiss")]
+    partial class AddTypeDiss
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,7 +198,7 @@ namespace DoAnTotNghiep.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("DiscussID");
@@ -318,7 +320,7 @@ namespace DoAnTotNghiep.Migrations
             modelBuilder.Entity("DoAnTotNghiep.Models.EntityModels.Discuss", b =>
                 {
                     b.HasOne("DoAnTotNghiep.Models.EntityModels.Account", "Account")
-                        .WithMany("Discusses")
+                        .WithMany("Discuss")
                         .HasForeignKey("AccountUserID");
 
                     b.Navigation("Account");
@@ -378,7 +380,7 @@ namespace DoAnTotNghiep.Migrations
 
                     b.Navigation("Comments");
 
-                    b.Navigation("Discusses");
+                    b.Navigation("Discuss");
 
                     b.Navigation("Employer")
                         .IsRequired();

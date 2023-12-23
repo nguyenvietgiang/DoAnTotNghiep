@@ -24,10 +24,6 @@ namespace DoAnTotNghiep.Models.EntityModels
 
         [ForeignKey("CandidateID")]
         public Account Account { get; set; }
-
-        public List<Discuss> Discuss { get; set; }
-
-        public List<Comment> Comments { get; set; }
-        public List<Like> Likes { get; set; }
+     
     }
 }

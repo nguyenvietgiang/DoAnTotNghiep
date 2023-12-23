@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DoAnTotNghiep.Models.EntityModels
 {
@@ -13,12 +14,13 @@ namespace DoAnTotNghiep.Models.EntityModels
 
         [Required(ErrorMessage = "Vui lòng nhập nội dung bài viết")]
         public string? Content { get; set; }
+        public string? Type { get; set; }
 
-        public Guid? UserId { get; set; }
+        [ForeignKey("UserId")]
+        public Guid UserId { get; set; } 
         public Account? Account { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool Status { get; set; }
-
         public List<Like>? Likes { get; set; }
         public List<Comment>? Comments { get; set; }
     }

@@ -26,5 +26,10 @@ namespace DoAnTotNghiep.Models.EntityModels
         public ICollection<Message> SentMessages { get; set; }
 
         public ICollection<Message> ReceivedMessages { get; set; }
+
+        public List<Discuss> Discusses { get; set; }
+
+        public List<Comment> Comments { get; set; }
+        public List<Like> Likes { get; set; }
     }
 }
