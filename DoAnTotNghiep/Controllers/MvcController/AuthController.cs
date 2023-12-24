@@ -1,4 +1,5 @@
-﻿using DoAnTotNghiep.Common;
+﻿using DNTCaptcha.Core;
+using DoAnTotNghiep.Common;
 using DoAnTotNghiep.Models.DTO;
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Models.Enum;
@@ -65,6 +66,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
         }
 
         [HttpPost]
+        [ValidateDNTCaptcha(ErrorMessage ="Mã Captcha không chính xác")]
         public IActionResult Register(RegisterViewModel model)
         {
             Account rowuser = _dbContext.Accounts.Where(m => m.Email == model.Email).FirstOrDefault();

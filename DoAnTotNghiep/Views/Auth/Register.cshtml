@@ -1,4 +1,5 @@
 ﻿@model DoAnTotNghiep.Models.DTO.RegisterViewModel
+@addTagHelper *, DNTCaptcha.Core
 @{
     ViewData["Title"] = "Đăng ký";
 }
@@ -66,7 +67,22 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="form-outline mb-4">
+                                        <dnt-captcha asp-captcha-generator-max="99999"
+                                                     asp-captcha-generator-min="11111"
+                                                     asp-captcha-generator-language="English"
+                                                     asp-captcha-generator-display-mode="ShowDigits"
+                                                     asp-fore-color="#333333"
+                                                     asp-back-color="#ccc"
+                                                     asp-font-name="Tahoma"
+                                                     asp-font-size="50"
+                                                 asp-refresh-button-class="fa-solid fa-business-time"
+                                         asp-use-relative-urls="true"
+                                         asp-placeholder="Mã Captcha"
+                                                 asp-text-box-class="form-control"
+                                         asp-validation-message-class="text-danger"
+                                         asp-use-noise="false"/>
+                                </div>
                                 <!-- Submit button -->
                                 <button type="submit" class="btn btn-primary btn-block mb-4">
                                     Đăng Ký

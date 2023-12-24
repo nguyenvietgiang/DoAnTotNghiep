@@ -1,4 +1,5 @@
-﻿using DoAnTotNghiep.Models.EntityModels;
+﻿using DNTCaptcha.Core;
+using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.BaseRepo;
 using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.ContactRepo;
@@ -44,6 +45,10 @@ builder.Services.AddSession(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
+builder.Services.AddDNTCaptcha(options => { options.UseCookieStorageProvider().ShowThousandsSeparators(false);
+    options.WithEncryptionKey("JobFinder2024");
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
