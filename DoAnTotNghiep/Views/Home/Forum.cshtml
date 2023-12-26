@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<DoAnTotNghiep.Models.EntityModels.Discuss>
 @{
     ViewData["Title"] = "Diễn Đàn";
 }
@@ -31,13 +29,15 @@
                 </div>
             </div>
             <!-- End of post 1 -->
+            @foreach(var item in Model)
+            {
             <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
                 <div class="row align-items-center">
                     <div class="col-md-8 mb-3 mb-sm-0">
                         <h5>
-                            <a href="#" class="text-primary">Chia sẻ kinh nghiệm phỏng vấn</a>
+                                <a asp-action="DetailDiscuss" asp-route-id="@item.DiscussID" class="text-primary">@Html.DisplayFor(modelItem => item.Title)</a>
                         </h5>
-                        <div class="text-sm op-5"> <p class="text-black mr-2">Nguyễn Việt Giang</p> </div>
+                            <div class="text-sm op-5"> <p class="text-black mr-2">Đăng vào: @((item.CreatedAt).ToString("dd/MM/yyyy"))</p> </div>
                     </div>
                     <div class="col-md-4 op-7">
                         <div class="row text-center op-7">
@@ -47,25 +47,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /End of post 1 -->
-            <!-- End of post 1 -->
-            <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning border-top-0 border-right-0 border-bottom-0 rounded-0">
-                <div class="row align-items-center">
-                    <div class="col-md-8 mb-3 mb-sm-0">
-                        <h5>
-                            <a href="#" class="text-primary">Chia sẻ kinh nghiệm phỏng vấn</a>
-                        </h5>
-                        <div class="text-sm op-5"> <p class="text-black mr-2">Nguyễn Việt Giang</p> </div>
-                    </div>
-                    <div class="col-md-4 op-7">
-                        <div class="row text-center op-7">
-                            <div class="col px-1"> <i class="fa-solid fa-comment"></i> <span class="d-block text-sm">122 Phản hồi </span> </div>
-                            <div class="col px-1"> <i class="fa-solid fa-heart"></i> <span class="d-block text-sm">290 Tim</span> </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /End of post 1 -->
+            }
         </div>
         <!-- Sidebar content -->
         <div class="col-lg-3 mb-4 mb-lg-0 px-lg-0 mt-lg-0">

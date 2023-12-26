@@ -3,6 +3,7 @@ using DoAnTotNghiep.Models.DTO;
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.ContactRepo;
+using DoAnTotNghiep.Repository.DisscussRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -15,11 +16,13 @@ namespace DoAnTotNghiep.Controllers
         private readonly IContactRepository _contactRepository;
         private readonly IEmployerRepository _employerRepository;
         private readonly ICandidatesRepo _candidateRepository;
-        public HomeController(ILogger<HomeController> logger, IContactRepository contactRepository, IEmployerRepository employerRepository, ICandidatesRepo candidatesRepo )
+        private readonly IDiscussRepository _discussRepository;
+        public HomeController(ILogger<HomeController> logger, IContactRepository contactRepository, IEmployerRepository employerRepository, ICandidatesRepo candidatesRepo, IDiscussRepository discussRepository)
         {
             _employerRepository= employerRepository;
             _contactRepository= contactRepository;
             _candidateRepository = candidatesRepo;
+            _discussRepository= discussRepository;
             _logger = logger;
         }
 
@@ -52,9 +55,16 @@ namespace DoAnTotNghiep.Controllers
             return View(contactViewModel);
         }
 
-        public IActionResult Forum()
+        public async Task<IActionResult> Forum()
         {
-            return View();
+            var discussList = await _discussRepository.GetAllDiscussions();
+            return View(discussList);
+        }
+
+        public async Task<IActionResult> DetailDiscuss(Guid Id)
+        {
+            var discussList = await _discussRepository.GetDiscussionById(Id);
+            return View(discussList);
         }
 
         public IActionResult Hiring()  

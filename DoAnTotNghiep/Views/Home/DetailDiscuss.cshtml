@@ -1,0 +1,41 @@
+﻿@model DoAnTotNghiep.Models.EntityModels.Discuss
+
+@{
+    ViewData["Title"] = "Câu hỏi thảo luận";
+}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="post-content">
+             
+                <div class="post-container">
+                 
+                    <div class="post-detail">
+                        <div class="user-info">
+                            <h5><a href="timeline.html" class="profile-link">Alexis Clark</a> <span class="following">following</span></h5>
+                            <p class="text-muted">Published a photo about 3 mins ago</p>
+                        </div>
+                        <div class="line-divider"></div>
+                        <div class="post-text">
+                            <p>@Html.DisplayFor(model => model.Content) <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
+                        </div>
+                        <div class="line-divider"></div>
+                       @* <div class="post-comment">
+                          
+                            <p><a href="timeline.html" class="profile-link">Diana </a><i class="em em-laughing"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
+                        </div>
+                        <div class="post-comment">
+                         
+                            <p><a href="timeline.html" class="profile-link">John</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
+                        </div>
+                        <div class="post-comment">
+                          
+                            <input type="text" class="form-control" placeholder="Post a comment">
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
