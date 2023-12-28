@@ -1,0 +1,76 @@
+﻿@model DoAnTotNghiep.Models.EntityModels.Account
+
+<h2>Chat with @Model.Email</h2>
+
+<div id="chat">
+    @foreach (var message in Model.SentMessages)
+    {
+        <p><strong>You:</strong> @message.Content</p>
+    }
+
+    @foreach (var message in Model.ReceivedMessages)
+    {
+        <p><strong>@Model.Email:</strong> @message.Content</p>
+    }
+</div>
+
+<input type="text" id="messageInput" />
+<button onclick="sendMessage()">Send</button>
+
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.12/signalr.min.js"></script>
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+        connection.on("ReceiveMessage", function (message) {
+            // Handle received message
+            console.log(message);
+
+            // Find the sender information in the user list
+            var senderName = message.senderId === "@Model.UserID" ? "You" : message.senderId;
+
+            // Update UI to display the message
+            $("#chat").append("<p><strong>" + senderName + ":</strong> " + message.content + "</p>");
+        });
+
+        connection.on("ReceiveMessages", function (messages) {
+            // Handle received messages
+            console.log(messages);
+
+            // Update UI to display the messages
+            for (var i = 0; i < messages.length; i++) {
+                var senderName = messages[i].senderId === "@Model.UserID" ? "You" : messages[i].senderId;
+                $("#chat").append("<p><strong>" + senderName + ":</strong> " + messages[i].content + "</p>");
+            }
+        });
+
+        connection.start().then(function () {
+            // Join the group with the user's ID
+            connection.invoke("JoinGroup", "@Model.UserID");
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        function sendMessage() {
+            var receiverId = getParameterByName("receiverId"); // Lấy receiverId từ URL
+            var message = $("#messageInput").val();
+            connection.invoke("SendMessage", "@Model.UserID", receiverId, message).catch(function (err) {
+                return console.error(err.toString());
+            });
+
+            // Update UI to display the sent message
+            $("#chat").append("<p><strong>You:</strong> " + message + "</p>");
+        }
+
+        // Hàm để lấy giá trị của tham số từ URL
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return "";
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+    </script>
+}

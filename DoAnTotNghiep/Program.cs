@@ -1,4 +1,5 @@
 ﻿using DNTCaptcha.Core;
+using DoAnTotNghiep.Common;
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.BaseRepo;
 using DoAnTotNghiep.Repository.CandidatesRepo;
@@ -44,6 +45,7 @@ builder.Services.AddSession(options =>
 });
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 
 
 builder.Services.AddDNTCaptcha(options => { options.UseCookieStorageProvider().ShowThousandsSeparators(false);
@@ -69,20 +71,26 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-
     endpoints.MapControllerRoute(
         name: "error",
         pattern: "/Error/{statusCode}",
         defaults: new { controller = "Error", action = "HttpStatusCodeHandler" }
     );
+
+    endpoints.MapHub<ChatHub>("/chatHub");
+
     endpoints.MapControllerRoute(
-      name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+        name: "areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+
+    // Default route for Home/Index
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}"
     );
 });
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+// Remove the previous MapControllerRoute for the default route
 
 app.Run();
