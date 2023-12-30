@@ -2,6 +2,7 @@
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
+using DoAnTotNghiep.Repository.JobRepo;
 using DoAnTotNghiep.Services.ImageServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,14 +14,16 @@ namespace DoAnTotNghiep.Controllers.MvcController
         private readonly IEmployerRepository _employerRepository;
         private readonly DataContext _dataContext;
         private readonly IFileService _fileService;
+        private readonly IJobPostingRepository _jobPostingRepository;
 
-        public EmployerController(IEmployerRepository employerRepository, DataContext dataContext, IFileService fileService)
+        public EmployerController(IEmployerRepository employerRepository, DataContext dataContext, IFileService fileService, IJobPostingRepository jobPostingRepository)
         {
             _employerRepository = employerRepository;
-            _fileService= fileService;
+            _fileService = fileService;
             _dataContext = dataContext;
+            _jobPostingRepository = jobPostingRepository;
         }
-        public IActionResult CompanyProfile() 
+        public IActionResult CompanyProfile()
         {
             var userId = GetUserIdFromClaim();
 
@@ -100,6 +103,43 @@ namespace DoAnTotNghiep.Controllers.MvcController
             }
 
             return View(model);
+        }
+
+        public IActionResult CompanyJobList()
+        {
+            return View();
+        } 
+
+        public IActionResult CreateJobPosting()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateJobPosting(JobPostingDto jobPostingDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = GetUserIdFromClaim();
+                var newJobPosting = new JobPosting
+                {
+                    JobPostingID = Guid.NewGuid(), // Tự tạo ID mới
+                    Title = jobPostingDto.Title,
+                    Description = jobPostingDto.Description,
+                    EmployerID = Guid.Parse(userId),
+                    Location = jobPostingDto.Location,
+                    CreateAt = DateTime.Now, // Thời gian hiện tại
+                    Requirements = jobPostingDto.Requirements,
+                    Number = jobPostingDto.Number,
+                    Salary = jobPostingDto.Salary,
+                    position = jobPostingDto.Position,
+                    benefits = jobPostingDto.Benefits,
+                    Status = false // Giá trị mặc định cho Status
+                };
+                await _jobPostingRepository.CreateJobPostingAsync(newJobPosting);
+                return RedirectToAction("Index", "Home");
+            }
+            return View(jobPostingDto);
         }
     }
 }

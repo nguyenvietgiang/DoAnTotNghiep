@@ -18,6 +18,8 @@ namespace DoAnTotNghiep.Models.EntityModels
 
         [ForeignKey("EmployerID")]
         public Account Account { get; set; }
-   
+
+        public List<JobPosting> JobPostings { get; set; }
+
     }
 }

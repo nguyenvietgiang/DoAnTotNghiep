@@ -66,7 +66,7 @@
                                                         <a href="#">Chào: @Context.Session.GetString("EmployerName")</a>
                                                         <ul class="submenu">
                                                             <li><a asp-controller="Employer" asp-action="CompanyProfile">Thông tin doanh nghiệp</a></li>
-                                                            <li><a href="single-blog.html">Danh sách tuyển dụng</a></li>
+                                                            <li><a asp-controller="Employer" asp-action="CompanyJobList">Danh sách tuyển dụng</a></li>
                                                             <li><a asp-controller="Auth" asp-action="ChangePass">Đổi mật khẩu</a></li>
                                                             <li><a asp-controller="Auth" asp-action="Logout">Đăng xuất</a></li>
                                                         </ul>
