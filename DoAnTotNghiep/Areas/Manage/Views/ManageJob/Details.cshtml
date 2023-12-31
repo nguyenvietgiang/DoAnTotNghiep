@@ -1,0 +1,44 @@
+﻿@model DoAnTotNghiep.Models.EntityModels.JobPosting
+
+@{
+    ViewData["Title"] = "Chi Tiết Tin Tuyển Dụng";
+    Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">@Model.Title</h1>
+                    <h3 class="card-subtitle mb-2 text-muted">Công ty: @Model.Employer.CompanyName</h3>
+                    <p class="lead card-text"> @Html.Raw(Model.Description)</p>
+
+                    <hr />
+
+                    <dl class="row">
+                        <dt class="col-sm-4">Địa Điểm:</dt>
+                        <dd class="col-sm-8">@Model.Location</dd>
+
+                        <dt class="col-sm-4">Ngày Đăng:</dt>
+                        <dd class="col-sm-8">@Model.CreateAt.ToString("dd/MM/yyyy")</dd>
+
+                        <dt class="col-sm-4">Yêu Cầu:</dt>
+                        <dd class="col-sm-8"> @Html.Raw(Model.Requirements)</dd>
+
+                        <dt class="col-sm-4">Số Lượng:</dt>
+                        <dd class="col-sm-8">@Model.Number</dd>
+
+                        <dt class="col-sm-4">Mức Lương:</dt>
+                        <dd class="col-sm-8">@Model.Salary</dd>
+
+                        <dt class="col-sm-4">Chức Vụ:</dt>
+                        <dd class="col-sm-8">@Model.position</dd>
+
+                        <dt class="col-sm-4">Quyền Lợi:</dt>
+                        <dd class="col-sm-8"> @Html.Raw(Model.benefits)</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

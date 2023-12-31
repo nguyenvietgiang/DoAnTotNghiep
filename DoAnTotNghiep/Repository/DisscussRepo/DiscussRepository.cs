@@ -43,6 +43,17 @@ namespace DoAnTotNghiep.Repository.DisscussRepo
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task ToggleDiscussStatusAsync(Guid id)
+        {
+            var disscus = await _context.Discusses.FindAsync(id);
+
+            if (disscus != null)
+            {
+                disscus.Status = !disscus.Status;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 
 }

@@ -9,5 +9,6 @@ namespace DoAnTotNghiep.Repository.JobRepo
         Task CreateJobPostingAsync(JobPosting jobPosting);
         Task UpdateJobPostingAsync(JobPosting jobPosting);
         Task DeleteJobPostingAsync(Guid id);
+        Task ToggleJobStatusAsync(Guid id);
     }
 }

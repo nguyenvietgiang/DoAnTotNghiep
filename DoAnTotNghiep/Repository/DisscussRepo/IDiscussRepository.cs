@@ -9,5 +9,6 @@ namespace DoAnTotNghiep.Repository.DisscussRepo
         Task CreateDiscussion(Discuss discuss);
         Task UpdateDiscussion(Discuss discuss);
         Task DeleteDiscussion(Guid id);
+        Task ToggleDiscussStatusAsync(Guid id);
     }
 }

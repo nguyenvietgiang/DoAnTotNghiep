@@ -14,12 +14,12 @@ namespace DoAnTotNghiep.Repository.JobRepo
 
         public async Task<IEnumerable<JobPosting>> GetAllJobPostingsAsync()
         {
-            return await _context.JobPostings.ToListAsync();
+            return await _context.JobPostings.Include(jp => jp.Employer).ToListAsync();
         }
 
         public async Task<JobPosting> GetJobPostingByIdAsync(Guid id)
         {
-            return await _context.JobPostings.FindAsync(id);
+            return await _context.JobPostings.Include(jp => jp.Employer).FirstOrDefaultAsync(jp => jp.JobPostingID == id);
         }
 
         public async Task CreateJobPostingAsync(JobPosting jobPosting)
@@ -40,6 +40,17 @@ namespace DoAnTotNghiep.Repository.JobRepo
             if (jobPosting != null)
             {
                 _context.JobPostings.Remove(jobPosting);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task ToggleJobStatusAsync(Guid id)
+        {
+            var jobPosting = await _context.JobPostings.FindAsync(id);
+
+            if (jobPosting != null)
+            {
+                jobPosting.Status = !jobPosting.Status; 
                 await _context.SaveChangesAsync();
             }
         }
