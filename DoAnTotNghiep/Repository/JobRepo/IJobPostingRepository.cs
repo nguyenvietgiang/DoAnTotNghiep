@@ -8,7 +8,10 @@ namespace DoAnTotNghiep.Repository.JobRepo
         Task<JobPosting> GetJobPostingByIdAsync(Guid id);
         Task CreateJobPostingAsync(JobPosting jobPosting);
         Task UpdateJobPostingAsync(JobPosting jobPosting);
-        Task DeleteJobPostingAsync(Guid id);
+        Task DeleteJobPostingAsync(Guid id); 
         Task ToggleJobStatusAsync(Guid id);
+        Task<IEnumerable<JobPosting>> GetUnapprovedJobPostingsAsync();
+        Task<IEnumerable<JobPosting>> GetApprovedJobPostingsAsync();
+        Task<IEnumerable<JobPosting>> SearchJobPostingsAsync(string searchTerm, string location);
     }
 }

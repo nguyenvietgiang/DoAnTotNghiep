@@ -54,5 +54,40 @@ namespace DoAnTotNghiep.Repository.JobRepo
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<JobPosting>> GetUnapprovedJobPostingsAsync()
+        {
+            return await _context.JobPostings
+                .Include(jp => jp.Employer)
+                .Where(jp => !jp.Status)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<JobPosting>> GetApprovedJobPostingsAsync()
+        {
+            return await _context.JobPostings
+                .Include(jp => jp.Employer)
+                .Where(jp => jp.Status)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<JobPosting>> SearchJobPostingsAsync(string searchTerm, string location)
+        {
+            var query = _context.JobPostings
+                .Include(jp => jp.Employer)
+                .Where(jp => jp.Status);
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(jp => jp.Title.Contains(searchTerm));
+            }
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                query = query.Where(jp => jp.Location == location);
+            }
+
+            return await query.ToListAsync();
+        }
     }
 }

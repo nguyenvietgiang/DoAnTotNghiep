@@ -18,22 +18,21 @@
                 <div class="row">
                     <div class="col-xl-8">
                         <!-- form -->
-                        <form action="#" class="search-box">
+                        <form asp-controller="Search" asp-action="SearchJob" method="post" class="search-box">
                             <div class="input-form">
-                                <input type="text" placeholder="Job Tittle or keyword">
+                                <input type="text" name="searchTerm" placeholder="Tìm kiếm công việc">
                             </div>
                             <div class="select-form">
                                 <div class="select-itms">
-                                    <select name="select" id="select1">
-                                        <option value="">Hà Nội</option>
-                                        <option value="">Đà Nẵng</option>
-                                        <option value="">TP Hồ Chí Minh</option>
+                                    <select name="location">
+                                        <option value="">Tất cả</option>
+                                        <option value="Hà Nội">Hà Nội</option>
+                                        <option value="Đà Nẵng">Đà Nẵng</option>
+                                        <option value="TP Hồ Chí Minh">TP Hồ Chí Minh</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="search-form">
-                                <a href="#">Tìm Kiếm</a>
-                            </div>
+                            <button type="submit" class="search-form btn btn-success">Tìm Kiếm</button>
                         </form>
                     </div>
                 </div>

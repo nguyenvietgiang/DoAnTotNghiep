@@ -12,6 +12,7 @@ using DoAnTotNghiep.Services.ImageServices;
 using DoAnTotNghiep.Services.PaymentServices;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.Licensing;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
  
@@ -52,6 +53,13 @@ builder.Services.AddSignalR();
 builder.Services.AddDNTCaptcha(options => { options.UseCookieStorageProvider().ShowThousandsSeparators(false);
     options.WithEncryptionKey("JobFinder2024");
 });
+
+builder.Services.AddControllers()
+            .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
+            });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

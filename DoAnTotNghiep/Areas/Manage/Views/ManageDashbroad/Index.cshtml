@@ -81,3 +81,87 @@
         </div>
     </div>
 </div>
+
+<div class="card border-primary mb-3">
+    <div class="card-header bg-primary text-white">
+        Tin tuyển dụng chờ duyệt
+    </div>
+    <div class="card-body">
+        <table id="jobTable" class="table">
+            <thead>
+                <tr>
+                    <th>Tiêu đề</th>
+                    <th>Vị trí</th>
+                    <th>Công ty</th>
+                    <th>Ảnh</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+        <script>
+            $(document).ready(function () {
+                // Function to create the "Duyệt" button
+                function createActionButton(jobId, actionType, buttonText) {
+                    return `<button class="btn btn-${actionType}" data-job-id="${jobId}">${buttonText}</button>`;
+                }
+
+                // Function to handle the action button click
+                function handleActionButtonClick() {
+                    var jobId = $(this).data('job-id');
+                    var actionType = $(this).hasClass('btn-approve') ? 'approve' : 'delete';
+
+                    // Call the corresponding API based on the action type
+                    var apiUrl = actionType === 'approve'
+                        ? `/api/job/togglestatus/${jobId}`
+                        : `/api/job/${jobId}`;
+
+                    var successCallback = function () {
+                        // Remove the row from the table on success
+                        $(`#jobTable tr[data-job-id="${jobId}"]`).remove();
+                    };
+
+                    $.ajax({
+                        type: actionType === 'approve' ? 'POST' : 'DELETE',
+                        url: apiUrl,
+                        success: successCallback,
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/job',
+                    success: function (data) {
+                        $.each(data, function (index, job) {
+                            var row = `
+                                <tr data-job-id="${job.jobId}">
+                                    <td>${job.title}</td>
+                                    <td>${job.position}</td>
+                                    <td>${job.company}</td>
+                                    <td><img src="${job.image}" alt="Company Image" width="50"></td>
+                                    <td>
+                                        ${createActionButton(job.jobId, 'approve', 'Duyệt')}
+                                        ${createActionButton(job.jobId, 'delete', 'Xóa')}
+                                    </td>
+                                </tr>`;
+
+                            $('#jobTable tbody').append(row);
+                        });
+
+                        // Attach click event to the action buttons
+                        $('.btn-approve, .btn-delete').on('click', handleActionButtonClick);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        </script>
+}
