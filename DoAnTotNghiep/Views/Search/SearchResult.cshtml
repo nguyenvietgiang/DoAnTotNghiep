@@ -3,36 +3,44 @@
 @{
     ViewData["Title"] = "Tìm kiếm công việc";
 }
-@if (Model.Any())
-{
-    <div class="card mb-4">
-        <div class="card-body">
-            <h2 class="card-title">Kết quả tìm kiếm</h2>
-            <div class="card-deck">
+
+<div class="card mb-4 rounded">
+    <div class="card-body">
+        <h2 class="card-title">Kết quả tìm kiếm</h2>
+        <div class="card-deck">
+            @if (Model.Any())
+            {
                 @foreach (var jobPosting in Model)
                 {
-                    <div class="card">
-                        <div class="row no-gutters">
-                            <!-- Ảnh bên trái -->
-                            <div class="col-md-4">
-                                <img src="@jobPosting.Image" class="card-img" alt="Job Image" />
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">@jobPosting.Title</h5>
-                                    <p class="card-text">Position: @jobPosting.Position</p>
-                                    <p class="card-text">Location: @jobPosting.Location</p>
+                            <div class="single-job-items mb-30">
+                                <div class="job-items">
+                                    <div class="company-img">
+                                        <a href="@Url.Action("Conpany", "Home", new { @id = jobPosting.CompanyId })">
+                                            <img src="@jobPosting.Image" alt="@jobPosting.Title">
+                                        </a>
+                                    </div>
+                                    <div class="job-tittle job-tittle2">
+                                <a href="@Url.Action("DetailJob", "Search", new { @id = jobPosting.JobId })">
+                                            <h4>@jobPosting.Title</h4>
+                                        </a>
+                                        <ul>
+                                            <li>@jobPosting.Position</li>
+                                            <li><i class="fas fa-map-marker-alt"></i>@jobPosting.Location</li>
+                                            <li>@jobPosting.Salary VND</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="items-link items-link2 f-right">
+                                    <a href="job_details.html">Toàn thời gian</a>
                                 </div>
                             </div>
-                        </div>
-                    </div>
                 }
-            </div>
+            }
+            else
+            {
+                    <p>Không có công việc phù hợp.</p>
+            }
         </div>
     </div>
-}
-else
-{
-    <p>No results found.</p>
-}
+</div>
 

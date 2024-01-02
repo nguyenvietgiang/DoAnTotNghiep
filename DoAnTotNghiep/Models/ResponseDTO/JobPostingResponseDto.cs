@@ -8,6 +8,8 @@
         public string Location { get; set; }
         public string Company { get; set; }
         public string Image { get; set; }
+        public int Salary { get; set; }
+        public Guid CompanyId { get; set; }
 
     }
 }
