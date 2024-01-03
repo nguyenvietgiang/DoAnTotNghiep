@@ -12,6 +12,7 @@ namespace DoAnTotNghiep.Repository.JobRepo
         Task ToggleJobStatusAsync(Guid id);
         Task<IEnumerable<JobPosting>> GetUnapprovedJobPostingsAsync();
         Task<IEnumerable<JobPosting>> GetApprovedJobPostingsAsync();
+        Task<IEnumerable<JobPosting>> GetApprovedJobPostingsByEmployerAsync(Guid employerId);
         Task<IEnumerable<JobPosting>> SearchJobPostingsAsync(string searchTerm, string location);
     }
 }

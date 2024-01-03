@@ -8,6 +8,7 @@ using DoAnTotNghiep.Repository.DisscussRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
 using DoAnTotNghiep.Repository.JobRepo;
 using DoAnTotNghiep.Services.EmailServices;
+using DoAnTotNghiep.Services.ExportServices;
 using DoAnTotNghiep.Services.ImageServices;
 using DoAnTotNghiep.Services.PaymentServices;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("Connect")));
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IEmailServices, EmailServices>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IExcelExportService, ExcelExportService>();
 //repo
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IContactRepository, ContactRepository>();

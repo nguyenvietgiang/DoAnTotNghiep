@@ -84,5 +84,10 @@ namespace DoAnTotNghiep.Controllers.MvcController
             // Tạo thanh toán
             return payment.Create(apiContext);
         }
-    }
+
+        public IActionResult PaymentWithVNPay() 
+        {
+            return View();
+        }
+     }
 }

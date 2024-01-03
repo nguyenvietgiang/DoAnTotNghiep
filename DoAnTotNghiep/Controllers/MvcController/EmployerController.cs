@@ -1,5 +1,6 @@
 ﻿using DoAnTotNghiep.Models.DTO;
 using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Models.ResponseDTO;
 using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
 using DoAnTotNghiep.Repository.JobRepo;
@@ -105,9 +106,21 @@ namespace DoAnTotNghiep.Controllers.MvcController
             return View(model);
         }
 
-        public IActionResult CompanyJobList()
+        public async Task<IActionResult> CompanyJobList()
         {
-            return View();
+            var userId = GetUserIdFromClaim();
+            var approvedJobPostings = await _jobPostingRepository.GetApprovedJobPostingsByEmployerAsync(Guid.Parse(userId));
+            var result = approvedJobPostings.Select(jp => new JobPostingResponseDto
+            {
+                JobId = jp.JobPostingID,
+                Title = jp.Title,
+                Image = jp.Employer.UrlImage,
+                Position = jp.position,
+                Location = jp.Location,
+                Salary = jp.Salary,
+                CompanyId = jp.EmployerID,
+            });
+            return View(result);
         } 
 
         public IActionResult CreateJobPosting()

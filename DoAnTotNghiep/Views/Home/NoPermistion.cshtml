@@ -9,7 +9,32 @@
             <p class="lead">
                 Trang này không khả dụng với tài khoản của bạn, hãy nâng cấp để sử dụng
             </p>
-            <a asp-controller="Payment" asp-action="PaymentWithPaypal" class="btn btn-primary">Nâng cấp tài khoản</a>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Nâng cấp tài khoản
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Lựa chọn cổng thanh toán</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Lựa chọn cổng thanh toán để tiến hành nâng cấp tài khoản
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                            <a asp-controller="Payment" asp-action="PaymentWithPaypal" class="btn btn-primary">Paypal</a>
+                            <a asp-controller="Payment" asp-action="" class="btn btn-primary">VN PAY</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -89,5 +89,14 @@ namespace DoAnTotNghiep.Repository.JobRepo
 
             return await query.ToListAsync();
         }
+
+        public async Task<IEnumerable<JobPosting>> GetApprovedJobPostingsByEmployerAsync(Guid employerId)
+        {
+            return await _context.JobPostings
+                .Include(jp => jp.Employer)
+                .Where(jp => jp.EmployerID == employerId && jp.Status)
+                .ToListAsync();
+        }
+
     }
 }

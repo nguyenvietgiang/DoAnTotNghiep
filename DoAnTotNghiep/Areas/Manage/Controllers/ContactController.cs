@@ -2,6 +2,7 @@
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.ContactRepo;
 using DoAnTotNghiep.Services.EmailServices;
+using DoAnTotNghiep.Services.ExportServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
@@ -13,9 +14,10 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
     {
         private readonly IContactRepository _contactRepository;
         private readonly IEmailServices _emailServices;
-
-        public ContactController( IContactRepository contactRepository, IEmailServices emailServices)
+        private readonly IExcelExportService _excelExportService;
+        public ContactController( IContactRepository contactRepository, IEmailServices emailServices, IExcelExportService excelExportService)
         {
+            _excelExportService= excelExportService;
             _emailServices= emailServices;
             _contactRepository = contactRepository;
         }
@@ -58,5 +60,13 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
                 return View("Error");
             }
         }
+        public async Task<IActionResult> ExportToExcel()
+        {
+            IEnumerable<Contact> contactsEnumerable = await _contactRepository.GetAllAsync();
+            List<Contact> contacts = contactsEnumerable.ToList();
+            byte[] excelData = _excelExportService.ExportContactsToExcel(contacts);
+            return File(excelData, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Contacts.xlsx");
+        }
+
     }
 }
