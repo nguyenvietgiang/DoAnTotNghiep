@@ -18,13 +18,15 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="md-form mb-0">
-                                <input type="text" asp-for="Name" class="form-control" placeholder="Tên của bạn">
+                                <input type="text" asp-for="Name" class="form-control" placeholder="Nhập tên của bạn">
+                                <p>Họ và tên</p>
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="md-form mb-0">
-                                <input type="text" asp-for="Email" class="form-control" name="email" placeholder="Email của bạn">
+                                <input type="text" asp-for="Email" class="form-control" name="email" placeholder="Nhập email của bạn">
+                                <p>Email liên hệ</p>
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                         </div>
@@ -33,6 +35,7 @@
                         <div class="col-md-12">
                             <div class="md-form mb-0">
                                 <input type="text" asp-for="Subject" name="subject" class="form-control" placeholder="Vấn đề">
+                                <p>Vấn đề của bạn</p>
                                 <span asp-validation-for="Subject" class="text-danger"></span>
                             </div>
                         </div>
@@ -41,6 +44,7 @@
                         <div class="col-md-12">
                             <div class="md-form">
                                 <textarea type="text" asp-for="Message" rows="2" class="form-control md-textarea"></textarea>
+                                <p>Phản hồi, góp ý của bạn</p>
                                 <span asp-validation-for="Message" class="text-danger"></span>
                             </div>
 

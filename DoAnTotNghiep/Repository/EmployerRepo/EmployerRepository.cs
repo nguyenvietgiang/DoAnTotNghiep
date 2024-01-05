@@ -12,12 +12,18 @@ namespace DoAnTotNghiep.Repository.EmployerRepo
             _context = context;
         }
 
+        public async Task<IEnumerable<Employer>> GetAllAsync()
+        {
+           return await _context.Employers.ToListAsync();
+        }
+
         public async Task<Employer> GetEmployerByIdAsync(Guid employerId)
         {
             return await _context.Employers
                 .Include(e => e.Account) 
                 .FirstOrDefaultAsync(e => e.EmployerID == employerId);
         }
+
 
     }
 }

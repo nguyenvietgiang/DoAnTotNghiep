@@ -6,7 +6,9 @@ using DoAnTotNghiep.Repository.ContactRepo;
 using DoAnTotNghiep.Repository.DisscussRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Matching;
 using System.Diagnostics;
+using X.PagedList;
 
 namespace DoAnTotNghiep.Controllers
 {
@@ -108,6 +110,34 @@ namespace DoAnTotNghiep.Controllers
                 return NotFound();
             }
             return View(candidate);
+        } 
+
+        public async Task<IActionResult> EmployerList(int? page, string? searchTerm)
+        {
+            int pageSize = 9;
+            int pageNumber = page ?? 1;
+            var employers = await _employerRepository.GetAllAsync();
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                employers = employers.Where(e => e.CompanyName.Contains(searchTerm));
+            }
+            int totalItemCount = employers.Count();
+            var pagedList = new StaticPagedList<Employer>(employers.Skip((pageNumber - 1) * pageSize).Take(pageSize), pageNumber, pageSize, totalItemCount);
+            return View(pagedList);
+        }
+
+        public async Task<IActionResult> CandidatesList(int? page, string? searchTerm)
+        {
+            int pageSize = 9; 
+            int pageNumber = page ?? 1;
+            var candidates = await _candidateRepository.GetAllAsync();
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                candidates = candidates.Where(e => e.Name.Contains(searchTerm));
+            }
+            int totalItemCount = candidates.Count();
+            var pagedList = new StaticPagedList<Candidate>(candidates.Skip((pageNumber - 1) * pageSize).Take(pageSize), pageNumber, pageSize, totalItemCount);
+            return View(pagedList);
         }
 
     }

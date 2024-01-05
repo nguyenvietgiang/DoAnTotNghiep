@@ -11,6 +11,12 @@ namespace DoAnTotNghiep.Repository.CandidatesRepo
         {
             _context = context;
         }
+
+        public async Task<IEnumerable<Candidate>> GetAllAsync()
+        {
+                return await _context.Candidates.ToListAsync();
+        }
+
         public async Task<Candidate> GetCandidateByIdAsync(Guid candidateId)
         {
             return await _context.Candidates

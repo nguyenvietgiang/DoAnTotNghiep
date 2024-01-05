@@ -22,6 +22,16 @@
                         <div class="d-inline-flex">
                             <img id="qrcode" src="" alt="QR Code">
                         </div>
+                        <p class="text-dark font-weight-medium mb-0 mr-2">Chia sẻ với:</p>
+                <div class="d-inline-flex">
+                            <button class="genric-btn primary small" onclick="shareOnFacebook()">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    |
+                    <button class="genric-btn primary small" onclick="shareOnTwitter()">
+                        <i class="fab fa-twitter"></i>
+                    </button>
+                </div>
                     </div>
                 </div>
             </div>
@@ -78,23 +88,3 @@
         </div>
     </div>
 </section>
-@section Scripts {
-    <script>
-        // tạo QR code đến trang hiện tại
-        var previousPageUrl = window.location.href;
-        var url = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(previousPageUrl);
-        document.getElementById("qrcode").src = url;
-        // chia sẻ với facebook (pushlish lên mới được nha)
-        function shareOnFacebook() {
-            var currentURL = window.location.href;
-            var facebookShareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(currentURL);
-            window.open(facebookShareURL, '_blank');
-        }
-        // chia sẻ với twitter
-        function shareOnTwitter() {
-            var currentURL = window.location.href;
-            var twitterShareURL = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(currentURL);
-            window.open(twitterShareURL, '_blank');
-        }
-    </script>
-}

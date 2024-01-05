@@ -68,6 +68,13 @@
                                         <ul id="navigation">
                                             <li><a asp-controller="Home" asp-action="index">Trang Chủ</a></li>
                                             <li><a asp-controller="Home" asp-action="Hiring">Tuyển Dụng </a></li>
+                                            <li>
+                                                <a href="#">Danh sách</a>
+                                                <ul class="submenu">
+                                                    <li><a asp-controller="Home" asp-action="EmployerList">Danh sách công ty</a></li>
+                                                    <li><a asp-controller="Home" asp-action="CandidatesList">Danh sách ứng viên</a></li>
+                                                </ul>
+                                            </li>
                                             <li><a asp-controller="Home" asp-action="Forum">Diễn Đàn</a></li>
                                             <li><a asp-controller="Home" asp-action="Contact">Liên Hệ</a></li>
                                             @{
@@ -219,5 +226,25 @@
                   chat-title="JobFinder"
                   agent-id="91759a92-8689-4994-98eb-d55c1ede131d"
                   language-code="vi"></df-messenger>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v15.0&appId=5546284648741227&autoLogAppEvents=1" nonce="pHaCsEiK"></script>
+    <script>
+        // tạo QR code đến trang hiện tại
+        var previousPageUrl = window.location.href;
+        var url = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(previousPageUrl);
+        document.getElementById("qrcode").src = url;
+        // chia sẻ với facebook (pushlish lên mới được nha)
+        function shareOnFacebook() {
+            var currentURL = window.location.href;
+            var facebookShareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(currentURL);
+            window.open(facebookShareURL, '_blank');
+        }
+        // chia sẻ với twitter
+        function shareOnTwitter() {
+            var currentURL = window.location.href;
+            var twitterShareURL = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(currentURL);
+            window.open(twitterShareURL, '_blank');
+        }
+    </script>
 </body>
 </html>
