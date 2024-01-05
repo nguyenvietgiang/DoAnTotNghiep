@@ -14,7 +14,9 @@ namespace DoAnTotNghiep.Repository.DisscussRepo
 
         public async Task<List<Discuss>> GetAllDiscussions()
         {
-            return await _context.Discusses.ToListAsync();
+            return await _context.Discusses
+                .Include(dis => dis.Account) 
+                .ToListAsync();
         }
 
         public async Task<Discuss> GetDiscussionById(Guid id)

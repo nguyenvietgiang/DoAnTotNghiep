@@ -17,18 +17,22 @@
                             @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                         </div>
 
-                        <div class="form-group">
-                            @Html.DropDownListFor(model => model.Type, new List<SelectListItem>
-                        {
-                        new SelectListItem { Value = "Câu hỏi thảo luận", Text = "Câu hỏi thảo luận" },
-                        new SelectListItem { Value = "Hướng dẫn ", Text = "Hướng dẫn" },
-                        }, "---- Chọn Chủ Đề Chính Cho Bài Thảo Luận----", new { @class = "form-control", required = "required" })
-                            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.DropDownListFor(model => model.Type, new List<SelectListItem>
+                                {
+                                new SelectListItem { Value = "Câu hỏi thảo luận", Text = "Câu hỏi thảo luận" },
+                                new SelectListItem { Value = "Hướng dẫn", Text = "Hướng dẫn" },
+                                }, "---- Chọn Chủ Đề Chính Cho Bài Thảo Luận ----", new { @class = "form-control", required = "required" })
+                                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="Content">Nội dung thảo luận</label>
-                            @Html.TextAreaFor(model => model.Content, new { @class = "form-control", required = "required" })
+                        <div class="form-group pt-10">
+                            <label for="editor1">Nội dung</label>
+                            <textarea id="editor1" asp-for="Content" class="form-control"></textarea>
                             @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
                         </div>
 
@@ -41,3 +45,11 @@
 </div>
 
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        <script>
+        CKEDITOR.replace('Content');
+        </script>
+}
