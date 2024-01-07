@@ -19,6 +19,7 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<JobPosting> JobPostings { get; set; }
+        public DbSet<JobApplyForm> JobApplyForms { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

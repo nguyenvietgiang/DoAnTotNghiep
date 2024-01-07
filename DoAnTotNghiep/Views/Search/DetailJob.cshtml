@@ -68,7 +68,10 @@
                         <li>Lương :  <span>@Model.Salary VND</span></li>
                     </ul>
                     <div class="apply-btn2">
-                        <a href="#" class="btn">Ứng tuyển ngay</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#RecruitmentModal">
+                            Launch demo modal
+                        </button>
                     </div>
                 </div>
                 <div class="post-details4  mb-50">
@@ -98,5 +101,45 @@
             </div>
         </div>
     </div>
+</div> 
+
+<div class="modal fade" id="RecruitmentModal" tabindex="-1" role="dialog" aria-labelledby="RecruitmentModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="RecruitmentModalTitle">Ứng tuyển vị trí</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="userName">Tên người dùng:</label>
+            <input type="text" class="form-control" id="userName" placeholder="Nhập tên của bạn">
+          </div>
+          <div class="form-group">
+            <label for="userEmail">Email:</label>
+            <input type="email" class="form-control" id="userEmail" placeholder="Nhập địa chỉ email của bạn">
+          </div>
+          <div class="form-group">
+            <label for="userPhone">Số điện thoại:</label>
+            <input type="tel" class="form-control" id="userPhone" placeholder="Nhập số điện thoại của bạn">
+          </div>
+          <div class="form-group">
+            <label for="userFile">Chọn file:</label>
+            <input type="file" class="form-control-file" id="userFile">
+          </div>
+          <div class="form-group">
+            <label for="userDescription">Mô tả chi tiết:</label>
+            <textarea class="form-control" id="userDescription" rows="3" placeholder="Nhập mô tả chi tiết về bản thân"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="genric-btn danger radius" data-dismiss="modal">Hủy</button>
+        <button type="button" class="genric-btn success radius">Ứng tuyển ngay</button>
+      </div>
+    </div>
+  </div>
 </div>
-<!-- job post company End -->
