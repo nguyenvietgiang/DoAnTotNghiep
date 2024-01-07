@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DoAnTotNghiep</title>   
+    <title>@ViewData["Title"] - DoAnTotNghiep</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href="~/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/flaticon.css" rel="stylesheet" />
@@ -21,7 +21,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            height: 800px; 
+            height: 800px;
         }
 
         .company-img img {
@@ -86,7 +86,11 @@
                                                             <li><a asp-controller="Employer" asp-action="CompanyProfile">Thông tin doanh nghiệp</a></li>
                                                             <li><a asp-controller="Employer" asp-action="CompanyJobList">Danh sách tuyển dụng</a></li>
                                                             <li><a asp-controller="Auth" asp-action="ChangePass">Đổi mật khẩu</a></li>
-                                                            <li><a asp-controller="Auth" asp-action="Logout">Đăng xuất</a></li>
+                                                            <li>
+                                                                <button type="button" class="genric-btn link" data-toggle="modal" data-target="#exampleModalCenter">
+                                                                    Đăng xuất
+                                                                </button>
+                                                            </li>
                                                         </ul>
                                                     </li>
 
@@ -100,36 +104,61 @@
                                                             <li><a asp-controller="Candidates" asp-action="CreateCV">Tạo CV online</a></li>
                                                             <li><a href="single-blog.html">Danh sách công việc</a></li>
                                                             <li><a asp-controller="Auth" asp-action="ChangePass">Đổi mật khẩu</a></li>
-                                                            <li><a asp-controller="Auth" asp-action="Logout">Đăng xuất</a></li>
+                                                            <li>
+                                                                <button type="button" class="genric-btn link" data-toggle="modal" data-target="#exampleModalCenter">
+                                                                    Đăng xuất
+                                                                </button>
+                                                            </li>
                                                         </ul>
                                                     </li>
                                                 }
                                                 else
                                                 {
-                                                   <li><a asp-controller="Auth" asp-action="Login">Đăng Nhập</a></li>
-                                                   <li><a asp-controller="Auth" asp-action="Register">Đăng Ký</a></li>  
+                                                    <li><a asp-controller="Auth" asp-action="Login">Đăng Nhập</a></li>
+                                                    <li><a asp-controller="Auth" asp-action="Register">Đăng Ký</a></li>
                                                 }
                                             }
                                         </ul>
                                     </nav>
                                 </div>
-                              
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Đăng xuất tài khoản?</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                               <p>Bạn có chắc chắn rằng mình muốn đăng xuất khỏi hệ thống không ?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                                <a asp-controller="Auth" asp-action="Logout" class="btn btn-primary">Đăng xuất</a>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
-                        </div>
-                        <!-- Mobile Menu -->
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
+                            <!-- Mobile Menu -->
+                            <div class="col-12">
+                                <div class="mobile_menu d-block d-lg-none"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Header End -->
+            <!-- Header End -->
     </header>
     <partial name="_Breadcrumb" />
-      <main>
-            @RenderBody()
-      </main>
+    <main>
+        @RenderBody()
+    </main>
     <footer class="mt-4">
         <!-- Footer Start-->
         <div class="footer-area footer-bg">
@@ -176,7 +205,7 @@
                                 </p>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

@@ -47,5 +47,19 @@ namespace DoAnTotNghiep.Repository.LikeRepo
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<List<Like>> GetLikesByDiscussId(Guid discussId)
+        {
+            return await _context.Likes
+                .Where(l => l.DiscussID == discussId)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetLikeCountByDiscussId(Guid discussId)
+        {
+            return await _context.Likes
+                .Where(l => l.DiscussID == discussId)
+                .CountAsync();
+        }
     }
 }
