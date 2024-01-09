@@ -5,6 +5,7 @@ using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.ContactRepo;
 using DoAnTotNghiep.Repository.DisscussRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
+using DoAnTotNghiep.Repository.JobApplyFormRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Matching;
 using System.Diagnostics;
@@ -19,12 +20,14 @@ namespace DoAnTotNghiep.Controllers
         private readonly IEmployerRepository _employerRepository;
         private readonly ICandidatesRepo _candidateRepository;
         private readonly IDiscussRepository _discussRepository;
-        public HomeController(ILogger<HomeController> logger, IContactRepository contactRepository, IEmployerRepository employerRepository, ICandidatesRepo candidatesRepo, IDiscussRepository discussRepository)
+        private readonly IJobApplyFormRepository _jobApplyFormRepository;
+        public HomeController(ILogger<HomeController> logger, IContactRepository contactRepository, IEmployerRepository employerRepository, ICandidatesRepo candidatesRepo, IDiscussRepository discussRepository, IJobApplyFormRepository jobApplyFormRepository)
         {
             _employerRepository= employerRepository;
             _contactRepository= contactRepository;
             _candidateRepository = candidatesRepo;
             _discussRepository= discussRepository;
+            _jobApplyFormRepository= jobApplyFormRepository;
             _logger = logger;
         }
 
@@ -140,5 +143,12 @@ namespace DoAnTotNghiep.Controllers
             return View(pagedList);
         }
 
+        [HttpPost]
+        public JsonResult ApplyForJob(JobApplyFormDTO jobApplyFormDTO)
+        {
+            // Thêm hồ sơ ứng tuyển vào cơ sở dữ liệu
+            _jobApplyFormRepository.AddJobApplyForm(jobApplyFormDTO);
+            return Json(new { success = true, message = "Ứng tuyển thành công" });
+        }
     }
 }
