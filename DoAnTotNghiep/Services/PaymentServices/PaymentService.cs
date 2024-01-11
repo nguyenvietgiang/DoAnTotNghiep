@@ -25,6 +25,27 @@ namespace DoAnTotNghiep.Services.PaymentServices
                 else
                 {
                     account.AccountRole = AccountRole.CandidatePaid;
+
+                    // Cập nhật dữ liệu thống kê
+                    var today = DateTime.Today;
+                    var revenueStatistic = _context.RevenueStatistics
+                        .FirstOrDefault(r => r.Date.Year == today.Year && r.Date.Month == today.Month);
+
+                    if (revenueStatistic == null)
+                    {
+                        revenueStatistic = new RevenueStatistic
+                        {
+                            Id = Guid.NewGuid(),
+                            Date = today,
+                            Amount = 50000
+                        };
+                        _context.RevenueStatistics.Add(revenueStatistic);
+                    }
+                    else
+                    {
+                        revenueStatistic.Amount += 50000;
+                    }
+
                     _context.SaveChanges();
                     return true;
                 }

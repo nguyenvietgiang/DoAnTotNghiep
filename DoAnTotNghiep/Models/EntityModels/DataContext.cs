@@ -16,10 +16,11 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<CvLibrary> CvLibraries { get; set; }
         public DbSet<Discuss> Discusses { get; set; }
         public DbSet<Like> Likes { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Comment> Comments { get; set; } 
         public DbSet<Message> Messages { get; set; }
         public DbSet<JobPosting> JobPostings { get; set; }
         public DbSet<JobApplyForm> JobApplyForms { get; set; }
+        public DbSet<RevenueStatistic> RevenueStatistics { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
