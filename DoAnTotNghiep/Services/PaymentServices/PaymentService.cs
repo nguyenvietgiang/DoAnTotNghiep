@@ -55,6 +55,16 @@ namespace DoAnTotNghiep.Services.PaymentServices
                 return false;
             }
         }
+
+        public IEnumerable<RevenueStatistic> GetRevenueStatisticsForCurrentMonth()
+        {
+            var today = DateTime.Today;
+            var revenueStatistics = _context.RevenueStatistics
+                .Where(r => r.Date.Year == today.Year && r.Date.Month == today.Month)
+                .ToList();
+
+            return revenueStatistics;
+        }
     }
 
 }

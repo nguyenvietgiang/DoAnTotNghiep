@@ -21,6 +21,9 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<JobPosting> JobPostings { get; set; }
         public DbSet<JobApplyForm> JobApplyForms { get; set; }
         public DbSet<RevenueStatistic> RevenueStatistics { get; set; }
+        public DbSet<Survey> Surveys { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<AnswerCount> AnswerCounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

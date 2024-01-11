@@ -11,9 +11,9 @@ namespace DoAnTotNghiep.Models.EntityModels
 
         [Required]
         public string QuestionText { get; set; }
-        public Guid SurveyId { get; set; }
 
-        public Survey? Survey { get; set; }
+        public Guid SurveyId { get; set; }
+        public Survey Survey { get; set; }
 
         public List<Option> Options { get; set; }
     }

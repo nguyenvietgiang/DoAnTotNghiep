@@ -3,16 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DoAnTotNghiep.Models.EntityModels
 {
-    public class Response
+    public class AnswerCount
     {
         [Key]
-        public Guid ResponseId { get; set; }
-
-        public Guid UserID { get; set; }
-
+        public Guid AnswerCountId { get; set; }
         public Guid OptionId { get; set; }
-
-        [ForeignKey("OptionId")]
-        public Option? Option { get; set; }
+        public Option Option { get; set; }
     }
 }

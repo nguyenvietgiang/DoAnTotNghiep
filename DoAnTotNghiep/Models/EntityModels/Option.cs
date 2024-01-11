@@ -11,11 +11,11 @@ namespace DoAnTotNghiep.Models.EntityModels
         [Required]
         public string OptionText { get; set; }
         public Guid QuestionId { get; set; }
-
-        public Question? Question
+        public Question Question
         {
             get; set;
         }
-        public List<Response> Responses { get; set; }
+
+        public List<AnswerCount> AnswerCounts { get; set; }
     }
 }

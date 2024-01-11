@@ -1,5 +1,6 @@
 ﻿using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Models.Enum;
+using DoAnTotNghiep.Services.PaymentServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,11 @@ namespace DoAnTotNghiep.Controllers.ApisController
     public class StatisticsController : ControllerBase
     {
         private readonly DataContext _context;
-
-        public StatisticsController(DataContext context)
+        private readonly IPaymentService _paymentService;
+        public StatisticsController(DataContext context, IPaymentService paymentService)
         {
             _context = context;
+            _paymentService = paymentService;
         }
         [HttpGet("account-roles")]
         public IActionResult GetAccountRoleStats()
@@ -27,5 +29,11 @@ namespace DoAnTotNghiep.Controllers.ApisController
             return Ok(stats);
         }
 
+        [HttpGet("revenue-statistics")]
+        public IActionResult GetRevenueStatistics()
+        {
+            var revenueStatistics = _paymentService.GetRevenueStatisticsForCurrentMonth();
+            return Ok(new { success = true, revenueStatistics });
+        }
     }
 }
