@@ -20,7 +20,8 @@
                         <!-- form -->
                         <form asp-controller="Search" asp-action="SearchJob" method="post" class="search-box">
                             <div class="input-form">
-                                <input type="text" name="searchTerm" placeholder="Tìm kiếm công việc">
+                                <input type="text" name="searchTerm" placeholder="Tìm kiếm công việc" id="searchPostInput">
+                                <div id="searchSuggestions" class="dropdown-menu"></div>
                             </div>
                             <div class="select-form">
                                 <div class="select-itms">
@@ -103,3 +104,38 @@
     </div>
 </div>
 <!-- Our Services End -->
+
+
+
+@section Scripts {
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+            var searchPostInput = document.getElementById("searchPostInput");
+            var suggestionsDropdown = document.getElementById("searchSuggestions");
+            searchPostInput.addEventListener("input", function () {
+                var searchText = this.value;
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "https://localhost:7235/search/GetTitlesBySearch?searchString=" + searchText, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        suggestionsDropdown.innerHTML = "";
+                        data.forEach(function (item) {
+                            var link = document.createElement("a");
+                            link.classList.add("dropdown-item", "text-dark");
+                            link.textContent = item;
+                            link.href = "https://localhost:7235/Search/SearchJob?=" + item; // Đặt đường dẫn tương ứng cho mỗi item
+                            link.addEventListener("click", function (event) {
+                                event.preventDefault(); // Ngăn chặn chuyển hướng mặc định
+                                window.location.href = this.href; // Chuyển hướng trang web
+                            });
+                            suggestionsDropdown.appendChild(link);
+                        });
+                        suggestionsDropdown.style.display = "block";
+                    }
+                };
+                xhr.send();
+            });
+        });
+    </script>
+}

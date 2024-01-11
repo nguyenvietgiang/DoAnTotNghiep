@@ -12,33 +12,38 @@
             {
                 @foreach (var jobPosting in Model)
                 {
-                            <div class="single-job-items mb-30">
-                                <div class="job-items">
-                                    <div class="company-img">
-                                        <a href="@Url.Action("Conpany", "Home", new { @id = jobPosting.CompanyId })">
-                                            <img src="@jobPosting.Image" alt="@jobPosting.Title">
-                                        </a>
-                                    </div>
-                                    <div class="job-tittle job-tittle2">
-                                <a href="@Url.Action("DetailJob", "Search", new { @id = jobPosting.JobId })">
-                                            <h4>@jobPosting.Title</h4>
-                                        </a>
-                                        <ul>
-                                            <li>@jobPosting.Position</li>
-                                            <li><i class="fas fa-map-marker-alt"></i>@jobPosting.Location</li>
-                                            <li>@jobPosting.Salary VND</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="items-link items-link2 f-right">
-                                    <a href="job_details.html">Toàn thời gian</a>
-                                </div>
+                    <div class="single-job-items mb-30">
+                        <div class="job-items">
+                            <div class="company-img">
+                                <a href="@Url.Action("Conpany", "Home", new { @id = jobPosting.CompanyId })">
+                                    <img src="@jobPosting.Image" alt="@jobPosting.Title">
+                                </a>
                             </div>
+                            <div class="job-tittle job-tittle2">
+                                <a href="@Url.Action("DetailJob", "Search", new { @id = jobPosting.JobId })">
+                                    <h4>@jobPosting.Title</h4>
+                                </a>
+                                <ul>
+                                    <li>@jobPosting.Position</li>
+                                    <li><i class="fas fa-map-marker-alt"></i>@jobPosting.Location</li>
+                                    <li>@jobPosting.Salary VND</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="items-link items-link2 f-right">
+                            <a href="job_details.html">Toàn thời gian</a>
+                        </div>
+                    </div>
                 }
             }
             else
             {
-                    <p>Không có công việc phù hợp.</p>
+                <div class="card text-center">
+                    <img src="https://www.svgrepo.com/show/444337/gui-check-no.svg" class="card-img-top mx-auto" alt="No Job Found" style="width: 300px; height: 300px; object-fit: cover;">
+                    <div class="card-body">
+                        <p class="card-text">Không có công việc phù hợp.</p>
+                    </div>
+                </div>
             }
         </div>
     </div>

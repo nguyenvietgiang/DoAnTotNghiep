@@ -16,7 +16,8 @@
         <div class="col-md-4 mt-4 mt-sm-0">
             <form method="get" action="@Url.Action("EmployerList", "Home")">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Tìm công ty" name="searchTerm">
+                    <input type="text" class="form-control" placeholder="Tìm công ty" name="searchTerm" id="searchPostInput">
+                    <div id="searchSuggestions" class="dropdown-menu"></div>
                     <button type="submit" class="genric-btn success medium">
                         <i class="fas fa-search"></i>
                     </button>
@@ -27,28 +28,39 @@
     </div><!--end row-->
 
     <div class="row">
-        @foreach (var employer in Model)
-        {
-            <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
-                <div class="card border-0 bg-light rounded shadow">
-                    <div class="d-flex align-items-center">
-                        <img src="@employer.UrlImage" class="card-img-top rounded-circle" alt="Avatar" style="width: 90px; height: 90px;">
-                        <div class="card-body p-4">
-                            <span class="badge rounded-pill bg-primary float-md-end mb-3 mb-sm-0">@employer.Industry</span>
-                            <h5>@employer.CompanyName</h5>
-                            <div class="mt-3">
-                                <span class="text-muted d-block"><i class="fa fa-map-marker" aria-hidden="true"></i> @employer.Location</span>
-                            </div>
+         @if (Model.Any())
+            {
+            @foreach (var employer in Model)
+            {
+                <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                    <div class="card border-0 bg-light rounded shadow">
+                        <div class="d-flex align-items-center">
+                            <img src="@employer.UrlImage" class="card-img-top rounded-circle" alt="Avatar" style="width: 90px; height: 90px;">
+                            <div class="card-body p-4">
+                                <span class="badge rounded-pill bg-primary float-md-end mb-3 mb-sm-0">@employer.Industry</span>
+                                <h5>@employer.CompanyName</h5>
+                                <div class="mt-3">
+                                    <span class="text-muted d-block"><i class="fa fa-map-marker" aria-hidden="true"></i> @employer.Location</span>
+                                </div>
 
-                            <div class="mt-3">
-                                <a href="@Url.Action("Conpany", "Home", new { @id = employer.EmployerID })" class="btn btn-primary">Xem chi tiết</a>
+                                <div class="mt-3">
+                                    <a href="@Url.Action("Conpany", "Home", new { @id = employer.EmployerID })" class="btn btn-primary">Xem chi tiết</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         }
-
+        else
+        {
+             <div class="card text-center">
+                    <img src="https://www.svgrepo.com/show/444337/gui-check-no.svg" class="card-img-top mx-auto" alt="No Job Found" style="width: 300px; height: 300px; object-fit: cover;">
+                    <div class="card-body">
+                        <p class="card-text">Không có doanh nghiệp phù hợp.</p>
+                    </div>
+                </div>
+        }
     </div><!--end row-->
 </div>
 <div class="pagination d-flex justify-content-center">
@@ -74,3 +86,35 @@
     </nav>
 </div>
 
+@section Scripts {
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+            var searchPostInput = document.getElementById("searchPostInput");
+            var suggestionsDropdown = document.getElementById("searchSuggestions");
+            searchPostInput.addEventListener("input", function () {
+                var searchText = this.value;
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "https://localhost:7235/search/GetCompanyBySearch?searchString=" + searchText, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        suggestionsDropdown.innerHTML = "";
+                        data.forEach(function (item) {
+                            var link = document.createElement("a");
+                            link.classList.add("dropdown-item", "text-dark");
+                            link.textContent = item;
+                            link.href = "https://localhost:7235/search/SearchResult?searchString=" + item; // Đặt đường dẫn tương ứng cho mỗi item
+                            link.addEventListener("click", function (event) {
+                                event.preventDefault(); // Ngăn chặn chuyển hướng mặc định
+                                window.location.href = this.href; // Chuyển hướng trang web
+                            });
+                            suggestionsDropdown.appendChild(link);
+                        });
+                        suggestionsDropdown.style.display = "block";
+                    }
+                };
+                xhr.send();
+            });
+        });
+    </script>
+}
