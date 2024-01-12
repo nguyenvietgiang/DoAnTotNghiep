@@ -3,6 +3,7 @@ using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Models.ResponseDTO;
 using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
+using DoAnTotNghiep.Repository.JobApplyFormRepo;
 using DoAnTotNghiep.Repository.JobRepo;
 using DoAnTotNghiep.Services.ImageServices;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +17,15 @@ namespace DoAnTotNghiep.Controllers.MvcController
         private readonly DataContext _dataContext;
         private readonly IFileService _fileService;
         private readonly IJobPostingRepository _jobPostingRepository;
+        private readonly IJobApplyFormRepository _jobApplyFormRepository;
 
-        public EmployerController(IEmployerRepository employerRepository, DataContext dataContext, IFileService fileService, IJobPostingRepository jobPostingRepository)
+        public EmployerController(IEmployerRepository employerRepository, DataContext dataContext, IFileService fileService, IJobPostingRepository jobPostingRepository, IJobApplyFormRepository jobApplyFormRepository)
         {
             _employerRepository = employerRepository;
             _fileService = fileService;
             _dataContext = dataContext;
             _jobPostingRepository = jobPostingRepository;
+            _jobApplyFormRepository = jobApplyFormRepository;
         }
         public IActionResult CompanyProfile()
         {
@@ -153,6 +156,13 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 return RedirectToAction("Index", "Home");
             }
             return View(jobPostingDto);
+        }
+
+        public async Task<IActionResult> ApplyList(Guid JobId)
+        {
+            var jobApplyForms = await _jobApplyFormRepository.GetJobApplyFormsByJobPostingID(JobId);
+
+            return View(jobApplyForms);
         }
     }
 }
