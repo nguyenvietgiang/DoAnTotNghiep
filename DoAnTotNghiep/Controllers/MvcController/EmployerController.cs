@@ -5,6 +5,7 @@ using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
 using DoAnTotNghiep.Repository.JobApplyFormRepo;
 using DoAnTotNghiep.Repository.JobRepo;
+using DoAnTotNghiep.Services.EmailServices;
 using DoAnTotNghiep.Services.ImageServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,14 +19,16 @@ namespace DoAnTotNghiep.Controllers.MvcController
         private readonly IFileService _fileService;
         private readonly IJobPostingRepository _jobPostingRepository;
         private readonly IJobApplyFormRepository _jobApplyFormRepository;
+        private readonly IEmailServices _emailServices;
 
-        public EmployerController(IEmployerRepository employerRepository, DataContext dataContext, IFileService fileService, IJobPostingRepository jobPostingRepository, IJobApplyFormRepository jobApplyFormRepository)
+        public EmployerController(IEmployerRepository employerRepository, DataContext dataContext, IFileService fileService, IJobPostingRepository jobPostingRepository, IJobApplyFormRepository jobApplyFormRepository, IEmailServices emailServices)
         {
             _employerRepository = employerRepository;
             _fileService = fileService;
             _dataContext = dataContext;
             _jobPostingRepository = jobPostingRepository;
             _jobApplyFormRepository = jobApplyFormRepository;
+            _emailServices = emailServices;
         }
         public IActionResult CompanyProfile()
         {
@@ -163,6 +166,22 @@ namespace DoAnTotNghiep.Controllers.MvcController
             var jobApplyForms = await _jobApplyFormRepository.GetJobApplyFormsByJobPostingID(JobId);
 
             return View(jobApplyForms);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> JobContactResponse(Guid id, string repcontent)
+        {
+            try
+            {
+                var jobcontact = await _jobApplyFormRepository.GetJobApplyFormById(id);
+                await _emailServices.SendEmailAsync(jobcontact.Email, repcontent);
+                TempData["SuccessMessage"] = "Gửi email thành công!";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Gửi email thất bại: " + ex.Message;
+            }
+            return RedirectToAction("CompanyJobList");
         }
     }
 }

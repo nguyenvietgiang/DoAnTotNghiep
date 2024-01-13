@@ -8,6 +8,7 @@
     <div class="card-body">
         <h4 class="card-title">Số lượng ứng tuyển (2)</h4>
         <button class="genric-btn info radius mb-3">Xuất file thống kê</button>
+
         @if (Model.Any())
         {
             <table class="table table-striped table-bordered">
@@ -28,19 +29,19 @@
                             <td>@jobApplyForm.Email</td>
                             <td>@jobApplyForm.PhoneNumber</td>
                             <td>
-                                <button type="button" class="genric-btn success radius" data-toggle="modal" data-target="#exampleModal">
+                                <button type="button" class="genric-btn success radius" data-toggle="modal" data-target="#exampleModal-@jobApplyForm.JobApplyID">
                                     Xem CV
                                 </button>
                             </td>
                             <td>
-                                <button type="button" class="genric-btn warning radius" data-toggle="modal" data-target="#contactModal">
+                                <button type="button" class="genric-btn warning radius" data-toggle="modal" data-target="#contactModal-@jobApplyForm.JobApplyID">
                                     Liên hệ
                                 </button>
                                 <button class="genric-btn danger radius">Xóa</button>
                             </td>
                         </tr>
                         <!-- CV Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="exampleModal-@jobApplyForm.JobApplyID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -60,7 +61,7 @@
                         </div>
 
                         <!-- Contact Modal -->
-                        <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="contactModal-@jobApplyForm.JobApplyID" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -70,20 +71,16 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form>
+                                        <form asp-action="JobContactResponse" method="post">
+                                            <input type="hidden" name="id" value="@jobApplyForm.JobApplyID" />
                                             <div class="form-group">
-                                                <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                                <input type="text" class="form-control" id="recipient-name">
+                                                <label for="message-text" class="col-form-label">Nội dung thư liên hệ:</label>
+                                                <textarea name="repcontent" placeholder="Nhập nội dung" class="form-control" id="message-text"></textarea>
                                             </div>
                                             <div class="form-group">
-                                                <label for="message-text" class="col-form-label">Message:</label>
-                                                <textarea class="form-control" id="message-text"></textarea>
+                                                <button type="submit" class="btn btn-primary">Gửi Ngay</button>
                                             </div>
                                         </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                        <button type="button" class="btn btn-primary">Gửi</button>
                                     </div>
                                 </div>
                             </div>
@@ -98,3 +95,4 @@
         }
     </div>
 </div>
+

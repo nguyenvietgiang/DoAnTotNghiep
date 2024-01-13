@@ -150,7 +150,14 @@ namespace DoAnTotNghiep.Controllers.MvcController
 
         public IActionResult ChangePass()
         {
-            return View();
+            if (HttpContext.Session.GetString("Accountid") == null)
+            {
+                return View("Login");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
