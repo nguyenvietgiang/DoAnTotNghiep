@@ -113,7 +113,8 @@ namespace DoAnTotNghiep.Controllers.MvcController
                         Industry = "Chưa cập nhật",
                         CompanySize = 0,
                         Descrpitons ="Chưa cập nhật",
-                        Location = "Chưa cập nhật"
+                        Location = "Chưa cập nhật",
+                        PhoneNumber = "Chưa cập nhật"
                     };
 
                     var account = new Account

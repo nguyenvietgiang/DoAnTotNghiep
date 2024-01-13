@@ -9,31 +9,45 @@
         <div class="card-deck">
             @if (Model.Any())
             {
-                @foreach (var jobPosting in Model)
-                {
-                    <div class="single-job-items mb-30">
-                        <div class="job-items">
-                            <div class="company-img">
-                                <a href="@Url.Action("Conpany", "Home", new { @id = jobPosting.CompanyId })">
-                                    <img src="@jobPosting.Image" alt="@jobPosting.Title">
-                                </a>
-                            </div>
-                            <div class="job-tittle job-tittle2">
-                                <a href="@Url.Action("DetailJob", "Search", new { @id = jobPosting.JobId })">
-                                    <h4>@jobPosting.Title</h4>
-                                </a>
-                                <ul>
-                                    <li>@jobPosting.Position</li>
-                                    <li><i class="fas fa-map-marker-alt"></i>@jobPosting.Location</li>
-                                    <li>@jobPosting.Salary VND</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="items-link items-link2 f-right">
-                            <a href="@Url.Action("ApplyList", "Employer", new { @JobId = jobPosting.JobId })">DS Ứng tuyển</a>
-                        </div>
-                    </div>
-                }
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Ảnh</th>
+                            <th>Tiêu đề</th>
+                            <th>Chức vụ</th>
+                            <th>Địa điểm</th>
+                            <th>Lương</th>
+                            <th>DS Ứng tuyển</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var jobPosting in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.Action("Company", "Home", new { @id = jobPosting.CompanyId })">
+                                        <img src="@jobPosting.Image" alt="@jobPosting.Title" style="max-width: 100px; max-height: 100px;">
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("DetailJob", "Search", new { @id = jobPosting.JobId })">
+                                        <h4>@jobPosting.Title</h4>
+                                    </a>
+                                </td>
+                                <td>@jobPosting.Position</td>
+                                <td><i class="fas fa-map-marker-alt"></i> @jobPosting.Location</td>
+                                <td>@jobPosting.Salary VND</td>
+                                <td>
+                                    <a class="genric-btn info radius" href="@Url.Action("ApplyList", "Employer", new { @JobId = jobPosting.JobId })">DS Ứng tuyển</a>
+                                </td>
+                                <td>
+                                    <button class="genric-btn danger radius">Xóa</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             }
             else
             {
@@ -41,5 +55,6 @@
             }
         </div>
         <a class="btn btn-success" asp-controller="Employer" asp-action="CreateJobPosting">Đăng tin tuyển dụng</a>
+        <a class="btn btn-danger" asp-controller="Employer" asp-action="ListJobPostings">Đăng danh sách tin tuyển dụng</a>
     </div>
 </div>

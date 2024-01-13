@@ -16,7 +16,7 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<CvLibrary> CvLibraries { get; set; }
         public DbSet<Discuss> Discusses { get; set; }
         public DbSet<Like> Likes { get; set; }
-        public DbSet<Comment> Comments { get; set; } 
+        public DbSet<Comment> Comments { get; set; }  
         public DbSet<Message> Messages { get; set; }
         public DbSet<JobPosting> JobPostings { get; set; }
         public DbSet<JobApplyForm> JobApplyForms { get; set; }
@@ -24,6 +24,7 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<Survey> Surveys { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<AnswerCount> AnswerCounts { get; set; }
+        public DbSet<ImageGalery> ImageGaleries { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
