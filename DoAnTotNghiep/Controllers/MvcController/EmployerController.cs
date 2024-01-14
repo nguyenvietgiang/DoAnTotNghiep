@@ -192,5 +192,10 @@ namespace DoAnTotNghiep.Controllers.MvcController
             }
             return RedirectToAction("CompanyJobList");
         }
+
+        public IActionResult ImageGalery() 
+        {
+            return View();
+        }
     }
 }

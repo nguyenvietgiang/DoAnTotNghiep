@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "Tạo CV trực tiếp";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-section">
+                <form id="cvForm">
+                    <div class="form-group">
+                        <label for="fullName">Họ và tên:</label>
+                        <input type="text" class="form-control" id="fullName" name="fullName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personalPage">Email liên hệ:</label>
+                        <input type="text" class="form-control" id="personalPage" name="personalPage" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Mô tả:</label>
+                        <textarea class="form-control" id="description" name="description" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="education">Học vấn:</label>
+                        <input type="text" class="form-control" id="education" name="education" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profession">Sở trường:</label>
+                        <input type="text" class="form-control" id="profession" name="profession" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience">Kinh nghiệm làm việc:</label>
+                        <textarea class="form-control" id="experience" name="experience" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personalProjects">Dự án cá nhân:</label>
+                        <textarea class="form-control" id="personalProjects" name="personalProjects" required></textarea>
+                    </div>
+                    <button type="submit" class="genric-btn primary">Tải xuống</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="cv-section" id="cvSection">
+                <div class="card">
+                    <img class="profile-img" src="https://via.placeholder.com/150" alt="Profile Image">
+                    <h2>Họ và tên</h2>
+                    <p>Email liên hệ:</p>
+                    <p>Mô tả:</p>
+                    <h3>Học vấn:</h3>
+                    <p>Ngành nghề:</p>
+                    <h3>Kinh nghiệm làm việc:</h3>
+                    <h3>Dự án cá nhân:</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('cvForm').addEventListener('input', updateCV);
+
+        function updateCV() {
+            const fullName = document.getElementById('fullName').value;
+            const personalPage = document.getElementById('personalPage').value;
+            const description = document.getElementById('description').value;
+            const education = document.getElementById('education').value;
+            const profession = document.getElementById('profession').value;
+            const experience = document.getElementById('experience').value;
+            const personalProjects = document.getElementById('personalProjects').value;
+
+            const cvContent = `
+                        <div class="card">
+                            <img class="profile-img" src="https://via.placeholder.com/150" alt="Profile Image">
+                            <h2>${fullName}</h2>
+                            <p>Trang cá nhân: ${personalPage}</p>
+                            <p>${description}</p>
+                            <h3>Học vấn:</h3>
+                            <p>${education}</p>
+                            <h3>Ngành nghề:</h3>
+                            <p>${profession}</p>
+                            <h3>Kinh nghiệm làm việc:</h3>
+                            <p>${experience}</p>
+                            <h3>Dự án cá nhân:</h3>
+                            <p>${personalProjects}</p>
+                        </div>
+                    `;
+
+            const cvSection = document.getElementById('cvSection');
+            cvSection.innerHTML = cvContent;
+        }
+    </script>
+
+}

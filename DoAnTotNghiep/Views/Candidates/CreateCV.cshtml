@@ -1,10 +1,11 @@
 ﻿@model IPagedList<DoAnTotNghiep.Models.EntityModels.CvLibrary>
 @using X.PagedList
 @{
-    ViewData["Title"] = "CV Trực tuyến";
+    ViewData["Title"] = "Quản lý CV";
 }
 <div class="container">
-    <div class="text-center"><h2>- Các Mẫu CV Phổ Biến -</h2></div>
+    <a asp-action="CreateCvOnline" class="genric-btn primary">Tạo CV Trực Tiếp</a>
+    <div class="text-center"><h2>- Dùng Sẵn Các Mẫu CV Phổ Biến -</h2></div>
     <div class="row">
      @foreach (var cv in Model)
         {

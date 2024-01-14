@@ -34,6 +34,17 @@
         .single-job-items {
             text-align: center;
         }
+
+        .cv-section .card {
+            border: 3px solid #3498db; 
+            margin: 10px;
+            height: 650px; 
+            width: 500px;
+        }
+
+            .cv-section .card img.profile-img {
+                max-width: 80px; 
+            }
     </style>
 </head>
 <body>
@@ -101,7 +112,7 @@
                                                         <a href="#">Chào: @Context.Session.GetString("CandidateName")</a>
                                                         <ul class="submenu">
                                                             <li><a asp-controller="Candidates" asp-action="Profile">Thông tin cá nhân</a></li>
-                                                            <li><a asp-controller="Candidates" asp-action="CreateCV">Tạo CV online</a></li>
+                                                            <li><a asp-controller="Candidates" asp-action="CreateCV">Quản lý CV</a></li>
                                                             <li><a href="single-blog.html">Danh sách công việc</a></li>
                                                             <li><a asp-controller="Auth" asp-action="ChangePass">Đổi mật khẩu</a></li>
                                                             <li>
@@ -133,27 +144,27 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                               <p>Bạn có chắc chắn rằng mình muốn đăng xuất khỏi hệ thống không ?</p>
+                                                <p>Bạn có chắc chắn rằng mình muốn đăng xuất khỏi hệ thống không ?</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                                                 <a asp-controller="Auth" asp-action="Logout" class="btn btn-primary">Đăng xuất</a>
                                             </div>
                                         </div>
-                                        </div>
                                     </div>
-
                                 </div>
+
                             </div>
-                            <!-- Mobile Menu -->
-                            <div class="col-12">
-                                <div class="mobile_menu d-block d-lg-none"></div>
-                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Header End -->
+        </div>
+        <!-- Header End -->
     </header>
     <partial name="_Breadcrumb" />
     <main>

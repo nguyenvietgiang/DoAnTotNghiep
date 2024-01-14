@@ -66,7 +66,12 @@ namespace DoAnTotNghiep.Controllers.MvcController
             return View(pagedList);
         }
 
-        public async Task<IActionResult> DownloadCv(Guid cvId)
+        public IActionResult CreateCvOnline()
+        {
+            return View();
+        }     
+
+            public async Task<IActionResult> DownloadCv(Guid cvId)
         {
             var cvLibrary = await _dataContext.CvLibraries.FindAsync(cvId);
 
