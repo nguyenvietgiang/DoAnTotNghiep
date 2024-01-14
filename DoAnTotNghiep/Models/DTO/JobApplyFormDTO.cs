@@ -4,7 +4,7 @@ namespace DoAnTotNghiep.Models.DTO
 {
     public class JobApplyFormDTO
     {
-        [Required]
+        [Required(ErrorMessage = "Hãy nhập tên của bạn")]
         public string Name { get; set; }
 
         [Required]

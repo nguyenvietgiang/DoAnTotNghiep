@@ -11,6 +11,8 @@ namespace DoAnTotNghiep.Models.DTO
         public string? UrlImage { get; set; }
         public string? Industry { get; set; }
         public int? CompanySize { get; set; }
+        [RegularExpression(@"^(84|0[3|5|7|8|9])+([0-9]{8})$", ErrorMessage = "định dạng số điện thoại không hợp lệ.")]
+        public string? PhoneNumber { get; set; }
         public string? Location { get; set; }
         public string? Descrpitons { get; set; }
     }

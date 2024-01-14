@@ -94,6 +94,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 employer.Industry = model.Industry;
                 employer.CompanySize = model.CompanySize;
                 employer.Location = model.Location;
+                employer.PhoneNumber = model.PhoneNumber;
                 employer.Descrpitons = model.Descrpitons;
 
                 // Kiểm tra xem có ảnh mới không
@@ -139,26 +140,34 @@ namespace DoAnTotNghiep.Controllers.MvcController
         {
             if (ModelState.IsValid)
             {
-                var userId = GetUserIdFromClaim();
-                var newJobPosting = new JobPosting
+                try
                 {
-                    JobPostingID = Guid.NewGuid(), // Tự tạo ID mới
-                    Title = jobPostingDto.Title,
-                    Description = jobPostingDto.Description,
-                    EmployerID = Guid.Parse(userId),
-                    Location = jobPostingDto.Location,
-                    CreateAt = DateTime.Now, // Thời gian hiện tại
-                    Requirements = jobPostingDto.Requirements,
-                    Number = jobPostingDto.Number,
-                    Salary = jobPostingDto.Salary,
-                    position = jobPostingDto.Position,
-                    benefits = jobPostingDto.Benefits,
-                    Status = false // Giá trị mặc định cho Status
-                };
-                await _jobPostingRepository.CreateJobPostingAsync(newJobPosting);
-                return RedirectToAction("Index", "Home");
+                    var userId = GetUserIdFromClaim();
+                    var newJobPosting = new JobPosting
+                    {
+                        JobPostingID = Guid.NewGuid(), // Tự tạo ID mới
+                        Title = jobPostingDto.Title,
+                        Description = jobPostingDto.Description,
+                        EmployerID = Guid.Parse(userId),
+                        Location = jobPostingDto.Location,
+                        CreateAt = DateTime.Now, // Thời gian hiện tại
+                        Requirements = jobPostingDto.Requirements,
+                        Number = jobPostingDto.Number,
+                        Salary = jobPostingDto.Salary,
+                        position = jobPostingDto.Position,
+                        benefits = jobPostingDto.Benefits,
+                        Status = false // Giá trị mặc định cho Status
+                    };
+                    await _jobPostingRepository.CreateJobPostingAsync(newJobPosting);
+                    TempData["SuccessMessage"] = "Tin tuyển dụng đã được lưu thành công và đang chờ được duyệt!";
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorMessage"] = "Đã có lỗi sảy ra khi thực hiện lưu dữ liệu: " + ex.Message;
+                }
+                return RedirectToAction("CompanyJobList");
             }
-            return View(jobPostingDto);
+                return View(jobPostingDto);
         }
 
         public async Task<IActionResult> ApplyList(Guid JobId)

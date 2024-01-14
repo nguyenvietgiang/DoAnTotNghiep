@@ -25,6 +25,7 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<Question> Questions { get; set; }
         public DbSet<AnswerCount> AnswerCounts { get; set; }
         public DbSet<ImageGalery> ImageGaleries { get; set; }
+        public DbSet<Follow> Follows { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

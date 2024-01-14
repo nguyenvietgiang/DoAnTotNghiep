@@ -36,6 +36,12 @@
             </div>
 
             <div class="form-group">
+                <label asp-for="PhoneNumber">Số điện thoại liên hệ</label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="CompanySize">Số lượng nhân viên</label>
                 <input asp-for="CompanySize" class="form-control" />
                 <span asp-validation-for="CompanySize" class="text-danger"></span>
