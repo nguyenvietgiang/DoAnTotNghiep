@@ -5,9 +5,11 @@ using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.ContactRepo;
 using DoAnTotNghiep.Repository.DisscussRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
+using DoAnTotNghiep.Repository.FollowRepo;
 using DoAnTotNghiep.Repository.JobApplyFormRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Matching;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System.Diagnostics;
 using X.PagedList;
 
@@ -21,13 +23,16 @@ namespace DoAnTotNghiep.Controllers
         private readonly ICandidatesRepo _candidateRepository;
         private readonly IDiscussRepository _discussRepository;
         private readonly IJobApplyFormRepository _jobApplyFormRepository;
-        public HomeController(ILogger<HomeController> logger, IContactRepository contactRepository, IEmployerRepository employerRepository, ICandidatesRepo candidatesRepo, IDiscussRepository discussRepository, IJobApplyFormRepository jobApplyFormRepository)
+        private readonly IFollowRepository _followRepository;
+        public HomeController(ILogger<HomeController> logger, IContactRepository contactRepository, IEmployerRepository employerRepository, ICandidatesRepo candidatesRepo
+            , IDiscussRepository discussRepository, IJobApplyFormRepository jobApplyFormRepository, IFollowRepository followRepository)
         {
             _employerRepository= employerRepository;
             _contactRepository= contactRepository;
             _candidateRepository = candidatesRepo;
             _discussRepository= discussRepository;
             _jobApplyFormRepository= jobApplyFormRepository;
+            _followRepository = followRepository;
             _logger = logger;
         }
 
@@ -93,7 +98,7 @@ namespace DoAnTotNghiep.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Conpany(Guid Id) 
+        public async Task<IActionResult> Conpany(Guid Id) 
         {
             var employer = _employerRepository.GetEmployerByIdAsync(Id).Result;
 
@@ -101,6 +106,8 @@ namespace DoAnTotNghiep.Controllers
             {
                 return NotFound();
             }
+            var followCount = await _followRepository.GetFollowCount(Id);
+            ViewBag.FollowCount = followCount;
             return View(employer);
         }
 
@@ -150,5 +157,32 @@ namespace DoAnTotNghiep.Controllers
             _jobApplyFormRepository.AddJobApplyForm(jobApplyFormDTO);
             return Json(new { success = true, message = "Ứng tuyển thành công" });
         }
+
+        public async Task<IActionResult> AddFollow(Guid followUserId)
+        {
+            var accountIdClaim = HttpContext.Session.GetString("Accountid");
+            if (accountIdClaim == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            Guid userId = Guid.Parse(accountIdClaim);
+            bool isFollowing = await _followRepository.IsFollowing(userId, followUserId);
+
+            if (isFollowing)
+            {
+                // Nếu đang follow, gọi hàm RemoveFollow để hủy follow
+                await _followRepository.RemoveFollow(userId, followUserId);
+            }
+            else
+            {
+                // Nếu chưa follow, gọi hàm AddFollow để thêm follow
+                await _followRepository.AddFollow(userId, followUserId);
+            }
+
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+
     }
 }

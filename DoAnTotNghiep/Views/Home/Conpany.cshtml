@@ -15,15 +15,19 @@
                         <h5 class="my-3">@Model.CompanyName</h5>
                         <p class="text-muted mb-1">@Model.Industry</p>
                         <p class="text-muted mb-4">@Model.Location</p>
+                        <p>Số người theo dõi: @ViewBag.FollowCount</p>
+                        <div class="d-flex justify-content-center mb-2">
+                            <a href="@Url.Action("AddFollow", "Home")?followUserId=@Html.DisplayFor(model => model.EmployerID)" class="btn btn-primary">Theo Dõi</a>
+                        </div>
                     </div>
 
                 </div>
                 <div class="card mb-4">
                     <div class="card-body text-center">
                         <p class="text-dark font-weight-medium mb-0 mr-2">Mã QR Code:</p>
-                        <div class="d-inline-flex">
+@*                        <div class="d-inline-flex">
                             <img id="qrcode" src="" alt="QR Code">
-                        </div>
+                        </div>*@
                         <p class="text-dark font-weight-medium mb-0 mr-2">Chia sẻ với:</p>
                         <div class="d-inline-flex">
                             <button class="genric-btn primary small" onclick="shareOnFacebook()">
