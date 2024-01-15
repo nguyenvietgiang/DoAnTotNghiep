@@ -5,8 +5,10 @@ using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.DisscussRepo;
 using DoAnTotNghiep.Services.ImageServices;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
 using X.PagedList;
+using System.Drawing.Drawing2D;
 
 namespace DoAnTotNghiep.Controllers.MvcController
 {
@@ -46,14 +48,14 @@ namespace DoAnTotNghiep.Controllers.MvcController
 
         public IActionResult Survey()
         {
-            return View(); 
+            return View();
         }
 
-        public IActionResult CreateCV(int? page) 
+        public IActionResult CreateCV(int? page)
         {
             var userId = GetUserIdFromClaim();
             var account = _dataContext.Accounts.Where(m => m.UserID == Guid.Parse(userId)).FirstOrDefault();
-            if(account.AccountRole == AccountRole.CandidateFree)
+            if (account.AccountRole == AccountRole.CandidateFree)
             {
                 return RedirectToAction("NoPermistion", "Home");
             }
@@ -69,9 +71,9 @@ namespace DoAnTotNghiep.Controllers.MvcController
         public IActionResult CreateCvOnline()
         {
             return View();
-        }     
+        }
 
-            public async Task<IActionResult> DownloadCv(Guid cvId)
+        public async Task<IActionResult> DownloadCv(Guid cvId)
         {
             var cvLibrary = await _dataContext.CvLibraries.FindAsync(cvId);
 
@@ -109,7 +111,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 EducationLevel = cadiate.EducationLevel,
                 DateOfBirth = cadiate.DateOfBirth,
                 PhoneNumber = cadiate.PhoneNumber,
-                Descrpitons= cadiate.Descrpitons,
+                Descrpitons = cadiate.Descrpitons,
                 Experience = cadiate.Experience,
             };
 
@@ -155,7 +157,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
         }
 
         // Action để hiển thị form tạo mới Discussion
-        public IActionResult CreateDiscuss() 
+        public IActionResult CreateDiscuss()
         {
             return View();
         }
@@ -170,7 +172,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 var userId = GetUserIdFromClaim();
                 var newDiscussion = new Discuss
                 {
-                   
+
                     Title = model.Title,
                     Content = model.Content,
                     UserId = new Guid(userId),
@@ -183,6 +185,52 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 return RedirectToAction("Index", "Home");
             }
             return View(model);
+        }
+
+
+        // tải file CV đang bị lỗi Font tiếng việt, dùng tiếng anh tạm
+        public IActionResult DownloadPDF(string fullName, string personalPage, string description, string education, string profession, string skill, string personalProjects)
+        {
+            byte[] pdfBytes;
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                using (PdfDocument document = new PdfDocument())
+                {
+                    PdfPage page = document.Pages.Add();
+                    PdfGraphics graphics = page.Graphics;
+                    float startX = 10;
+                    float startY = 10;
+                    float lineHeight = 15;
+                    graphics.DrawString(fullName, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    startY += lineHeight;
+
+                    graphics.DrawString(personalPage, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    startY += lineHeight;
+
+                    graphics.DrawString(description, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    startY += lineHeight;
+
+                    graphics.DrawString(education, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    startY += lineHeight;
+
+                    graphics.DrawString(profession, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    startY += lineHeight;
+
+                    graphics.DrawString("Kỹ năng: " + skill, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    startY += lineHeight;
+
+                    graphics.DrawString("Kinh nghiệm làm việc: " + personalProjects, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    startY += lineHeight;
+
+                    document.Save(stream);
+                }
+                pdfBytes = stream.ToArray();
+            }
+            return new FileContentResult(pdfBytes, "application/pdf")
+            {
+                FileDownloadName = "MyCV.pdf"
+            };
         }
     }
 }

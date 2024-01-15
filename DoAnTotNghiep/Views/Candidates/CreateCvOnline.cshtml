@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="input-section">
-                <form id="cvForm">
+                <form id="cvForm" action="@Url.Action("DownloadPDF", "Candidates")" method="post">
                     <div class="form-group">
                         <label for="fullName">Họ và tên:</label>
                         <input type="text" class="form-control" id="fullName" name="fullName" required>
@@ -71,25 +71,25 @@
                                 <section class="resume-section summary-section mb-2">
                                     <div class="resume-section-content">
                                         <h5 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Mô Tả</h5>
-                                        <p class="mb-0" id="cvDescription">Mô tả</p>
+                                        <p id="cvDescription">Mô tả</p>
                                     </div>
                                 </section>
                                 <section class="resume-section summary-section mb-2">
                                     <h5 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Học vấn</h5>
                                     <div class="resume-section-content">
-                                        <p class="mb-0" id="cvEducation">Học vấn</p>
+                                        <p id="cvEducation">Học vấn</p>
                                     </div>
                                 </section>
                                 <section class="resume-section summary-section mb-2">
                                     <h5 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Kỹ năng</h5>
                                     <div class="resume-section-content">
-                                        <p class="mb-0" id="cvSkill">Kỹ năng</p>
+                                        <p id="cvSkill">Kỹ năng</p>
                                     </div>
                                 </section>
                                 <section class="resume-section summary-section mb-2">
                                     <h5 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Kinh nghiệm làm việc</h5>
                                     <div class="resume-section-content">
-                                        <p class="mb-0" id="cvExperience">Kinh nghiệm làm việc</p>
+                                        <p id="cvExperience">Kinh nghiệm làm việc</p>
                                     </div>
                                 </section>
                             </div><!--//resume-body-->
