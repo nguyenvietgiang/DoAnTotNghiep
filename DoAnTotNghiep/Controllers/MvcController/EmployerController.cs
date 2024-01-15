@@ -3,12 +3,15 @@ using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Models.ResponseDTO;
 using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
+using DoAnTotNghiep.Repository.ImageGaleryRepo;
 using DoAnTotNghiep.Repository.JobApplyFormRepo;
 using DoAnTotNghiep.Repository.JobRepo;
 using DoAnTotNghiep.Services.EmailServices;
 using DoAnTotNghiep.Services.ImageServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
+using SkiaSharp;
 
 namespace DoAnTotNghiep.Controllers.MvcController
 {
@@ -20,8 +23,8 @@ namespace DoAnTotNghiep.Controllers.MvcController
         private readonly IJobPostingRepository _jobPostingRepository;
         private readonly IJobApplyFormRepository _jobApplyFormRepository;
         private readonly IEmailServices _emailServices;
-
-        public EmployerController(IEmployerRepository employerRepository, DataContext dataContext, IFileService fileService, IJobPostingRepository jobPostingRepository, IJobApplyFormRepository jobApplyFormRepository, IEmailServices emailServices)
+        private readonly IImageGaleryRepository _imageGaleryRepository;
+        public EmployerController(IEmployerRepository employerRepository, DataContext dataContext, IFileService fileService, IJobPostingRepository jobPostingRepository, IJobApplyFormRepository jobApplyFormRepository, IEmailServices emailServices, IImageGaleryRepository imageGaleryRepository)
         {
             _employerRepository = employerRepository;
             _fileService = fileService;
@@ -29,6 +32,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
             _jobPostingRepository = jobPostingRepository;
             _jobApplyFormRepository = jobApplyFormRepository;
             _emailServices = emailServices;
+            _imageGaleryRepository= imageGaleryRepository;
         }
         public IActionResult CompanyProfile()
         {
@@ -193,9 +197,27 @@ namespace DoAnTotNghiep.Controllers.MvcController
             return RedirectToAction("CompanyJobList");
         }
 
-        public IActionResult ImageGalery() 
+        public async Task<IActionResult> ImageGalery() 
         {
+            var userId = GetUserIdFromClaim();
+            ViewBag.GaleryList = await _imageGaleryRepository.GetImageGaleriesByEmployerIdAsync(Guid.Parse(userId));
             return View();
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ImageGalery(ImageGaleryCreateDTO imageGaleryDTO)
+        {
+            if (ModelState.IsValid) 
+            {
+                var userId = GetUserIdFromClaim();
+                imageGaleryDTO.EmployerID = Guid.Parse(userId);
+                await _imageGaleryRepository.CreateImageGaleryAsync(imageGaleryDTO);
+                return RedirectToAction("CompanyProfile");
+            }
+
+            return View(imageGaleryDTO);
+        }
+
     }
 }

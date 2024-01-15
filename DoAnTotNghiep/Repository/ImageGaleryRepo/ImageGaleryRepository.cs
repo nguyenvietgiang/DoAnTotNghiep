@@ -1,4 +1,6 @@
-﻿using DoAnTotNghiep.Models.EntityModels;
+﻿using DoAnTotNghiep.Models.DTO;
+using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Services.ImageServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoAnTotNghiep.Repository.ImageGaleryRepo
@@ -6,9 +8,10 @@ namespace DoAnTotNghiep.Repository.ImageGaleryRepo
     public class ImageGaleryRepository : IImageGaleryRepository
     {
         private readonly DataContext _context;
-
-        public ImageGaleryRepository(DataContext context)
+        private readonly IFileService _fileService;
+        public ImageGaleryRepository(DataContext context, IFileService fileService)
         {
+            _fileService= fileService;
             _context = context;
         }
 
@@ -22,11 +25,24 @@ namespace DoAnTotNghiep.Repository.ImageGaleryRepo
             return await _context.ImageGaleries.ToListAsync();
         }
 
-        public async Task CreateImageGaleryAsync(ImageGalery imageGalery)
+        public async Task CreateImageGaleryAsync(ImageGaleryCreateDTO imageGaleryDTO)
         {
-            _context.ImageGaleries.Add(imageGalery);
-            await _context.SaveChangesAsync();
+            if (imageGaleryDTO.ImageFile != null)
+            {
+                string imgUrl = await _fileService.SaveImageAsync(imageGaleryDTO.ImageFile);
+
+                var imageGalery = new ImageGalery
+                {
+                    JobPostingID = Guid.NewGuid(),
+                    EmployerID = imageGaleryDTO.EmployerID,
+                    ImgUrl = imgUrl
+                };
+
+                _context.ImageGaleries.Add(imageGalery);
+                await _context.SaveChangesAsync();
+            }
         }
+
 
         public async Task UpdateImageGaleryAsync(ImageGalery imageGalery)
         {

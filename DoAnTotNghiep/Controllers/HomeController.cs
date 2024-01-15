@@ -6,6 +6,7 @@ using DoAnTotNghiep.Repository.ContactRepo;
 using DoAnTotNghiep.Repository.DisscussRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
 using DoAnTotNghiep.Repository.FollowRepo;
+using DoAnTotNghiep.Repository.ImageGaleryRepo;
 using DoAnTotNghiep.Repository.JobApplyFormRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Matching;
@@ -24,8 +25,9 @@ namespace DoAnTotNghiep.Controllers
         private readonly IDiscussRepository _discussRepository;
         private readonly IJobApplyFormRepository _jobApplyFormRepository;
         private readonly IFollowRepository _followRepository;
+        private readonly IImageGaleryRepository _imageGaleryRepository;
         public HomeController(ILogger<HomeController> logger, IContactRepository contactRepository, IEmployerRepository employerRepository, ICandidatesRepo candidatesRepo
-            , IDiscussRepository discussRepository, IJobApplyFormRepository jobApplyFormRepository, IFollowRepository followRepository)
+            , IDiscussRepository discussRepository, IJobApplyFormRepository jobApplyFormRepository, IFollowRepository followRepository, IImageGaleryRepository imageGaleryRepository)
         {
             _employerRepository= employerRepository;
             _contactRepository= contactRepository;
@@ -33,6 +35,7 @@ namespace DoAnTotNghiep.Controllers
             _discussRepository= discussRepository;
             _jobApplyFormRepository= jobApplyFormRepository;
             _followRepository = followRepository;
+            _imageGaleryRepository= imageGaleryRepository;
             _logger = logger;
         }
 
@@ -108,6 +111,7 @@ namespace DoAnTotNghiep.Controllers
             }
             var followCount = await _followRepository.GetFollowCount(Id);
             ViewBag.FollowCount = followCount;
+            ViewBag.GaleryList = await _imageGaleryRepository.GetImageGaleriesByEmployerIdAsync(Id);
             return View(employer);
         }
 
@@ -182,7 +186,5 @@ namespace DoAnTotNghiep.Controllers
 
             return Redirect(Request.Headers["Referer"].ToString());
         }
-
-
     }
 }

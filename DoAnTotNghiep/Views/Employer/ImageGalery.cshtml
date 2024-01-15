@@ -1,18 +1,61 @@
-﻿
+﻿@model DoAnTotNghiep.Models.DTO.ImageGaleryCreateDTO
+
 @{
     ViewData["Title"] = "Thư Viện Ảnh";
+    var GaleryList = (List<DoAnTotNghiep.Models.EntityModels.ImageGalery>)ViewBag.GaleryList;
 }
 
-<div class="section-top-border">
-	<h3>Thư viện ảnh của tôi</h3>
+<div class="card">
+    <div class="card-body">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+            Thêm ảnh
+        </button>
 
-	<div class="row gallery-item">
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Thêm ảnh vào thư viện</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-action="ImageGalery" asp-controller="Employer" method="post" enctype="multipart/form-data">
+                            <!-- Không cần trường nhập EmployerID trong form -->
 
-		<div class="col-md-4">
-			<a href="assets/img/elements/g1.jpg" class="img-pop-up">
-				<div class="single-gallery-image" style="background: url(assets/img/elements/g1.jpg);"></div>
-			</a>
-		</div>
-		
-	</div>
-</div>
+                            <div class="form-group">
+                                <label asp-for="ImageFile" class="control-label"></label>
+                                <input asp-for="ImageFile" type="file" class="form-control" />
+                                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Thêm</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="section-top-border">
+                <h3>Thư viện ảnh của tôi</h3>
+                @if (GaleryList != null && GaleryList.Any())
+                {
+                    <div class="row gallery-item">
+                        @foreach (var img in GaleryList)
+                        {
+                            <div class="col-md-4">
+                                <img src="@img.ImgUrl">
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p>Không có ảnh nào trong thư viện.</p>
+                }
+            </div>
+
+        </div>
+    </div>
