@@ -26,8 +26,10 @@ namespace DoAnTotNghiep.Controllers
         private readonly IJobApplyFormRepository _jobApplyFormRepository;
         private readonly IFollowRepository _followRepository;
         private readonly IImageGaleryRepository _imageGaleryRepository;
+        private readonly DataContext _dataContext;
         public HomeController(ILogger<HomeController> logger, IContactRepository contactRepository, IEmployerRepository employerRepository, ICandidatesRepo candidatesRepo
-            , IDiscussRepository discussRepository, IJobApplyFormRepository jobApplyFormRepository, IFollowRepository followRepository, IImageGaleryRepository imageGaleryRepository)
+            , IDiscussRepository discussRepository, IJobApplyFormRepository jobApplyFormRepository,
+            IFollowRepository followRepository, IImageGaleryRepository imageGaleryRepository, DataContext dataContext)
         {
             _employerRepository= employerRepository;
             _contactRepository= contactRepository;
@@ -36,12 +38,16 @@ namespace DoAnTotNghiep.Controllers
             _jobApplyFormRepository= jobApplyFormRepository;
             _followRepository = followRepository;
             _imageGaleryRepository= imageGaleryRepository;
+            _dataContext= dataContext;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-
+            ViewBag.Employer = _dataContext.Employers.Count();
+            ViewBag.Cadidates = _dataContext.Candidates.Count();
+            ViewBag.Job = _dataContext.JobPostings.Count();
+            ViewBag.Disscus = _dataContext.Discusses.Count();
             return View();
         }
 

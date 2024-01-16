@@ -1,7 +1,6 @@
 ﻿using DoAnTotNghiep.Models.DTO;
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Models.ResponseDTO;
-using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
 using DoAnTotNghiep.Repository.ImageGaleryRepo;
 using DoAnTotNghiep.Repository.JobApplyFormRepo;
@@ -9,9 +8,7 @@ using DoAnTotNghiep.Repository.JobRepo;
 using DoAnTotNghiep.Services.EmailServices;
 using DoAnTotNghiep.Services.ImageServices;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Core.Types;
-using SkiaSharp;
+using Syncfusion.XlsIO;
 
 namespace DoAnTotNghiep.Controllers.MvcController
 {
@@ -172,6 +169,70 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 return RedirectToAction("CompanyJobList");
             }
                 return View(jobPostingDto);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ImportJobPostings(IFormFile file)
+        {
+            if (file != null && file.Length > 0)
+            {
+                try
+                {
+                    using (var stream = file.OpenReadStream())
+                    {
+                        using (ExcelEngine excelEngine = new ExcelEngine())
+                        {
+                            IApplication application = excelEngine.Excel;
+                            IWorkbook workbook = application.Workbooks.Open(stream);
+                            IWorksheet worksheet = workbook.Worksheets[0];
+                            var rowCount = worksheet.Rows.Length;
+                            for (int i = 2; i <= rowCount; i++)
+                            {
+                                var jobPostingDto = new JobPostingDto
+                                {
+                                    Title = worksheet.Rows[i].Cells[1].Text ?? string.Empty,
+                                    Description = worksheet.Rows[i].Cells[2].Text ?? string.Empty,
+                                    Location = worksheet.Rows[i].Cells[3].Text ?? string.Empty,
+                                    Requirements = worksheet.Rows[i].Cells[4].Text ?? string.Empty,
+                                    Number = int.Parse(worksheet.Rows[i].Cells[5].Text),
+                                    Salary = int.Parse(worksheet.Rows[i].Cells[6].Text),
+                                    Position = worksheet.Rows[i].Cells[7].Text,
+                                    Benefits = worksheet.Rows[i].Cells[8].Text
+                                };
+                                var userId = GetUserIdFromClaim();
+                                var newJobPosting = new JobPosting
+                                {
+                                    JobPostingID = Guid.NewGuid(),
+                                    Title = jobPostingDto.Title,
+                                    Description = jobPostingDto.Description,
+                                    EmployerID = Guid.Parse(userId),
+                                    Location = jobPostingDto.Location,
+                                    CreateAt = DateTime.Now,
+                                    Requirements = jobPostingDto.Requirements,
+                                    Number = jobPostingDto.Number,
+                                    Salary = jobPostingDto.Salary,
+                                    position = jobPostingDto.Position,
+                                    benefits = jobPostingDto.Benefits,
+                                    Status = false
+                                };
+                                await _jobPostingRepository.CreateJobPostingAsync(newJobPosting);
+                            }
+                            TempData["SuccessMessage"] = "Dữ liệu từ file Excel đã được nhập thành công và đang được chờ duyệt!";
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorMessage"] = "Đã có lỗi xảy ra khi nhập dữ liệu từ file Excel: " + ex.Message;
+                }
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Vui lòng chọn một file Excel để nhập dữ liệu!";
+            }
+
+            return RedirectToAction("CompanyJobList");
         }
 
         public async Task<IActionResult> ApplyList(Guid JobId)

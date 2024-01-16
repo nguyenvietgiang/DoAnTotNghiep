@@ -59,8 +59,8 @@
                 <div class="single-services text-center mb-30">
                     <i class="fa-solid fa-paint-roller"></i>
                     <div class="services-cap">
-                        <h5><a href="job_listing.html">Bài viết thảo luận</a></h5>
-                        <span>(653)</span>
+                        <h5><a asp-action="Forum">Bài viết thảo luận</a></h5>
+                        <span>@ViewBag.Disscus</span>
                     </div>
                 </div>
             </div>
@@ -68,8 +68,8 @@
                 <div class="single-services text-center mb-30">
                     <i class="fa-solid fa-code"></i>
                     <div class="services-cap">
-                        <h5><a href="job_listing.html"> Cơ hội nghề nghiệp</a></h5>
-                        <span>(658)</span>
+                        <h5><a asp-action="Hiring"> Cơ hội nghề nghiệp</a></h5>
+                        <span>@ViewBag.Job</span>
                     </div>
                 </div>
             </div>
@@ -77,8 +77,8 @@
                 <div class="single-services text-center mb-30">
                     <i class="fa-solid fa-business-time"></i>
                     <div class="services-cap">
-                        <h5><a href="job_listing.html">Doanh nghiệp cộng tác</a></h5>
-                        <span>(658)</span>
+                        <h5><a asp-action="EmployerList">Doanh nghiệp cộng tác</a></h5>
+                        <span>@ViewBag.Employer</span>
                     </div>
                 </div>
             </div>
@@ -86,8 +86,8 @@
                 <div class="single-services text-center mb-30">
                     <i class="fa-solid fa-people-roof"></i>
                     <div class="services-cap">
-                        <h5><a href="job_listing.html">Ứng viên tiềm năng</a></h5>
-                        <span>(658)</span>
+                        <h5><a asp-action="CandidatesList">Ứng viên tiềm năng</a></h5>
+                        <span>@ViewBag.Cadidates</span>
                     </div>
                 </div>
             </div>
