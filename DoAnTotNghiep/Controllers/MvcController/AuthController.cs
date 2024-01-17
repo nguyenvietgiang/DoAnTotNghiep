@@ -27,14 +27,19 @@ namespace DoAnTotNghiep.Controllers.MvcController
         {
             if (ModelState.IsValid)
             {
-                Account rowuser = _dbContext.Accounts.Where(m => m.Status == true && (m.Email == model.Email)).FirstOrDefault();
+                Account rowuser = _dbContext.Accounts.Where(m => m.Email == model.Email).FirstOrDefault();
+
                 if (rowuser == null)
                 {
                     ViewBag.thongbao = "Tài khoản này không tồn tại";
                 }
                 else
                 {
-                    if ((rowuser.Password) == Encrypt.MD5Hash(model.Password))
+                    if (!rowuser.Status)
+                    {
+                        ViewBag.thongbao = "Tài khoản của bạn đã bị khóa, hãy liên hệ với chúng tôi để biết thêm thông tin";
+                    }
+                    else if (rowuser.Password == Encrypt.MD5Hash(model.Password))
                     {
                         if (rowuser.AccountRole == AccountRole.EmployerFree || rowuser.AccountRole == AccountRole.EmployerPaid)
                         {
@@ -42,23 +47,25 @@ namespace DoAnTotNghiep.Controllers.MvcController
                             HttpContext.Session.SetString("Accountid", rowuser.UserID.ToString());
                             return RedirectToAction("Index", "Home");
                         }
-                        else if ((rowuser.AccountRole == AccountRole.CandidateFree || rowuser.AccountRole == AccountRole.CandidatePaid))
+                        else if (rowuser.AccountRole == AccountRole.CandidateFree || rowuser.AccountRole == AccountRole.CandidatePaid)
                         {
                             HttpContext.Session.SetString("CandidateName", model.Email);
                             HttpContext.Session.SetString("Accountid", rowuser.UserID.ToString());
                             return RedirectToAction("Index", "Home");
-                        }    
+                        }
                     }
                     else
                     {
                         ViewBag.thongbao = "Mật khẩu sai rồi";
                     }
                 }
-                return View();
 
+                return View();
             }
+
             return View();
         }
+
 
         public IActionResult Register() 
         {

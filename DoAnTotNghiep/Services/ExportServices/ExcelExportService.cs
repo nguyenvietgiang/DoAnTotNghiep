@@ -1,10 +1,19 @@
 ﻿using DoAnTotNghiep.Models.EntityModels;
 using Syncfusion.XlsIO;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace DoAnTotNghiep.Services.ExportServices
 {
     public class ExcelExportService : IExcelExportService
     {
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public ExcelExportService(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+
         public byte[] ExportContactsToExcel(List<Contact> contacts)
         {
             using (ExcelEngine excelEngine = new ExcelEngine())
@@ -41,6 +50,22 @@ namespace DoAnTotNghiep.Services.ExportServices
                 using (MemoryStream stream = new MemoryStream())
                 {
                     workbook.SaveAs(stream);
+                    return stream.ToArray();
+                }
+            }
+        }
+
+        public byte[] GetExcelTemplate(string templateName)
+        {
+            // Sử dụng IWebHostEnvironment để lấy đường dẫn đến thư mục wwwroot
+            var webRootPath = _webHostEnvironment.WebRootPath;
+            string templateFilePath = Path.Combine(webRootPath, "template", "excel-template", templateName + ".xlsx");
+
+            using (FileStream fileStream = new FileStream(templateFilePath, FileMode.Open, FileAccess.Read))
+            {
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    fileStream.CopyTo(stream);
                     return stream.ToArray();
                 }
             }

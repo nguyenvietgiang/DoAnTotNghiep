@@ -6,6 +6,7 @@ using DoAnTotNghiep.Repository.ImageGaleryRepo;
 using DoAnTotNghiep.Repository.JobApplyFormRepo;
 using DoAnTotNghiep.Repository.JobRepo;
 using DoAnTotNghiep.Services.EmailServices;
+using DoAnTotNghiep.Services.ExportServices;
 using DoAnTotNghiep.Services.ImageServices;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.XlsIO;
@@ -20,8 +21,9 @@ namespace DoAnTotNghiep.Controllers.MvcController
         private readonly IJobPostingRepository _jobPostingRepository;
         private readonly IJobApplyFormRepository _jobApplyFormRepository;
         private readonly IEmailServices _emailServices;
+        private readonly IExcelExportService _excelExportService;
         private readonly IImageGaleryRepository _imageGaleryRepository;
-        public EmployerController(IEmployerRepository employerRepository, DataContext dataContext, IFileService fileService, IJobPostingRepository jobPostingRepository, IJobApplyFormRepository jobApplyFormRepository, IEmailServices emailServices, IImageGaleryRepository imageGaleryRepository)
+        public EmployerController(IEmployerRepository employerRepository, DataContext dataContext, IFileService fileService, IJobPostingRepository jobPostingRepository, IJobApplyFormRepository jobApplyFormRepository, IEmailServices emailServices, IImageGaleryRepository imageGaleryRepository, IExcelExportService excelExportService)
         {
             _employerRepository = employerRepository;
             _fileService = fileService;
@@ -30,6 +32,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
             _jobApplyFormRepository = jobApplyFormRepository;
             _emailServices = emailServices;
             _imageGaleryRepository= imageGaleryRepository;
+            _excelExportService= excelExportService;
         }
         public IActionResult CompanyProfile()
         {
@@ -170,8 +173,14 @@ namespace DoAnTotNghiep.Controllers.MvcController
             }
                 return View(jobPostingDto);
         }
+         
+        public IActionResult DownloadExcelTemplate()
+        {
+            byte[] templateBytes = _excelExportService.GetExcelTemplate("job-posting");
+            return File(templateBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "job-posting.xlsx");
+        }
 
-
+        // đang lỗi cần được fix
         [HttpPost]
         public async Task<IActionResult> ImportJobPostings(IFormFile file)
         {

@@ -94,16 +94,15 @@
                     <div class="modal-body">
                         <form asp-action="ImportJobPostings" method="post" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label for="file">Chọn file Excel:</label>
+                                <label for="file">
+                                    Sử dụng mẫu file excel lầy <a class="genric-btn link-border radius" asp-action="DownloadExcelTemplate">Ở Đây</a> của chúng tôi và điền đầy đủ thông tin và các cột sau đó bạn có thể nhập lại ở mục chọn file
+                                    dưới đây để tiến hành thêm mới dữ liệu
+                                </label>
                                 <input type="file" name="file" class="form-control" required />
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Import</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn btn-primary">Lưu</button>
                     </div>
                 </div>
             </div>
