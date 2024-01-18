@@ -83,10 +83,38 @@
                                          asp-validation-message-class="text-danger"
                                          asp-use-noise="false"/>
                                 </div>
-                                <!-- Submit button -->
-                                <button type="submit" class="btn btn-primary btn-block mb-4">
-                                    Đăng Ký
+
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
+                                    Đăng Ký Ngay
                                 </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Xác nhận đăng ký</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Bằng cách đăng ký để trở thành một thành viên trong cộng đồng Job Finder,
+                                                    bạn đồng ý rằng bạn sẽ tuân thủ các quy định và điều kiện của chúng tôi.
+                                                    Hãy chắc rằng bạn đã đọc và có thể đáp ứng được tiêu chuẩn của cộng đồng
+                                                    <a class="genric-btn link-border circle" asp-controller="home" asp-action="Policy">Tại Đây</a>
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary btn-block mb-4">
+                                                    Đăng Ký
+                                                </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
                                 <p style="color: red">@ViewBag.thongbao</p>
                             </form>
                             <div class="text-center">

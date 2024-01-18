@@ -10,11 +10,12 @@
                 <div class="card-body">
                     <div class="mb-4">
                         <h5>Quên mật khẩu?</h5>
+                        <p style="color: red">@ViewBag.ancap</p>
                         <p class="mb-2">
                             Nhập Email mà bạn đã sử dụng để đăng ký tài khoản, chúng tôi sẽ reset mật khẩu mới cho bạn
                         </p>
                     </div>
-                    <form>
+                    <form method="post" asp-controller="Auth" asp-action="Forgotpass">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" id="email" class="form-control" name="email" placeholder="Enter Your Email" required="">

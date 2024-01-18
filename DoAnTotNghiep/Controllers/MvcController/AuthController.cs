@@ -3,6 +3,7 @@ using DoAnTotNghiep.Common;
 using DoAnTotNghiep.Models.DTO;
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Models.Enum;
+using DoAnTotNghiep.Services.EmailServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ namespace DoAnTotNghiep.Controllers.MvcController
     public class AuthController : Controller
     {
         private readonly DataContext _dbContext;
+        private readonly IEmailServices _emailServices;
 
-        public AuthController(DataContext dbContext)
+        public AuthController(DataContext dbContext, IEmailServices emailServices)
         {
+            _emailServices= emailServices;
             _dbContext = dbContext;
         }
 
@@ -145,6 +148,30 @@ namespace DoAnTotNghiep.Controllers.MvcController
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Forgotpass(IFormCollection fielt)
+        {
+            string mail = fielt["email"];
+            Account rowuser = _dbContext.Accounts.Where(m => m.Email == mail).FirstOrDefault();
+            if (rowuser != null)
+            {
+                Random r = new Random();
+                int i = r.Next();
+                rowuser.Password = Encrypt.MD5Hash(i.ToString());
+                _dbContext.Update(rowuser);
+                await _dbContext.SaveChangesAsync();
+                string message = "Mật khẩu mới của bạn là: "+ i;
+                await _emailServices.SendEmailAsync(mail, message);
+                ViewBag.ancap = "Hãy Kiểm Tra Email";
+            }
+            else
+            {
+                ViewBag.ancap = "Email này chưa được liên kết với tài khoản nào";
+            }
+            return View();
+        }
+
 
         [HttpGet]
         public IActionResult Logout()
