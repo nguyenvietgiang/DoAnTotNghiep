@@ -1,0 +1,37 @@
+﻿@model DoAnTotNghiep.Models.EntityModels.Policy
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @addTagHelper *, AuthoringTagHelpers
+}
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="PolicyTitle"></label>
+        <input asp-for="PolicyTitle" class="form-control" />
+        <span asp-validation-for="PolicyTitle" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Content"></label>
+        <textarea id="editor1" asp-for="Content" class="form-control"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Tạo mới" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Quay về danh sách</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        CKEDITOR.replace('Content');
+    </script>
+}

@@ -1,0 +1,22 @@
+﻿@model IEnumerable<DoAnTotNghiep.Models.EntityModels.Policy>
+
+@{
+    ViewData["Title"] = "Chính sách & điều khoản";
+}
+
+<h1>Chính sách và điều khoản</h1>
+@foreach (var item in Model)
+{
+    <div class="card rounded mb-4">
+        <div class="card-body">
+            <h3 class="mb-30">@Html.DisplayFor(modelItem => item.PolicyTitle)</h3>
+            <div class="row">
+                <div class="col-lg-12">
+                    <blockquote class="generic-blockquote">
+                        @Html.Raw(item.Content)
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+}

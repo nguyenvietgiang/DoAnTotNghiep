@@ -8,6 +8,7 @@ using DoAnTotNghiep.Repository.EmployerRepo;
 using DoAnTotNghiep.Repository.FollowRepo;
 using DoAnTotNghiep.Repository.ImageGaleryRepo;
 using DoAnTotNghiep.Repository.JobApplyFormRepo;
+using DoAnTotNghiep.Repository.PolicyRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Matching;
 using Org.BouncyCastle.Asn1.Ocsp;
@@ -26,10 +27,11 @@ namespace DoAnTotNghiep.Controllers
         private readonly IJobApplyFormRepository _jobApplyFormRepository;
         private readonly IFollowRepository _followRepository;
         private readonly IImageGaleryRepository _imageGaleryRepository;
+        private readonly IPolicyRepository _policyRepository;
         private readonly DataContext _dataContext;
         public HomeController(ILogger<HomeController> logger, IContactRepository contactRepository, IEmployerRepository employerRepository, ICandidatesRepo candidatesRepo
             , IDiscussRepository discussRepository, IJobApplyFormRepository jobApplyFormRepository,
-            IFollowRepository followRepository, IImageGaleryRepository imageGaleryRepository, DataContext dataContext)
+            IFollowRepository followRepository, IImageGaleryRepository imageGaleryRepository, DataContext dataContext, IPolicyRepository policyRepository)
         {
             _employerRepository= employerRepository;
             _contactRepository= contactRepository;
@@ -38,6 +40,7 @@ namespace DoAnTotNghiep.Controllers
             _jobApplyFormRepository= jobApplyFormRepository;
             _followRepository = followRepository;
             _imageGaleryRepository= imageGaleryRepository;
+            _policyRepository= policyRepository;
             _dataContext= dataContext;
             _logger = logger;
         }
@@ -191,6 +194,12 @@ namespace DoAnTotNghiep.Controllers
             }
 
             return Redirect(Request.Headers["Referer"].ToString());
+        }
+
+        public async Task<IActionResult> Policy() 
+        {
+            var policies = await _policyRepository.GetAllPoliciesAsync();
+            return View(policies);
         }
     }
 }

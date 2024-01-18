@@ -3,4 +3,12 @@
         <li class="breadcrumb-item" style="color: white">Trang chủ</li>
         <li class="breadcrumb-item active" aria-current="page" style="color: white">@ViewBag.Title</li>
     </ol>
+    <div class="d-flex justify-content-between align-items-center breaking-news bg-white">
+        <marquee class="news-scroll" behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+            <!-- Mỗi đoạn văn bản được đặt trong một thẻ span và có khoảng trắng giữa chúng -->
+            <span>--Mọi thông tin về điều khoản và chính sách của chúng tôi xin vui lòng tham khảo thông qua Chat bot hoặc: <a class="genric-btn link-border circle" asp-controller="home" asp-action="Policy">Tại Đây</a>--</span> <span class="dot"></span>
+            <span>--Mọi thắc mắc hoặc vấn đề cần giải quyết xin vui lòng gửi về tại form liên hệ hoặc thông qua email : vietgiang111001@gmail.com --</span> <span class="dot"></span>
+        </marquee>
+    </div>
 </nav>
+

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<DoAnTotNghiep.Models.EntityModels.Policy>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @addTagHelper *, AuthoringTagHelpers
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Tạo mới</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Chính sách
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PolicyTitle)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.PolicyID" class="btn btn-info">Chi tiết</a> |
+                    <a asp-action="Edit" asp-route-id="@item.PolicyID" class="btn btn-warning">Sửa</a> |
+                    <a asp-action="Delete" asp-route-id="@item.PolicyID" class="btn btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

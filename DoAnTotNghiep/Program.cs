@@ -10,6 +10,7 @@ using DoAnTotNghiep.Repository.FollowRepo;
 using DoAnTotNghiep.Repository.ImageGaleryRepo;
 using DoAnTotNghiep.Repository.JobApplyFormRepo;
 using DoAnTotNghiep.Repository.JobRepo;
+using DoAnTotNghiep.Repository.PolicyRepo;
 using DoAnTotNghiep.Services.EmailServices;
 using DoAnTotNghiep.Services.ExportServices;
 using DoAnTotNghiep.Services.ImageServices;
@@ -39,6 +40,9 @@ builder.Services.AddScoped<IJobPostingRepository, JobPostingRepository>();
 builder.Services.AddScoped<IJobApplyFormRepository, JobApplyFormRepository>();
 builder.Services.AddScoped<IImageGaleryRepository, ImageGaleryRepository>();
 builder.Services.AddScoped<IFollowRepository, FollowRepository>();
+builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
+
+
 // khai báo mã syncfusion phục vụ nhập/xuất file-extend
 SyncfusionLicenseProvider.RegisterLicense("MTQwNUAzMTM4MmUzNDJlMzBGT29sdENza2kyME1jUHpPNVd5enVXY1AvNVZ1SVdPQlVMNUE4R1c1M0FvPQ==");
 
