@@ -126,5 +126,19 @@ namespace DoAnTotNghiep.Controllers.ApisController
             }
         }
 
+        [HttpGet("positions/count")]
+        public async Task<IActionResult> GetJobPositionsCount()
+        {
+            try
+            {
+                var positionsCount = await _jobPostingRepository.GetJobPositionsCountAsync();
+                return Ok(positionsCount);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+            }
+        }
+
     }
 }

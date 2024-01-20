@@ -1,0 +1,38 @@
+﻿.slider-active .single-slider {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 800px;
+}
+
+.company-img img {
+    width: 85px;
+    height: 85px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.single-job-items {
+    text-align: center;
+}
+
+.cv-section .card {
+    border: 3px solid #3498db;
+    margin: 10px;
+    height: 700px;
+    width: 550px;
+}
+
+    .cv-section .card img.profile-img {
+        max-width: 80px;
+    }
+
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+    width: 800px; /* Thiết lập kích thước tổng của container */
+}
+
+canvas {
+    max-width: 400px; /* Thiết lập kích thước tối đa của mỗi biểu đồ */
+}

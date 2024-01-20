@@ -15,38 +15,8 @@
     <link href="~/css/magnific-popup.css" rel="stylesheet" />
     <link href="~/css/animate.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/DoAnTotNghiep.styles.css" asp-append-version="true" />
+    <link href="~/css/main.css" rel="stylesheet" /> @*tùy chỉnh css thì vào đây*@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        .slider-active .single-slider {
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 800px;
-        }
-
-        .company-img img {
-            width: 85px;
-            height: 85px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .single-job-items {
-            text-align: center;
-        }
-
-        .cv-section .card {
-            border: 3px solid #3498db;
-            margin: 10px;
-            height: 700px;
-            width: 550px;
-        }
-
-            .cv-section .card img.profile-img {
-                max-width: 80px;
-            }
-        
-    </style>
 </head>
 <body>
     <div id="preloader-active">
@@ -97,6 +67,7 @@
                                                         <ul class="submenu">
                                                             <li><a asp-controller="Employer" asp-action="CompanyProfile">Thông tin doanh nghiệp</a></li>
                                                             <li><a asp-controller="Employer" asp-action="CompanyJobList">Danh sách tuyển dụng</a></li>
+                                                            <li><a asp-controller="Dashbroad" asp-action="Index">Báo cáo thống kê</a></li>
                                                             <li><a href="single-blog.html">Khảo sát</a></li>
                                                             <li><a asp-controller="Auth" asp-action="ChangePass">Đổi mật khẩu</a></li>
                                                             <li>
@@ -115,6 +86,7 @@
                                                         <ul class="submenu">
                                                             <li><a asp-controller="Candidates" asp-action="Profile">Thông tin cá nhân</a></li>
                                                             <li><a asp-controller="Candidates" asp-action="CreateCV">Quản lý CV</a></li>
+                                                            <li><a asp-controller="Dashbroad" asp-action="Index">Báo cáo thống kê</a></li>
                                                             <li><a href="single-blog.html">Khảo sát</a></li>
                                                             <li><a asp-controller="Auth" asp-action="ChangePass">Đổi mật khẩu</a></li>
                                                             <li>
@@ -263,6 +235,7 @@
                   language-code="vi"></df-messenger>
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v15.0&appId=5546284648741227&autoLogAppEvents=1" nonce="pHaCsEiK"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // tạo QR code đến trang hiện tại
         var previousPageUrl = window.location.href;

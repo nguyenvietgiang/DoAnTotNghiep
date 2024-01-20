@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Báo cáo thống kê thị trường tuyển dụng";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Báo cáo thống kê</h2>
+            <div class="chart-container">
+                <canvas id="pieChart" width="200" height="100"></canvas>
+                <!-- Thêm canvas khác nếu cần -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+     <script>
+        // Hàm để gọi API và cập nhật biểu đồ
+        async function updateChart() {
+            try {
+                const response = await fetch('/api/Job/positions/count');
+                const data = await response.json();
+
+                const config = {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(data),
+                        datasets: [{
+                            data: Object.values(data),
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                            ],
+                            borderColor: [
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(255, 206, 86, 1)',
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Top công việc được tuyển dụng nhiều nhất'
+                            }
+                        }
+                    }
+                };
+
+                var myChart = new Chart(
+                    document.getElementById('pieChart'),
+                    config
+                );
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        // Gọi hàm để cập nhật biểu đồ khi trang được tải
+        updateChart();
+     </script>
+}
+
+

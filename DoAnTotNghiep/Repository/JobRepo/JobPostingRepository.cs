@@ -98,5 +98,19 @@ namespace DoAnTotNghiep.Repository.JobRepo
                 .ToListAsync();
         }
 
+        public async Task<IDictionary<string, int>> GetJobPositionsCountAsync()
+        {
+            var positionsCount = await _context.JobPostings
+                .Where(jp => jp.Status)
+                .GroupBy(jp => jp.position)
+                .Select(g => new { Position = g.Key, Count = g.Count() })
+                .OrderByDescending(x => x.Count)
+                .Take(3)
+                .ToDictionaryAsync(x => x.Position, x => x.Count);
+
+            return positionsCount;
+        }
+
+
     }
 }
