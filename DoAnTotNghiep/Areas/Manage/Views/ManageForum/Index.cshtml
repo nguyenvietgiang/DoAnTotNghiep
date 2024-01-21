@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+     @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @addTagHelper *, AuthoringTagHelpers
 }
 <h2>Quản lý diễn đàn</h2>
 
@@ -10,7 +12,6 @@
     <thead>
         <tr>
             <th>Tiêu đề</th>
-            <th>Nội dung</th>
             <th>Ngày tạo</th>
             <th>Trạng thái</th>
             <th>Thao tác</th>
@@ -21,22 +22,27 @@
         {
             <tr>
                 <td>@disscus.Title</td>
-                <td>@disscus.Content</td>
                 <td>@disscus.CreatedAt</td>
                 @if (disscus.Status == true)
                 {
                     <td>Đã Duyệt</td>
+                     <td>
+                    <a href="@Url.Action("Delete", "ManageForum", new { @id = disscus.DiscussID })" class="btn btn-danger">Xem</a>
+                    <a href="@Url.Action("ToggleStatus", "ManageForum", new { @id = disscus.DiscussID })" class="btn btn-danger">
+                        Hủy duyệt
+                    </a>
+                </td>
                 }
                 else
                 {
                     <td>Chưa Duyệt</td>
-                }
-                <td>
-                    <a href="@Url.Action("Delete", "ManageForum", new { @id = disscus.DiscussID })" class="btn btn-danger">Xóa</a>
-                    <a href="@Url.Action("disscusResponse", "ManageForum", new { @id = disscus.DiscussID })" class="btn btn-info">
-                        Phản hồi
+                     <td>
+                    <a href="@Url.Action("Delete", "ManageForum", new { @id = disscus.DiscussID })" class="btn btn-danger">Xem</a>
+                    <a href="@Url.Action("ToggleStatus", "ManageForum", new { @id = disscus.DiscussID })" class="btn btn-info">
+                        Duyệt
                     </a>
                 </td>
+                }
             </tr>
         }
     </tbody>

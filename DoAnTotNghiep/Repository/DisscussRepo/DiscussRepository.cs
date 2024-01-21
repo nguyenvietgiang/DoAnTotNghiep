@@ -56,6 +56,22 @@ namespace DoAnTotNghiep.Repository.DisscussRepo
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<List<Discuss>> GetApprovedDiscussions()
+        {
+            return await _context.Discusses
+                .Include(dis => dis.Account)
+                .Where(dis => dis.Status) // Lọc các bài đã duyệt
+                .ToListAsync();
+        }
+
+        public async Task<List<Discuss>> GetUnapprovedDiscussions()
+        {
+            return await _context.Discusses
+                .Include(dis => dis.Account)
+                .Where(dis => !dis.Status) // Lọc các bài chưa duyệt
+                .ToListAsync();
+        }
     }
 
 }

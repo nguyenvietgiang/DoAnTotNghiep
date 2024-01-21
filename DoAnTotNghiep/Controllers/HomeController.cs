@@ -78,11 +78,19 @@ namespace DoAnTotNghiep.Controllers
             return View(contactViewModel);
         }
 
-        public async Task<IActionResult> Forum()
+        public async Task<IActionResult> Forum(string? searchTerm)
         {
-            var discussList = await _discussRepository.GetAllDiscussions();
+            var discussList = await _discussRepository.GetApprovedDiscussions();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                var filteredList = discussList.Where(e => e.Title.Contains(searchTerm)).ToList();
+                return View(filteredList);
+            }
+
             return View(discussList);
         }
+
 
         public async Task<IActionResult> DetailDiscuss(Guid Id)
         {

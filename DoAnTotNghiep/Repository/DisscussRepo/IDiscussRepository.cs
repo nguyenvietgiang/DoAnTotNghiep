@@ -10,5 +10,7 @@ namespace DoAnTotNghiep.Repository.DisscussRepo
         Task UpdateDiscussion(Discuss discuss);
         Task DeleteDiscussion(Guid id);
         Task ToggleDiscussStatusAsync(Guid id);
+        Task<List<Discuss>> GetApprovedDiscussions();
+        Task<List<Discuss>> GetUnapprovedDiscussions();
     }
 }
