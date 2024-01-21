@@ -6,5 +6,6 @@ namespace DoAnTotNghiep.Repository.EmployerRepo
     {
         Task<IEnumerable<Employer>> GetAllAsync();
         Task<Employer> GetEmployerByIdAsync(Guid employerId);
+        Task<List<Employer>> GetTop5EmployersWithJobCount();
     }
 }
