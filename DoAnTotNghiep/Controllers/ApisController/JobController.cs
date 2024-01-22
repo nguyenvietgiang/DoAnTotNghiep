@@ -31,7 +31,9 @@ namespace DoAnTotNghiep.Controllers.ApisController
                     Location = jp.Location,
                     Position = jp.position,
                     Company = jp.Employer.CompanyName,
-                    Image = jp.Employer.UrlImage
+                    Image = jp.Employer.UrlImage,
+                    Salary = jp.Salary,
+                    CompanyId =jp.EmployerID
                 });
 
                 return Ok(jobPostingsDto);
@@ -43,6 +45,34 @@ namespace DoAnTotNghiep.Controllers.ApisController
             }
         }
 
+
+        [HttpGet("approved")]
+        public async Task<IActionResult> GetAllJobPostingsApproved()
+        { 
+            try
+            {
+                var jobPostings = await _jobPostingRepository.GetApprovedJobPostingsAsync();
+
+                var jobPostingsDto = jobPostings.Select(jp => new JobPostingResponseDto
+                {
+                    JobId = jp.JobPostingID,
+                    Title = jp.Title,
+                    Location = jp.Location,
+                    Position = jp.position,
+                    Company = jp.Employer.CompanyName,
+                    Image = jp.Employer.UrlImage,
+                    Salary = jp.Salary,
+                    CompanyId = jp.EmployerID
+                });
+
+                return Ok(jobPostingsDto);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetJobPostingById(Guid id)

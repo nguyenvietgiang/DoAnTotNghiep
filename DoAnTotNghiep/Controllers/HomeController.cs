@@ -8,6 +8,7 @@ using DoAnTotNghiep.Repository.EmployerRepo;
 using DoAnTotNghiep.Repository.FollowRepo;
 using DoAnTotNghiep.Repository.ImageGaleryRepo;
 using DoAnTotNghiep.Repository.JobApplyFormRepo;
+using DoAnTotNghiep.Repository.JobRepo;
 using DoAnTotNghiep.Repository.PolicyRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Matching;
@@ -28,9 +29,10 @@ namespace DoAnTotNghiep.Controllers
         private readonly IFollowRepository _followRepository;
         private readonly IImageGaleryRepository _imageGaleryRepository;
         private readonly IPolicyRepository _policyRepository;
+        private readonly IJobPostingRepository _jobPostingRepository;
         private readonly DataContext _dataContext;
         public HomeController(ILogger<HomeController> logger, IContactRepository contactRepository, IEmployerRepository employerRepository, ICandidatesRepo candidatesRepo
-            , IDiscussRepository discussRepository, IJobApplyFormRepository jobApplyFormRepository,
+            , IDiscussRepository discussRepository, IJobApplyFormRepository jobApplyFormRepository, IJobPostingRepository jobPostingRepository,
             IFollowRepository followRepository, IImageGaleryRepository imageGaleryRepository, DataContext dataContext, IPolicyRepository policyRepository)
         {
             _employerRepository= employerRepository;
@@ -42,6 +44,7 @@ namespace DoAnTotNghiep.Controllers
             _imageGaleryRepository= imageGaleryRepository;
             _policyRepository= policyRepository;
             _dataContext= dataContext;
+            _jobPostingRepository= jobPostingRepository;
             _logger = logger;
         }
 
@@ -98,9 +101,25 @@ namespace DoAnTotNghiep.Controllers
             return View(discussList);
         }
 
-        public IActionResult Hiring()  
+        // Action để hiển thị và lọc danh sách công việc
+        public async Task<IActionResult> Hiring(string title, string location, int? salary)
         {
-            return View();
+            var jobPostings = await _jobPostingRepository.GetApprovedJobPostingsAsync();
+            if (!string.IsNullOrEmpty(title))
+            {
+                jobPostings = jobPostings.Where(jp => jp.Title.Contains(title));
+            }
+            if (!string.IsNullOrEmpty(location))
+            {
+                jobPostings = jobPostings.Where(jp => jp.Location.Contains(location));
+            }
+            if (salary.HasValue)
+            {
+                jobPostings = jobPostings.Where(jp => jp.Salary == salary.Value);
+            }
+            jobPostings = jobPostings.OrderBy(jp => jp.Salary);
+
+            return View(jobPostings);
         }
 
         public IActionResult NoPermistion()
