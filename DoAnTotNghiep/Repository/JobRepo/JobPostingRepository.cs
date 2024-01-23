@@ -111,6 +111,23 @@ namespace DoAnTotNghiep.Repository.JobRepo
             return positionsCount;
         }
 
+        public async Task<IEnumerable<JobPosting>> GetSimilarJobsAsync(Guid jobId)
+        {
+            var currentJob = await _context.JobPostings
+                .Include(jp => jp.Employer)
+                .FirstOrDefaultAsync(jp => jp.JobPostingID == jobId);
+
+            if (currentJob == null)
+            {
+                return Enumerable.Empty<JobPosting>();
+            }
+            var similarJobs = await _context.JobPostings
+                .Include(jp => jp.Employer)
+                .Where(jp => jp.position == currentJob.position && jp.JobPostingID != jobId)
+                .ToListAsync();
+
+            return similarJobs;
+        }
 
     }
 }

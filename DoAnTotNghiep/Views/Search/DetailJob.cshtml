@@ -1,6 +1,9 @@
 ﻿@model DoAnTotNghiep.Models.EntityModels.JobPosting
+
 @{
     ViewData["Title"] = "Chi tiết công việc";
+    var SameJob = (List<DoAnTotNghiep.Models.EntityModels.JobPosting>)ViewBag.SameJob;
+}
 }
 
 <!-- job post company Start -->
@@ -99,6 +102,35 @@
             </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="small-section-tittle">
+                    <h4>Công việc tương tự</h4>
+                </div>
+            </div>
+            @foreach (var similarJob in SameJob)
+            {
+                <div class="col-md-4">
+                    <div class="single-job-items mb-30">
+                        <div class="job-items">
+                            <div class="company-img">
+                                <a href="#"><img src="@similarJob.Employer.UrlImage" alt=""></a>
+                            </div>
+                            <div class="job-tittle">
+                                <a href="#">
+                                    <h4>@similarJob.Title</h4>
+                                </a>
+                                <ul>
+                                    <li>@similarJob.Employer.CompanyName</li>
+                                    <li><i class="fas fa-map-marker-alt"></i>@similarJob.Location</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div> 

@@ -48,7 +48,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
             {
                 return NotFound();
             }
-
+            ViewBag.SameJob = await _jobPostingRepository.GetSimilarJobsAsync(id);
             return View(jobPosting);
         }
 

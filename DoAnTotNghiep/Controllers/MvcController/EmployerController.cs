@@ -149,18 +149,19 @@ namespace DoAnTotNghiep.Controllers.MvcController
                     var userId = GetUserIdFromClaim();
                     var newJobPosting = new JobPosting
                     {
-                        JobPostingID = Guid.NewGuid(), // Tự tạo ID mới
+                        JobPostingID = Guid.NewGuid(), 
                         Title = jobPostingDto.Title,
                         Description = jobPostingDto.Description,
                         EmployerID = Guid.Parse(userId),
                         Location = jobPostingDto.Location,
-                        CreateAt = DateTime.Now, // Thời gian hiện tại
+                        CreateAt = DateTime.Now, 
                         Requirements = jobPostingDto.Requirements,
                         Number = jobPostingDto.Number,
                         Salary = jobPostingDto.Salary,
                         position = jobPostingDto.Position,
                         benefits = jobPostingDto.Benefits,
-                        Status = false // Giá trị mặc định cho Status
+                        WorkingTime = jobPostingDto.WorkTime,
+                        Status = false 
                     };
                     await _jobPostingRepository.CreateJobPostingAsync(newJobPosting);
                     TempData["SuccessMessage"] = "Tin tuyển dụng đã được lưu thành công và đang chờ được duyệt!";

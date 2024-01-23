@@ -20,6 +20,7 @@ namespace DoAnTotNghiep.Models.DTO
         public int Salary { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập vị trí làm việc")]
         public string Position { get; set; }
+        public string WorkTime { get; set; }
         public string Benefits { get; set; }
     }
 }

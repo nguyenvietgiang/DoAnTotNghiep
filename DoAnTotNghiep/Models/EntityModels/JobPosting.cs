@@ -28,6 +28,7 @@ namespace DoAnTotNghiep.Models.EntityModels
         public string position { get; set; }
         // quyền lợi
         public string benefits { get; set; }
+        public string WorkingTime { get; set; }
         public bool Status { get; set; }
         public List<JobApplyForm> JobApplyForms { get; set; }
 

@@ -118,9 +118,25 @@ namespace DoAnTotNghiep.Controllers
                 jobPostings = jobPostings.Where(jp => jp.Salary == salary.Value);
             }
             jobPostings = jobPostings.OrderBy(jp => jp.Salary);
+            string pageTitle = "Danh sách công việc";
+            if (!string.IsNullOrEmpty(title))
+            {
+                pageTitle = $"Danh sách công việc {title}";
+                if (!string.IsNullOrEmpty(location))
+                {
+                    pageTitle += $" tại {location}";
+                }
+            }
+            else if (!string.IsNullOrEmpty(location))
+            {
+                pageTitle = $"Danh sách công việc tại {location}";
+            }
 
+            ViewData["TitleJob"] = pageTitle;
+            ViewData["JobCount"] = jobPostings.Count();
             return View(jobPostings);
         }
+
 
         public IActionResult NoPermistion()
         {
@@ -228,5 +244,7 @@ namespace DoAnTotNghiep.Controllers
             var policies = await _policyRepository.GetAllPoliciesAsync();
             return View(policies);
         }
+
+
     }
 }
