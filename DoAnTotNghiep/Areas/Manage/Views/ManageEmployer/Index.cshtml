@@ -12,6 +12,7 @@
             <th>Tên công ty</th>
             <th>Logo công ty</th>
             <th>Địa chỉ</th>
+            <th>Trạng thái</th>
             <th>Thao tác</th>
         </tr>
     </thead>
@@ -24,7 +25,24 @@
                     <img src="@employer.UrlImage" alt="Logo" class="img-thumbnail" style="width: 70px; height: 70px;" />
                 </td>
                 <td>@employer.Location</td>
-                <td><button class="btn btn-danger">Xóa</button></td>
+                @if (employer.Account.Status == true)
+                {
+                    <td>Đang hoạt động</td>
+                    <td>
+                        <a href="@Url.Action("ToggleAccountStatus", new { @id = employer.EmployerID })" class="btn btn-danger">
+                            Khóa tài khoản
+                        </a>
+                    </td>
+                }
+                else
+                {
+                    <td>Đang bị khóa</td>
+                    <td>
+                        <a href="@Url.Action("ToggleAccountStatus", new { @id = employer.EmployerID })" class="btn btn-success">
+                            Mở lại
+                        </a>
+                    </td>
+                }
             </tr>
         }
     </tbody>

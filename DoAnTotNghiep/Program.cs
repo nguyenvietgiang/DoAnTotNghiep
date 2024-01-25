@@ -1,6 +1,7 @@
 ﻿using DNTCaptcha.Core;
 using DoAnTotNghiep.Common;
 using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Repository.AccountRepo;
 using DoAnTotNghiep.Repository.BaseRepo;
 using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Repository.ContactRepo;
@@ -41,7 +42,7 @@ builder.Services.AddScoped<IJobApplyFormRepository, JobApplyFormRepository>();
 builder.Services.AddScoped<IImageGaleryRepository, ImageGaleryRepository>();
 builder.Services.AddScoped<IFollowRepository, FollowRepository>();
 builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
-
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 // khai báo mã syncfusion phục vụ nhập/xuất file-extend
 SyncfusionLicenseProvider.RegisterLicense("MTQwNUAzMTM4MmUzNDJlMzBGT29sdENza2kyME1jUHpPNVd5enVXY1AvNVZ1SVdPQlVMNUE4R1c1M0FvPQ==");

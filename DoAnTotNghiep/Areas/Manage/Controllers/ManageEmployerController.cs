@@ -1,5 +1,7 @@
 ﻿using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Repository.AccountRepo;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 
 namespace DoAnTotNghiep.Areas.Manage.Controllers
@@ -8,9 +10,10 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
     public class ManageEmployerController : ManageBaseController
     {
         private readonly DataContext _context;
-
-        public ManageEmployerController(DataContext context)
+        private readonly IAccountRepository _accountRepository;
+        public ManageEmployerController(DataContext context, IAccountRepository accountRepository)
         {
+            _accountRepository= accountRepository;
             _context = context;
         }
 
@@ -18,10 +21,16 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
         {
             int pageSize = 10;
             int pageNumber = page ?? 1;
-            var employers = _context.Employers.ToList();
+            var employers = _context.Employers.Include(c => c.Account).ToList();
             int totalItemCount = _context.Employers.Count();
             var pagedList = new StaticPagedList<Employer>(employers.Skip((pageNumber - 1) * pageSize).Take(pageSize), pageNumber, pageSize, totalItemCount);
             return View(pagedList);
+        }
+
+        public async Task<IActionResult> ToggleAccountStatus(Guid Id)
+        {
+            await _accountRepository.UpdateAccountStatusAsync(Id);
+            return RedirectToAction("Index");
         }
     }
 }

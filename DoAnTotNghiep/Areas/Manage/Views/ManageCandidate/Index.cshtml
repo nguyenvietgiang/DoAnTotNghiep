@@ -12,6 +12,7 @@
             <th>Tên ứng viên</th>
             <th>Ảnh đại diện</th>
             <th>Số điện</th>
+            <th>Trạng thái</th>
             <th>Thao tác</th>
         </tr>
     </thead>
@@ -24,7 +25,25 @@
                     <img src="@candidate.UrlImage" alt="Logo" class="img-thumbnail" style="width: 70px; height: 70px;" />
                 </td>
                 <td>@candidate.PhoneNumber</td>
-                <td><button class="btn btn-danger">Khóa</button></td>
+                @if (candidate.Account.Status == true)
+                {
+                    <td>Đang hoạt động</td>
+                    <td>
+                        <a href="@Url.Action("ToggleAccountStatus", new { @id = candidate.CandidateID })" class="btn btn-danger">
+                            Khóa tài khoản
+                        </a>
+                    </td>
+                }
+                else
+                {
+                    <td>Đang bị khóa</td>
+                    <td>
+                        <a href="@Url.Action("ToggleAccountStatus", new { @id = candidate.CandidateID })" class="btn btn-success">
+                            Mở lại
+                        </a>
+                    </td>
+                }
+               
             </tr>
         }
     </tbody>
