@@ -129,5 +129,32 @@ namespace DoAnTotNghiep.Repository.JobRepo
             return similarJobs;
         }
 
+        public async Task<IEnumerable<JobPosting>> GetFilteredJobPostingsAsync(string title, string location, int? salary, string time)
+        {
+            var query = _context.JobPostings.Include(jp => jp.Employer).Where(jp => jp.Status);
+
+            if (!string.IsNullOrEmpty(title))
+            {
+                query = query.Where(jp => jp.Title.Contains(title) || jp.Requirements.Contains(title));
+            }
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                query = query.Where(jp => jp.Location.Contains(location));
+            }
+
+            if (salary.HasValue)
+            {
+                query = query.Where(jp => jp.Salary == salary.Value);
+            }
+
+            if (!string.IsNullOrEmpty(time))
+            {
+                query = query.Where(jp => jp.WorkingTime == time);
+            }
+
+            return await query.ToListAsync();
+        }
+
     }
 }

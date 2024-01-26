@@ -12,7 +12,7 @@
                 <label for="title">Công Việc:</label>
                 <input type="text" class="form-control" name="title" />
             </div>
-            <div class="form-group col-md-2">   
+            <div class="form-group col-md-2">
                 <select class="form-control" name="location">
                     <option value="">--Chọn Địa Điểm--</option>
                     <option value="Hà Nội">Hà Nội</option>
@@ -20,49 +20,57 @@
                     <option value="TP. HCM">TP. HCM</option>
                 </select>
             </div>
-            <div class="form-group col-md-2">   
+            <div class="form-group col-md-2">
                 <select class="form-control" name="salary">
                     <option value="">--Lương Cơ Bản--</option>
-                    <option value="Hà Nội">5Tr - 10Tr</option>
-                    <option value="Đà Nẵng">Trên 10Tr</option> 
+                    <option value="5000">5Tr - 10Tr</option>
+                    <option value="10000">Trên 10Tr</option>
                 </select>
             </div>
-             <div class="form-group col-md-2">   
+            <div class="form-group col-md-2">
                 <select class="form-control" name="time">
                     <option value="">--Thời Gian Làm--</option>
-                    <option value="Hà Nội">Full Time</option>
-                    <option value="Đà Nẵng">Past Time</option> 
+                    <option value="Full Time">Full Time</option>
+                    <option value="Part Time">Part Time</option>
                 </select>
             </div>
+
             <div class="form-group col-md-3">
                 <button type="submit" class="genric-btn success medium mt-2 form-control"><i class="fas fa-search"></i></button>
             </div>
         </div>
     </form>
-    @foreach (var job in Model)
+    @if (Model.Any())
     {
-        <div class="single-job-items mb-30">
-            <div class="job-items">
-                <div class="company-img">
-                    <a href="@Url.Action("Conpany", "Home", new { @id = @job.Employer.EmployerID })">
-                        <img src="@job.Employer.UrlImage" alt="">
-                    </a>
+        foreach (var job in Model)
+        {
+            <div class="single-job-items mb-30">
+                <div class="job-items">
+                    <div class="company-img">
+                        <a href="@Url.Action("Conpany", "Home", new { @id = @job.Employer.EmployerID })">
+                            <img src="@job.Employer.UrlImage" alt="">
+                        </a>
+                    </div>
+                    <div class="job-tittle job-tittle2">
+                        <a href="@Url.Action("DetailJob", "Search", new { @id = job.JobPostingID })">
+                            <h4>@job.Title</h4>
+                        </a>
+                        <ul>
+                            <li>Vị Trí Tuyển Dụng: @job.position</li>
+                            <li>Địa Điểm Làm Việc: @job.Location</li>
+                            <li>Mức Lương Cơ Bản: @job.Salary VND</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="job-tittle job-tittle2">
-                    <a href="@Url.Action("DetailJob", "Search", new { @id = job.JobPostingID })">
-                        <h4>@job.Title</h4>
-                    </a>
-                    <ul>
-                        <li>Vị Trí Tuyển Dụng: @job.position</li>
-                        <li>Địa Điểm Làm Việc: @job.Location</li>
-                        <li>Mức Lương Cơ Bản: @job.Salary VND</li>
-                    </ul>
+                <div class="items-link items-link2 f-right">
+                    <a>@job.WorkingTime</a>
+                    <span>@job.CreateAt</span>
                 </div>
             </div>
-            <div class="items-link items-link2 f-right">
-                <a>@job.WorkingTime</a>
-                <span>@job.CreateAt</span>
-            </div>
-        </div>
+        }
+    }else
+    {
+        <partial name="_emty_search" />
     }
-</div>
+
+    </div>

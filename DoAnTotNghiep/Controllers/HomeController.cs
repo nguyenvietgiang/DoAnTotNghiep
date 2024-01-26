@@ -102,40 +102,29 @@ namespace DoAnTotNghiep.Controllers
         }
 
         // Action để hiển thị và lọc danh sách công việc
-        public async Task<IActionResult> Hiring(string title, string location, int? salary)
+        public async Task<IActionResult> Hiring(string title, string location, int? salary, string time)
         {
-            var jobPostings = await _jobPostingRepository.GetApprovedJobPostingsAsync();
+            var jobPostings = await _jobPostingRepository.GetFilteredJobPostingsAsync(title, location, salary, time);
+            string filterMessage = "Tất cả công việc";
             if (!string.IsNullOrEmpty(title))
             {
-                jobPostings = jobPostings.Where(jp => jp.Title.Contains(title));
-            }
-            if (!string.IsNullOrEmpty(location))
-            {
-                jobPostings = jobPostings.Where(jp => jp.Location.Contains(location));
-            }
-            if (salary.HasValue)
-            {
-                jobPostings = jobPostings.Where(jp => jp.Salary == salary.Value);
-            }
-            jobPostings = jobPostings.OrderBy(jp => jp.Salary);
-            string pageTitle = "Danh sách công việc";
-            if (!string.IsNullOrEmpty(title))
-            {
-                pageTitle = $"Danh sách công việc {title}";
+                filterMessage = $"Công việc liên quan đến '{title}'";
                 if (!string.IsNullOrEmpty(location))
                 {
-                    pageTitle += $" tại {location}";
+                    filterMessage += $" tại {location}";
                 }
             }
             else if (!string.IsNullOrEmpty(location))
             {
-                pageTitle = $"Danh sách công việc tại {location}";
+                filterMessage = $"Danh sách công việc tại {location}";
             }
 
-            ViewData["TitleJob"] = pageTitle;
+            ViewData["TitleJob"] = $"Danh sách - {filterMessage}";
             ViewData["JobCount"] = jobPostings.Count();
+
             return View(jobPostings);
         }
+
 
 
         public IActionResult NoPermistion()
