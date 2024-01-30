@@ -28,6 +28,7 @@
                                 <a asp-action="DetailDiscuss" asp-route-id="@item.DiscussID" class="text-primary">@Html.DisplayFor(modelItem => item.Title)</a>
                         </h5>
                             <div class="text-sm op-5"> <p class="text-black mr-2">Đăng vào: @((item.CreatedAt).ToString("dd/MM/yyyy"))</p> </div>
+                            <div class="text-sm op-5"> <p class="text-black mr-2">@item.Account.Email</p> </div>
                     </div>
                     <div class="col-md-4 op-7">
                         <div class="row text-center op-7">

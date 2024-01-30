@@ -15,8 +15,6 @@ namespace DoAnTotNghiep.Models.EntityModels
         [Required(ErrorMessage = "Vui lòng nhập nội dung bài viết")]
         public string? Content { get; set; }
         public string? Type { get; set; }
-
-        [ForeignKey("UserId")]
         public Guid UserId { get; set; } 
         public Account? Account { get; set; }
         public DateTime CreatedAt { get; set; }

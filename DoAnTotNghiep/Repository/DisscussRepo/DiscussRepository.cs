@@ -21,8 +21,10 @@ namespace DoAnTotNghiep.Repository.DisscussRepo
 
         public async Task<Discuss> GetDiscussionById(Guid id)
         {
-            return await _context.Discusses.FindAsync(id);
+            return await _context.Discusses.Include(dis => dis.Account)
+                                            .FirstOrDefaultAsync(dis => dis.DiscussID == id);
         }
+
 
         public async Task CreateDiscussion(Discuss discuss)
         {

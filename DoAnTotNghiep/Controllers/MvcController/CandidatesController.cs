@@ -9,6 +9,7 @@ using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
 using X.PagedList;
 using System.Drawing.Drawing2D;
+using Microsoft.EntityFrameworkCore;
 
 namespace DoAnTotNghiep.Controllers.MvcController
 {
@@ -162,7 +163,6 @@ namespace DoAnTotNghiep.Controllers.MvcController
             return View();
         }
 
-        // Action để xử lý việc gửi dữ liệu từ form tạo mới Discussion
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateDiscuss(DiscussViewModel model)
@@ -170,22 +170,36 @@ namespace DoAnTotNghiep.Controllers.MvcController
             if (ModelState.IsValid)
             {
                 var userId = GetUserIdFromClaim();
-                var newDiscussion = new Discuss
-                {
 
-                    Title = model.Title,
-                    Content = model.Content,
-                    UserId = new Guid(userId),
-                    CreatedAt = DateTime.Now,
-                    Type = model.Type,
-                    Status = false
-                };
-                _dataContext.Discusses.Add(newDiscussion);
-                await _dataContext.SaveChangesAsync();
-                return RedirectToAction("Index", "Home");
+                // Tìm tài khoản từ UserId
+                var account = await _dataContext.Accounts.FirstOrDefaultAsync(a => a.UserID == new Guid(userId));
+
+                if (account != null)
+                {
+                    var newDiscussion = new Discuss
+                    {
+                        Title = model.Title,
+                        Content = model.Content,
+                        Account = account, // Liên kết thảo luận với tài khoản
+                        UserId = account.UserID, // Cập nhật UserId
+                        CreatedAt = DateTime.Now,
+                        Type = model.Type,
+                        Status = false
+                    };
+
+                    _dataContext.Discusses.Add(newDiscussion);
+                    await _dataContext.SaveChangesAsync();
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    // Xử lý khi không tìm thấy tài khoản
+                }
             }
             return View(model);
         }
+
 
 
         // tải file CV đang bị lỗi Font tiếng việt, dùng tiếng anh tạm
