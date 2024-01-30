@@ -1,4 +1,5 @@
 ﻿using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Models.ResponseDTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoAnTotNghiep.Repository.DisscussRepo
@@ -74,6 +75,31 @@ namespace DoAnTotNghiep.Repository.DisscussRepo
                 .Where(dis => !dis.Status) // Lọc các bài chưa duyệt
                 .ToListAsync();
         }
+
+        public async Task<List<DiscussWithCounts>> GetApprovedDiscussionsWithCounts()
+        {
+            var discussions = await _context.Discusses
+                .Include(dis => dis.Account)
+                .Where(dis => dis.Status)
+                .ToListAsync();
+
+            var discussionsWithCounts = new List<DiscussWithCounts>();
+
+            foreach (var discuss in discussions)
+            {
+                var discussWithCounts = new DiscussWithCounts
+                {
+                    Discuss = discuss,
+                    LikeCount = await _context.Likes.Where(l => l.DiscussID == discuss.DiscussID).CountAsync(),
+                    CommentCount = await _context.Comments.Where(c => c.DiscussID == discuss.DiscussID).CountAsync()
+                };
+
+                discussionsWithCounts.Add(discussWithCounts);
+            }
+
+            return discussionsWithCounts;
+        }
+
     }
 
 }

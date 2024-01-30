@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DoAnTotNghiep.Models.EntityModels.Discuss>
+﻿@model IEnumerable<DoAnTotNghiep.Models.ResponseDTO.DiscussWithCounts>
 @{
     ViewData["Title"] = "Diễn Đàn";
 }
@@ -25,15 +25,15 @@
                 <div class="row align-items-center">
                     <div class="col-md-8 mb-3 mb-sm-0">
                         <h5>
-                                <a asp-action="DetailDiscuss" asp-route-id="@item.DiscussID" class="text-primary">@Html.DisplayFor(modelItem => item.Title)</a>
+                                <a asp-action="DetailDiscuss" asp-route-id="@item.Discuss.DiscussID" class="text-primary">@Html.DisplayFor(modelItem => item.Discuss.Title)</a>
                         </h5>
-                            <div class="text-sm op-5"> <p class="text-black mr-2">Đăng vào: @((item.CreatedAt).ToString("dd/MM/yyyy"))</p> </div>
-                            <div class="text-sm op-5"> <p class="text-black mr-2">@item.Account.Email</p> </div>
+                            <div class="text-sm op-5"> <p class="text-black mr-2">Đăng vào: @((item.Discuss.CreatedAt).ToString("dd/MM/yyyy"))</p> </div>
+                            <div class="text-sm op-5"> <p class="text-black mr-2">@item.Discuss.Account.Email</p> </div>
                     </div>
                     <div class="col-md-4 op-7">
                         <div class="row text-center op-7">
-                            <div class="col px-1"> <i class="fa-solid fa-comment"></i> <span class="d-block text-sm">122 Phản hồi </span> </div>
-                            <div class="col px-1"> <i class="fa-solid fa-heart"></i> <span class="d-block text-sm">290 Tim</span> </div>
+                            <div class="col px-1"> <i class="fa-solid fa-comment"></i> <span class="d-block text-sm">@item.CommentCount Phản hồi </span> </div>
+                            <div class="col px-1"> <i class="fa-solid fa-heart"></i> <span class="d-block text-sm">@item.LikeCount Yêu thích</span> </div>
                         </div>
                     </div>
                 </div>

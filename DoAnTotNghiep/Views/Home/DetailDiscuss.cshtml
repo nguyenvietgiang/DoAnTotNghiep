@@ -16,7 +16,7 @@
                         </div>
                         <div class="line-divider"></div>
                         <div class="post-text">
-                               @Html.Raw(Model.Content)
+                            @Html.Raw(Model.Content)
                         </div>
                         <div class="like-section">
                             <button class="btn btn-block btn-primary"><i class="fa fa-thumbs-up"></i> </button>
@@ -43,6 +43,10 @@
         </div>
         <div class="col-md-4">
             <div class="card-body text-center">
+                <p class="text-dark font-weight-medium mb-0 mr-2">Mã QR Code:</p>
+                <div class="d-inline-flex">
+                    <img id="qrcode" src="" alt="QR Code">
+                </div>
                 <p class="text-dark font-weight-medium mb-0 mr-2">Chia sẻ với:</p>
                 <div class="d-inline-flex">
                     <button class="genric-btn primary small" onclick="shareOnFacebook()">
@@ -53,7 +57,7 @@
                         <i class="fab fa-twitter"></i>
                     </button>
                 </div>
-                </div>
             </div>
+        </div>
     </div>
 </div>
