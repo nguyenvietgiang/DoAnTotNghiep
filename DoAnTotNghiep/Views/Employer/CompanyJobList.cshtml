@@ -6,27 +6,7 @@
 <div class="card mb-4 rounded">
     <div class="card-body">
         <h2 class="card-title">Danh sách tuyển dụng của tôi</h2>
-
-        @if (TempData.ContainsKey("SuccessMessage"))
-        {
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                @TempData["SuccessMessage"]
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        }
-
-        @if (TempData.ContainsKey("ErrorMessage"))
-        {
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                @TempData["ErrorMessage"]
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        }
-
+        <partial name="_Message_area" />
         <div class="card-deck">
             @if (Model.Any())
             {
@@ -63,7 +43,9 @@
                                     <a class="genric-btn info radius" href="@Url.Action("ApplyList", "Employer", new { @JobId = jobPosting.JobId })">DS Ứng tuyển</a>
                                 </td>
                                 <td>
-                                    <button class="genric-btn danger radius">Xóa</button>
+                                    <form asp-action="Delete" asp-route-id="@jobPosting.JobId" method="post">
+                                        <input type="submit" value="Xóa" class="genric-btn danger radius" onclick="return confirm('Bạn có muốn xóa tin này không?');" />
+                                    </form>
                                 </td>
                             </tr>
                         }

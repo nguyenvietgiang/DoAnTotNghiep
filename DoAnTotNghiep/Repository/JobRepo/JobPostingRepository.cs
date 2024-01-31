@@ -44,6 +44,8 @@ namespace DoAnTotNghiep.Repository.JobRepo
             }
         }
 
+
+
         public async Task ToggleJobStatusAsync(Guid id)
         {
             var jobPosting = await _context.JobPostings.FindAsync(id);

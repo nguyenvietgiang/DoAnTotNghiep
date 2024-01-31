@@ -174,7 +174,24 @@ namespace DoAnTotNghiep.Controllers.MvcController
             }
                 return View(jobPostingDto);
         }
-         
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                await _jobPostingRepository.DeleteJobPostingAsync(id);
+                TempData["SuccessMessage"] = "Tin tuyển dụng đã xóa thành công!";
+                return RedirectToAction("CompanyJobList");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Đã có lỗi sảy ra, không thể xóa: " + ex.Message;
+                return View("CompanyJobList");
+            }
+        }
+
+
         public IActionResult DownloadExcelTemplate()
         {
             byte[] templateBytes = _excelExportService.GetExcelTemplate("job-posting");
@@ -248,8 +265,25 @@ namespace DoAnTotNghiep.Controllers.MvcController
         public async Task<IActionResult> ApplyList(Guid JobId)
         {
             var jobApplyForms = await _jobApplyFormRepository.GetJobApplyFormsByJobPostingID(JobId);
-
+            int numberOfForms = jobApplyForms.Count(); // Đếm số lượng
+            ViewBag.NumberOfForms = numberOfForms;
             return View(jobApplyForms);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteApply(Guid jobApplyID)
+        {
+            try
+            {
+                await _jobApplyFormRepository.DeleteJobApplyForm(jobApplyID);
+                TempData["SuccessMessage"] = "Tin tuyển dụng đã xóa thành công!";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Đã có lỗi sảy ra, không thể xóa: " + ex.Message;
+                return View();
+            }
         }
 
         [HttpPost]

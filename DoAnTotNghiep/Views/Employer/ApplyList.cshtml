@@ -6,9 +6,9 @@
 
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">Số lượng ứng tuyển (2)</h4>
+        <h4 class="card-title">Số lượng ứng tuyển (@ViewBag.NumberOfForms)</h4>
         <button class="genric-btn info radius mb-3">Xuất file thống kê</button>
-
+        <partial name="_Message_area" />
         @if (Model.Any())
         {
             <table class="table table-striped table-bordered">
@@ -37,7 +37,9 @@
                                 <button type="button" class="genric-btn warning radius" data-toggle="modal" data-target="#contactModal-@jobApplyForm.JobApplyID">
                                     Liên hệ
                                 </button>
-                                <button class="genric-btn danger radius">Xóa</button>
+                                <form asp-action="DeleteApply" asp-route-jobApplyID="@jobApplyForm.JobApplyID" method="post">
+                                    <button type="submit" class="genric-btn danger radius" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</button>
+                                </form>
                             </td>
                         </tr>
                         <!-- CV Modal -->
