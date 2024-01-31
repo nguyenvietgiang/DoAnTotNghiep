@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @addTagHelper *, AuthoringTagHelpers
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,7 +20,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-controller="Dashboarh" asp-action="Index">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-controller="ManageDashbroad" asp-action="Index">
                 <div class="sidebar-brand-text mx-3">Job Finder</div>
             </a>
 
@@ -110,9 +114,9 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form asp-area="Manage" asp-controller="Posts" asp-action="Index" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form asp-area="Manage" asp-controller="ManageSearch" asp-action="Search" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control bg-light border-0 small" placeholder="Tìm kiếm...."
+                            <input type="text" name="searchTerm" class="form-control bg-light border-0 small" placeholder="Tìm kiếm...."
                                    aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">

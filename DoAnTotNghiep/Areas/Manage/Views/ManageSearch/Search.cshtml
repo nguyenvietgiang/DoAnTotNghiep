@@ -1,0 +1,43 @@
+﻿@model IEnumerable<DoAnTotNghiep.Models.ResponseDTO.SearchResultViewModel>
+
+@{
+    ViewData["Title"] = "Kết quả tìm kiếm";
+    Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @addTagHelper *, AuthoringTagHelpers
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Kết quả tìm kiếm cho: @ViewBag.SearchTerm</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Ứng viên</h4>
+            @foreach (var result in Model.Where(r => r.Type == "Candidate"))
+            {
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@result.Name</h5>
+                        <!-- Hiển thị các thông tin khác của result -->
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-6">
+            <h4>Doanh Nghiệp</h4>
+            @foreach (var result in Model.Where(r => r.Type == "Employer"))
+            {
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@result.Name</h5>
+                        <!-- Hiển thị các thông tin khác của result -->
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
