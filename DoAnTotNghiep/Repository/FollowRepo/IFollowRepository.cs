@@ -1,4 +1,6 @@
-﻿namespace DoAnTotNghiep.Repository.FollowRepo
+﻿using DoAnTotNghiep.Models.EntityModels;
+
+namespace DoAnTotNghiep.Repository.FollowRepo
 {
     public interface IFollowRepository
     {
@@ -6,5 +8,6 @@
         Task RemoveFollow(Guid userId, Guid followUserId);
         Task<int> GetFollowCount(Guid followUserId);
         Task<bool> IsFollowing(Guid userId, Guid followUserId);
+        List<Account> GetFollowers(Guid userId);
     }
 }

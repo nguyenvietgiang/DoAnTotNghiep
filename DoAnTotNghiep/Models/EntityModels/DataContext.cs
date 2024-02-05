@@ -22,6 +22,7 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<RevenueStatistic> RevenueStatistics { get; set; }
         public DbSet<Survey> Surveys { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<Option> Options { get; set; }
         public DbSet<AnswerCount> AnswerCounts { get; set; }
         public DbSet<ImageGalery> ImageGaleries { get; set; }
         public DbSet<Follow> Follows { get; set; }

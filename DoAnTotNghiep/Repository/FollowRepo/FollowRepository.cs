@@ -50,5 +50,13 @@ namespace DoAnTotNghiep.Repository.FollowRepo
             return await _context.Follows
                 .AnyAsync(f => f.UserId == userId && f.FollowUserId == followUserId);
         }
+
+        public List<Account> GetFollowers(Guid userId)
+        {
+            return _context.Follows
+                .Where(f => f.FollowUserId == userId)
+                .Select(f => f.Account)
+                .ToList();
+        }
     }
 }

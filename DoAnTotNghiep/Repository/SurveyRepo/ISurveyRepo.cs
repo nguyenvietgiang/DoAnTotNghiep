@@ -2,10 +2,13 @@
 
 namespace DoAnTotNghiep.Repository.SurveyRepo
 {
-    public interface ISurveyRepo
+    public interface ISurveyRepo<T> where T : class
     {
-        Task<IEnumerable<Survey>> GetAllSurveysAsync();
-        Task<Survey> GetSurveyByIdAsync(Guid surveyId);
-        Task AddSurveyAsync(Survey survey);
+        IEnumerable<T> GetAll();
+        T GetById(Guid id);
+        void Insert(T entity);
+        void Update(T entity);
+        void Delete(T entity);
+        void Save();
     }
 }

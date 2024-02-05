@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DoAnTotNghiep.Repository.SurveyRepo
 {
-    public class SurveyRepo : ISurveyRepo
+    public class SurveyRepo : ISurveyRepo<Survey>
     {
         private readonly DataContext _context; 
 
@@ -11,24 +11,36 @@ namespace DoAnTotNghiep.Repository.SurveyRepo
         {
             _context = context;
         }
-
-        public async Task<IEnumerable<Survey>> GetAllSurveysAsync()
+        public IEnumerable<Survey> GetAll()
         {
-            return await _context.Surveys.ToListAsync();
+            return _context.Surveys.ToList();
         }
 
-        public async Task<Survey> GetSurveyByIdAsync(Guid surveyId)
+        public Survey GetById(Guid id)
         {
-            return await _context.Surveys
-                .Include(s => s.Questions)  // Include related Questions
-                .FirstOrDefaultAsync(s => s.SurveyId == surveyId);
+            return _context.Surveys.Find(id);
         }
 
-        public async Task AddSurveyAsync(Survey survey)
+        public void Insert(Survey entity)
         {
-            _context.Surveys.Add(survey);
-            await _context.SaveChangesAsync();
+            _context.Surveys.Add(entity);
         }
+
+        public void Update(Survey entity)
+        {
+            _context.Surveys.Update(entity);
+        }
+
+        public void Delete(Survey entity)
+        {
+            _context.Surveys.Remove(entity);
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
     }
 
 }
