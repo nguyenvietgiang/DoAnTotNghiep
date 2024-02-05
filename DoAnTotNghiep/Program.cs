@@ -1,5 +1,4 @@
 ﻿using DNTCaptcha.Core;
-using DoAnTotNghiep.Common;
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.AccountRepo;
 using DoAnTotNghiep.Repository.BaseRepo;
@@ -19,7 +18,6 @@ using DoAnTotNghiep.Services.ImageServices;
 using DoAnTotNghiep.Services.PaymentServices;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.Licensing;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
  
@@ -99,8 +97,6 @@ app.UseEndpoints(endpoints =>
         pattern: "/Error/{statusCode}",
         defaults: new { controller = "Error", action = "HttpStatusCodeHandler" }
     );
-
-    endpoints.MapHub<ChatHub>("/chatHub");
 
     endpoints.MapControllerRoute(
         name: "areas",

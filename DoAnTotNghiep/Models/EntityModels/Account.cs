@@ -23,10 +23,6 @@ namespace DoAnTotNghiep.Models.EntityModels
 
         public bool Status { get; set; }
 
-        public ICollection<Message> SentMessages { get; set; }
-
-        public ICollection<Message> ReceivedMessages { get; set; }
-
         public List<Discuss> Discusses { get; set; }
 
         public List<Comment> Comments { get; set; }
