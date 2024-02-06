@@ -23,11 +23,12 @@
                         </div>
                         <div class="comment-form">
                             <h4>Bình luận</h4>
-                            <form class="form-contact comment_form" action="#" id="commentForm">
+                            <div class="row" id="Comment-list"></div>
+                            <form class="form-contact comment_form" id="commentForm">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9"
+                                            <textarea class="form-control w-100" name="content" id="content" cols="30" rows="9"
                                                       placeholder="Bình luận của bạn"></textarea>
                                         </div>
                                     </div>
@@ -37,6 +38,7 @@
                                 </div>
                             </form>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -62,81 +64,76 @@
     </div>
 </div>
 
-<h4>Danh sách bình luận</h4>
-<div class="row" id="Comment-list"></div>
-<form id="comment-form">
-    <label for="comment-content">Comment:</label>
-    <input type="text" id="comment-content" required />
-    <button type="submit">Add Comment</button>
-</form>
-
-
 @section Scripts {
     <script>
-        ﻿$(document).ready(function () {
-    function getComments() {
-        $.ajax({
-            url: 'https://localhost:7235/Home/GetCommentsForDiscuss?discussId=@Model.DiscussID',
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                displayComments(data);
-            },
-            error: function (error) {
-                console.log(error);
+        $(document).ready(function () {
+            // Hàm để hiển thị bình luận
+            function getComments() {
+                $.ajax({
+                    url: 'https://localhost:7235/Home/GetCommentsForDiscuss?discussId=@Model.DiscussID',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        displayComments(data);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
             }
-        });
-    }
 
-    function displayComments(comments) {
-        var commentTableHtml = '<table class="table"><thead><tr><th>ID</th><th>Content</th><th>Created At</th></tr></thead><tbody>';
+            // Hàm để hiển thị danh sách bình luận
+            function displayComments(comments) {
+                var commentListHtml = '<ul class="comment-list">';
 
-        $.each(comments, function (index, comment) {
-            commentTableHtml += '<tr>';
-            commentTableHtml += '<td>' + comment.content + '</td>';
-            commentTableHtml += '<td>' + comment.createdAt + '</td>';
-            commentTableHtml += '</tr>';
-        });
+                $.each(comments, function (index, comment) {
+                    commentListHtml += '<li>';
+                    commentListHtml += '<div class="comment-header">';
+                    commentListHtml += '<span class="user-name" style="color: blue;">' + comment.userName + '</span>';
+                    commentListHtml += '<span class="created-at"> Đã bình luận vào: ' + comment.createdAt + '</span>';
+                    commentListHtml += '</div>';
+                    commentListHtml += '<div class="comment-content">';
+                    commentListHtml += '<p>' + comment.content + '</p>';
+                    commentListHtml += '</div>';
+                    commentListHtml += '</li>';
+                });
 
-        commentTableHtml += '</tbody></table>';
-        $('#Comment-list').html(commentTableHtml);
-    }
-
-    function addComment(comment) {
-        $.ajax({
-            url: 'https://localhost:7183/admin/Comment/AddComment',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(comment),
-            success: function (data) {
-                // Refresh the comments after adding a new comment
-                getComments();
-            },
-            error: function (error) {
-                console.log(error);
+                commentListHtml += '</ul>';
+                $('#Comment-list').html(commentListHtml);
             }
+
+            // Gọi hàm để hiển thị bình luận khi trang được tải
+            getComments();
+
+            // Xử lý sự kiện submit form bình luận
+            $('#commentForm').submit(function (event) {
+                event.preventDefault(); // Ngăn chặn hành động mặc định của form
+                var formData = {
+                    discussId: '@Model.DiscussID', // Lấy discussId từ Model
+                    content: $('#content').val() // Lấy nội dung bình luận từ textarea
+                };
+                $.ajax({
+                    url: 'https://localhost:7235/Forum/AddCommentAndAccount',
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData), 
+                    success: function (response) {
+                        if (response.success) {
+                            // Nếu đăng bình luận thành công, cập nhật giao diện hiển thị bình luận mới
+                            getComments();
+                            // Xóa nội dung của textarea sau khi đã đăng bình luận thành công
+                            $('#content').val()
+                        } else {
+                            // Xử lý lỗi nếu có
+                            console.log(response.error);
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
         });
-    }
-
-    // Event handler for the form submission
-    $('#comment-form').submit(function (event) {
-        event.preventDefault();
-
-        var commentContent = $('#comment-content').val();
-
-        // Create a new comment object
-        var newComment = {
-            content: commentContent,
-            userId: '7d987d4e-de06-4696-6fdc-08dbc4e09b03', // đang gán mặc định UserID để tét
-            postId: '322098f6-a3e5-4421-a6af-cba394815a30'
-        };
-
-        // Call the addComment function to add the new comment
-        addComment(newComment);
-    });
-
-    // Initial load of comments
-    getComments();
-});
     </script>
 }

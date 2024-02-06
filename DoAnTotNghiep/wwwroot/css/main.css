@@ -36,3 +36,7 @@
 canvas {
     max-width: 400px; /* Thiết lập kích thước tối đa của mỗi biểu đồ */
 }
+
+.user-name {
+    color: blue; /* Thay đổi màu của tên người dùng thành màu xanh */
+}

@@ -66,5 +66,21 @@ namespace DoAnTotNghiep.Repository.FollowRepo
                 .Select(f => f.Account)
                 .ToList();
         }
+
+        public async Task<List<Account>> GetFollowersAsync(Guid accountId)
+        {
+            return await _context.Follows
+                .Where(f => f.FollowUserId == accountId)
+                .Select(f => f.Account)
+                .ToListAsync();
+        }
+
+        public async Task<List<Account>> GetFollowingAsync(Guid accountId)
+        {
+            return await _context.Follows
+                .Where(f => f.UserId == accountId)
+                .Select(f => f.Account)
+                .ToListAsync();
+        }
     }
 }

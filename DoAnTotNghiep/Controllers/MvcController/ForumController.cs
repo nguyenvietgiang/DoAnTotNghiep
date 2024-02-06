@@ -1,4 +1,5 @@
-﻿using DoAnTotNghiep.Models.EntityModels;
+﻿using DoAnTotNghiep.Models.DTO;
+using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.CommentRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
         }
         // Action để thêm một comment mới cho một discuss
         [HttpPost]
-        public async Task<IActionResult> AddCommentAndAccount(Guid discussId, string content)
+        public async Task<IActionResult> AddCommentAndAccount([FromBody] AddCommentModel model)
         {
             if (ModelState.IsValid)
             {
@@ -28,11 +29,11 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 {
                     var comment = new Comment
                     {
-                        Content = content, 
-                        DiscussID = discussId, 
+                        Content = model.Content,
+                        DiscussID = model.DiscussId,
                         UserId = account.UserID,
                         Account = account,
-                        CreatedAt = DateTime.Now 
+                        CreatedAt = DateTime.Now
                     };
                     await _commentRepository.AddCommentAsync(comment);
 

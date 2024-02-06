@@ -245,7 +245,7 @@ namespace DoAnTotNghiep.Controllers
             {
                 UserName = c.Account.Email,
                 Content = c.Content,
-                CreatedAt = c.CreatedAt
+                CreatedAt = c.CreatedAt.ToShortDateString()
             });
 
             return Json(commentsInfo);
