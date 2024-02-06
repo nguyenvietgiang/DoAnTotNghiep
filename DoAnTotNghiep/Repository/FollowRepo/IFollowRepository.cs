@@ -9,5 +9,6 @@ namespace DoAnTotNghiep.Repository.FollowRepo
         Task<int> GetFollowCount(Guid followUserId);
         Task<bool> IsFollowing(Guid userId, Guid followUserId);
         List<Account> GetFollowers(Guid userId);
+        List<Account> MyFollow(Guid userId);
     }
 }

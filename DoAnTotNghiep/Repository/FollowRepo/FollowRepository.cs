@@ -58,5 +58,13 @@ namespace DoAnTotNghiep.Repository.FollowRepo
                 .Select(f => f.Account)
                 .ToList();
         }
+
+        public List<Account> MyFollow(Guid userId)
+        {
+            return _context.Follows
+                .Where(f => f.UserId == userId)
+                .Select(f => f.Account)
+                .ToList();
+        }
     }
 }

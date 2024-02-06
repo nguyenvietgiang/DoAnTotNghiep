@@ -21,9 +21,11 @@ namespace DoAnTotNghiep.Repository.CommentRepo
         public async Task<List<Comment>> GetCommentsForDiscussAsync(Guid discussId)
         {
             return await _context.Comments
+                .Include(c => c.Account)
                 .Where(c => c.DiscussID == discussId)
                 .ToListAsync();
         }
+
     }
 
 }

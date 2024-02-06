@@ -18,6 +18,9 @@ namespace DoAnTotNghiep.Repository.LikeRepo
             var existingLike = await _context.Likes
                 .FirstOrDefaultAsync(l => l.UserId == userId && l.DiscussID == discussId);
 
+            // Tìm tài khoản từ UserId
+            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.UserID == userId);
+
             if (existingLike == null)
             {
                 // Người dùng chưa like, thêm mới
@@ -25,6 +28,7 @@ namespace DoAnTotNghiep.Repository.LikeRepo
                 {
                     ID = Guid.NewGuid(),
                     UserId = userId,
+                    Account= account,
                     DiscussID = discussId
                 };
 

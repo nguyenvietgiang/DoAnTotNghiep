@@ -2,6 +2,7 @@
 using DoAnTotNghiep.Models.DTO;
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.CandidatesRepo;
+using DoAnTotNghiep.Repository.CommentRepo;
 using DoAnTotNghiep.Repository.ContactRepo;
 using DoAnTotNghiep.Repository.DisscussRepo;
 using DoAnTotNghiep.Repository.EmployerRepo;
@@ -30,9 +31,10 @@ namespace DoAnTotNghiep.Controllers
         private readonly IImageGaleryRepository _imageGaleryRepository;
         private readonly IPolicyRepository _policyRepository;
         private readonly IJobPostingRepository _jobPostingRepository;
+        private readonly ICommentRepository _commentRepository;
         private readonly DataContext _dataContext;
         public HomeController(ILogger<HomeController> logger, IContactRepository contactRepository, IEmployerRepository employerRepository, ICandidatesRepo candidatesRepo
-            , IDiscussRepository discussRepository, IJobApplyFormRepository jobApplyFormRepository, IJobPostingRepository jobPostingRepository,
+            , IDiscussRepository discussRepository, IJobApplyFormRepository jobApplyFormRepository, IJobPostingRepository jobPostingRepository, ICommentRepository commentRepository,
             IFollowRepository followRepository, IImageGaleryRepository imageGaleryRepository, DataContext dataContext, IPolicyRepository policyRepository)
         {
             _employerRepository= employerRepository;
@@ -45,6 +47,7 @@ namespace DoAnTotNghiep.Controllers
             _policyRepository= policyRepository;
             _dataContext= dataContext;
             _jobPostingRepository= jobPostingRepository;
+            _commentRepository= commentRepository;
             _logger = logger;
         }
 
@@ -233,6 +236,19 @@ namespace DoAnTotNghiep.Controllers
             return View(policies);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetCommentsForDiscuss(Guid discussId)
+        {
+            var comments = await _commentRepository.GetCommentsForDiscussAsync(discussId);
 
+            var commentsInfo = comments.Select(c => new
+            {
+                UserName = c.Account.Email,
+                Content = c.Content,
+                CreatedAt = c.CreatedAt
+            });
+
+            return Json(commentsInfo);
+        }
     }
 }

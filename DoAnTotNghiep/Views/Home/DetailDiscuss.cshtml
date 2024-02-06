@@ -61,3 +61,82 @@
         </div>
     </div>
 </div>
+
+<h4>Danh sách bình luận</h4>
+<div class="row" id="Comment-list"></div>
+<form id="comment-form">
+    <label for="comment-content">Comment:</label>
+    <input type="text" id="comment-content" required />
+    <button type="submit">Add Comment</button>
+</form>
+
+
+@section Scripts {
+    <script>
+        ﻿$(document).ready(function () {
+    function getComments() {
+        $.ajax({
+            url: 'https://localhost:7235/Home/GetCommentsForDiscuss?discussId=@Model.DiscussID',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                displayComments(data);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function displayComments(comments) {
+        var commentTableHtml = '<table class="table"><thead><tr><th>ID</th><th>Content</th><th>Created At</th></tr></thead><tbody>';
+
+        $.each(comments, function (index, comment) {
+            commentTableHtml += '<tr>';
+            commentTableHtml += '<td>' + comment.content + '</td>';
+            commentTableHtml += '<td>' + comment.createdAt + '</td>';
+            commentTableHtml += '</tr>';
+        });
+
+        commentTableHtml += '</tbody></table>';
+        $('#Comment-list').html(commentTableHtml);
+    }
+
+    function addComment(comment) {
+        $.ajax({
+            url: 'https://localhost:7183/admin/Comment/AddComment',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(comment),
+            success: function (data) {
+                // Refresh the comments after adding a new comment
+                getComments();
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    // Event handler for the form submission
+    $('#comment-form').submit(function (event) {
+        event.preventDefault();
+
+        var commentContent = $('#comment-content').val();
+
+        // Create a new comment object
+        var newComment = {
+            content: commentContent,
+            userId: '7d987d4e-de06-4696-6fdc-08dbc4e09b03', // đang gán mặc định UserID để tét
+            postId: '322098f6-a3e5-4421-a6af-cba394815a30'
+        };
+
+        // Call the addComment function to add the new comment
+        addComment(newComment);
+    });
+
+    // Initial load of comments
+    getComments();
+});
+    </script>
+}
