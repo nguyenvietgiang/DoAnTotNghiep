@@ -10,9 +10,11 @@ using Syncfusion.Pdf.Graphics;
 using X.PagedList;
 using System.Drawing.Drawing2D;
 using Microsoft.EntityFrameworkCore;
+using DoAnTotNghiep.Middleware;
 
 namespace DoAnTotNghiep.Controllers.MvcController
 {
+    [CheckUserRoleFilter(AccountRole.CandidateFree, AccountRole.CandidatePaid)]
     public class CandidatesController : BaseController
     {
         private readonly ICandidatesRepo _candidateRepository;

@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Areas\Manage\Data\" />
     <Folder Include="Areas\Manage\Models\" />
-    <Folder Include="Middleware\" />
     <Folder Include="wwwroot\cvFile\" />
     <Folder Include="wwwroot\template\excel-template\" />
     <Folder Include="wwwroot\template\word-template\" />

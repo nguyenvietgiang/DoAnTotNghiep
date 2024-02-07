@@ -1,5 +1,7 @@
-﻿using DoAnTotNghiep.Models.DTO;
+﻿using DoAnTotNghiep.Middleware;
+using DoAnTotNghiep.Models.DTO;
 using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Models.Enum;
 using DoAnTotNghiep.Models.ResponseDTO;
 using DoAnTotNghiep.Repository.EmployerRepo;
 using DoAnTotNghiep.Repository.ImageGaleryRepo;
@@ -13,6 +15,7 @@ using Syncfusion.XlsIO;
 
 namespace DoAnTotNghiep.Controllers.MvcController
 {
+    [CheckUserRoleFilter(AccountRole.EmployerFree, AccountRole.EmployerPaid)]
     public class EmployerController : BaseController
     {
         private readonly IEmployerRepository _employerRepository;

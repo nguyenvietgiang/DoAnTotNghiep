@@ -48,12 +48,14 @@ namespace DoAnTotNghiep.Controllers.MvcController
                         {
                             HttpContext.Session.SetString("EmployerName", model.Email);
                             HttpContext.Session.SetString("Accountid", rowuser.UserID.ToString());
+                            HttpContext.Session.SetInt32("UserRole", (int)rowuser.AccountRole);
                             return RedirectToAction("Index", "Home");
                         }
                         else if (rowuser.AccountRole == AccountRole.CandidateFree || rowuser.AccountRole == AccountRole.CandidatePaid)
                         {
                             HttpContext.Session.SetString("CandidateName", model.Email);
                             HttpContext.Session.SetString("Accountid", rowuser.UserID.ToString());
+                            HttpContext.Session.SetInt32("UserRole", (int)rowuser.AccountRole);
                             return RedirectToAction("Index", "Home");
                         }
                     }
