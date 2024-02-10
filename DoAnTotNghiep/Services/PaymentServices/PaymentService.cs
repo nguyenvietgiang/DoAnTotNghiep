@@ -24,7 +24,19 @@ namespace DoAnTotNghiep.Services.PaymentServices
                 }
                 else
                 {
-                    account.AccountRole = AccountRole.CandidatePaid;
+                    if (account.AccountRole == AccountRole.CandidateFree)
+                    {
+                        account.AccountRole = AccountRole.CandidatePaid;
+                    }
+                    else if (account.AccountRole == AccountRole.EmployerFree)
+                    {
+                        account.AccountRole = AccountRole.EmployerPaid;
+                    }
+                    else
+                    {
+                        // Nếu tài khoản không phải là "Free" thì không thực hiện gì cả
+                        return false;
+                    }
 
                     // Cập nhật dữ liệu thống kê
                     var today = DateTime.Today;
@@ -55,6 +67,7 @@ namespace DoAnTotNghiep.Services.PaymentServices
                 return false;
             }
         }
+
 
         public IEnumerable<RevenueStatistic> GetRevenueStatisticsForCurrentMonth()
         {

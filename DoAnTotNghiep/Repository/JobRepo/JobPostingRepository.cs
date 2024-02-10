@@ -1,4 +1,5 @@
 ﻿using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Models.Enum;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoAnTotNghiep.Repository.JobRepo
@@ -70,8 +71,11 @@ namespace DoAnTotNghiep.Repository.JobRepo
             return await _context.JobPostings
                 .Include(jp => jp.Employer)
                 .Where(jp => jp.Status)
+                .OrderBy(jp => jp.Employer.Account.AccountRole == AccountRole.EmployerPaid ? 0 : 1)
+                .ThenByDescending(jp => jp.CreateAt) 
                 .ToListAsync();
         }
+
 
         public async Task<IEnumerable<JobPosting>> SearchJobPostingsAsync(string searchTerm, string location)
         {
@@ -133,29 +137,31 @@ namespace DoAnTotNghiep.Repository.JobRepo
 
         public async Task<IEnumerable<JobPosting>> GetFilteredJobPostingsAsync(string title, string location, int? salary, string time)
         {
-            var query = _context.JobPostings.Include(jp => jp.Employer).Where(jp => jp.Status);
+            var approvedJobPostings = await GetApprovedJobPostingsAsync();
+
+            var query = approvedJobPostings.ToList();
 
             if (!string.IsNullOrEmpty(title))
             {
-                query = query.Where(jp => jp.Title.Contains(title) || jp.Requirements.Contains(title));
+                query = query.Where(jp => jp.Title.Contains(title) || jp.Requirements.Contains(title)).ToList();
             }
 
             if (!string.IsNullOrEmpty(location))
             {
-                query = query.Where(jp => jp.Location.Contains(location));
+                query = query.Where(jp => jp.Location.Contains(location)).ToList();
             }
 
             if (salary.HasValue)
             {
-                query = query.Where(jp => jp.Salary == salary.Value);
+                query = query.Where(jp => jp.Salary == salary.Value).ToList();
             }
 
             if (!string.IsNullOrEmpty(time))
             {
-                query = query.Where(jp => jp.WorkingTime == time);
+                query = query.Where(jp => jp.WorkingTime == time).ToList();
             }
 
-            return await query.ToListAsync();
+            return query;
         }
 
     }
