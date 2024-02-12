@@ -1,0 +1,33 @@
+﻿@model IEnumerable<DoAnTotNghiep.Models.EntityModels.Survey>
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @addTagHelper *, AuthoringTagHelpers
+}
+<div class="container">
+    <div class="row">
+        @foreach (var survey in Model)
+        {
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">@survey.Title</h5>
+                        <a href="@Url.Action("Details", "ManageSurvey", new { id = survey.SurveyId })" class="btn btn-primary">Chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Tạo mới</h5>
+                    <a href="@Url.Action("Create", "ManageSurvey")" class="btn btn-success">Tạo mới</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

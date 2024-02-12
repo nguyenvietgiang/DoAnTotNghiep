@@ -1,0 +1,40 @@
+﻿@model DoAnTotNghiep.Models.EntityModels.Survey
+
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @addTagHelper *, AuthoringTagHelpers
+}
+
+
+<div>
+    <h2>@Model.Title</h2>
+    <!-- Hiển thị các thông tin khác của survey -->
+
+    @if (ViewBag.QuestionsInSurvey != null && ViewBag.QuestionsInSurvey.Count > 0)
+    {
+        <h3>Các câu hỏi:</h3>
+        <ul>
+            @foreach (var question in ViewBag.QuestionsInSurvey)
+            {
+                <li>@question.QuestionText</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Chưa có câu hỏi.</p>
+    }
+</div>
+
+<h3>Thêm câu hỏi từ tệp excel</h3>
+<form asp-action="ImportQuestionsFromExcel" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="surveyId" value="@Model.SurveyId" />
+    <div class="form-group">
+        <label for="excelFile">Upload Excel File:</label>
+        <input type="file" name="excelFile" class="form-control-file" />
+    </div>
+    <button type="submit" class="btn btn-primary">Thêm câu hỏi</button>
+</form>
+

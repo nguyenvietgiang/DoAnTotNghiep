@@ -1,0 +1,18 @@
+﻿@model DoAnTotNghiep.Models.EntityModels.Survey
+
+@{
+    ViewData["Title"] = "Create Survey";
+    Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @addTagHelper *, AuthoringTagHelpers
+}
+
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Title">Tên cuộc khảo sát</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Tạo mới</button>
+</form>
