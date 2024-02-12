@@ -1,0 +1,22 @@
+﻿@model IEnumerable<DoAnTotNghiep.Models.EntityModels.Survey>
+
+@{
+    ViewData["Title"] = "Danh sách các quộc khảo sát";
+}
+
+<div class="container">
+    <h2 class="mb-4">Các bài khảo sát khả dụng</h2>
+    <div class="row">
+        @foreach (var survey in Model)
+        {
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">@survey.Title</h5>
+                            <a href="@Url.Action("Survey", "Survey", new { id = survey.SurveyId })" class="btn btn-primary">Chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+        }
+    </div>
+</div>
