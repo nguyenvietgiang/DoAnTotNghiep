@@ -9,15 +9,11 @@ namespace DoAnTotNghiep.Controllers.MvcController
     public class SurveyController : Controller
     {
         private readonly ISurveyRepo<Survey> _surveyRepo;
-        private readonly ISurveyRepo<Question> _questionRepo;
-        private readonly ISurveyRepo<Option> _optionRepo;
         private readonly DataContext _dataContext;
 
-        public SurveyController(ISurveyRepo<Survey> surveyRepo, ISurveyRepo<Question> questionRepo, ISurveyRepo<Option> optionRepo, DataContext dataContext)
+        public SurveyController(ISurveyRepo<Survey> surveyRepo, DataContext dataContext)
         {
             _surveyRepo = surveyRepo;
-            _questionRepo = questionRepo;
-            _optionRepo = optionRepo;
             _dataContext = dataContext;
         }
 
@@ -65,6 +61,41 @@ namespace DoAnTotNghiep.Controllers.MvcController
 
             return RedirectToAction("Thankyou", "Survey"); 
         }
+
+        [HttpGet]
+        public IActionResult GetSurveyResults(Guid surveyId)
+        {
+            var survey = _dataContext.Surveys
+                .Include(s => s.Questions)
+                    .ThenInclude(q => q.Options)
+                        .ThenInclude(o => o.AnswerCounts)
+                .FirstOrDefault(s => s.SurveyId == surveyId);
+
+            if (survey == null)
+            {
+                return NotFound();
+            }
+
+            var results = new List<object>();
+
+            foreach (var question in survey.Questions)
+            {
+                foreach (var option in question.Options)
+                {
+                    var count = option.AnswerCounts.Count;
+                    results.Add(new
+                    {
+                        OptionId = option.OptionId,
+                        OptionText = option.OptionText,
+                        Count = count
+                    });
+                }
+            }
+
+            return Json(results);
+        }
+
+
         public IActionResult Thankyou()
         {
             return View();

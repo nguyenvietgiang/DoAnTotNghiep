@@ -13,6 +13,7 @@ using DoAnTotNghiep.Repository.JobRepo;
 using DoAnTotNghiep.Repository.PolicyRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Matching;
+using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.Ocsp;
 using System.Diagnostics;
 using X.PagedList;
@@ -106,7 +107,19 @@ namespace DoAnTotNghiep.Controllers
         // Action để hiển thị và lọc danh sách công việc
         public async Task<IActionResult> Hiring(string title, string location, int? salary, string time)
         {
-            var jobPostings = await _jobPostingRepository.GetFilteredJobPostingsAsync(title, location, salary, time);
+            var accountIdClaim = HttpContext.Session.GetString("Accountid");
+            var user = await _dataContext.Accounts
+               .FirstOrDefaultAsync(m => m.UserID.ToString() == accountIdClaim);
+
+            string recomment = null; // Mặc định recomment là null
+
+            // Kiểm tra xem user và user.Candidate có null hay không trước khi gán recomment
+            if (user != null && user.Candidate != null)
+            {
+                recomment = user.Candidate.Industry;
+            }
+
+            var jobPostings = await _jobPostingRepository.GetFilteredJobPostingsAsync(title, location, salary, time, recomment);
             string filterMessage = "Tất cả công việc";
             if (!string.IsNullOrEmpty(title))
             {
@@ -126,8 +139,6 @@ namespace DoAnTotNghiep.Controllers
 
             return View(jobPostings);
         }
-
-
 
         public IActionResult NoPermistion()
         {

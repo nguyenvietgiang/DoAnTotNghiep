@@ -16,7 +16,7 @@ namespace DoAnTotNghiep.Repository.JobRepo
         Task<IEnumerable<JobPosting>> SearchJobPostingsAsync(string searchTerm, string location);
         Task<IDictionary<string, int>> GetJobPositionsCountAsync();
         Task<IEnumerable<JobPosting>> GetSimilarJobsAsync(Guid jobId);
-        Task<IEnumerable<JobPosting>> GetFilteredJobPostingsAsync(string title, string location, int? salary, string time);
+        Task<IEnumerable<JobPosting>> GetFilteredJobPostingsAsync(string title, string location, int? salary, string time, string recommend);
 
     }
 }

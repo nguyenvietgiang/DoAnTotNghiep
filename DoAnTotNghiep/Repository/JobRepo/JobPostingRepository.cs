@@ -135,30 +135,40 @@ namespace DoAnTotNghiep.Repository.JobRepo
             return similarJobs;
         }
 
-        public async Task<IEnumerable<JobPosting>> GetFilteredJobPostingsAsync(string title, string location, int? salary, string time)
+        public async Task<IEnumerable<JobPosting>> GetFilteredJobPostingsAsync(string title, string location, int? salary, string time, string recommend)
         {
             var approvedJobPostings = await GetApprovedJobPostingsAsync();
 
             var query = approvedJobPostings.ToList();
 
-            if (!string.IsNullOrEmpty(title))
+            // Kiểm tra xem có nên sử dụng trường recommend hay không
+            if (!string.IsNullOrEmpty(recommend))
             {
-                query = query.Where(jp => jp.Title.Contains(title) || jp.Requirements.Contains(title)).ToList();
+                query = query.OrderByDescending(jp => jp.Title.Contains(recommend)).ToList();
             }
 
-            if (!string.IsNullOrEmpty(location))
+            // Nếu không sử dụng recommend hoặc recommend là null
+            else
             {
-                query = query.Where(jp => jp.Location.Contains(location)).ToList();
-            }
+                if (!string.IsNullOrEmpty(title))
+                {
+                    query = query.Where(jp => jp.Title.Contains(title) || jp.Requirements.Contains(title)).ToList();
+                }
 
-            if (salary.HasValue)
-            {
-                query = query.Where(jp => jp.Salary == salary.Value).ToList();
-            }
+                if (!string.IsNullOrEmpty(location))
+                {
+                    query = query.Where(jp => jp.Location.Contains(location)).ToList();
+                }
 
-            if (!string.IsNullOrEmpty(time))
-            {
-                query = query.Where(jp => jp.WorkingTime == time).ToList();
+                if (salary.HasValue)
+                {
+                    query = query.Where(jp => jp.Salary == salary.Value).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(time))
+                {
+                    query = query.Where(jp => jp.WorkingTime == time).ToList();
+                }
             }
 
             return query;
