@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
 }
@@ -95,18 +94,15 @@
             <!-- Area Chart -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Thống kê doanh thu</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
-                        <canvas id="myAreaChart"></canvas>
+                            <canvas id="revenueChart"></canvas>
                     </div>
                     <hr>
                 </div>
             </div>
-
-       
-
         </div>
 
         <!-- Donut Chart -->
@@ -114,7 +110,7 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Thống kê tỉ lệ tài khoản</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -149,67 +145,111 @@
 </div>
 
 @section Scripts {
-        <script>
-            $(document).ready(function () {
-                // Function to create the "Duyệt" button
-                function createActionButton(jobId, actionType, buttonText) {
-                    return `<button class="btn btn-${actionType}" data-job-id="${jobId}">${buttonText}</button>`;
-                }
+    <script>
+        $(document).ready(function () {
+            // Function to create the "Duyệt" button
+            function createActionButton(jobId, actionType, buttonText) {
+                return `<button class="btn btn-${actionType}" data-job-id="${jobId}">${buttonText}</button>`;
+            }
 
-                // Function to handle the action button click
-                function handleActionButtonClick() {
-                    var jobId = $(this).data('job-id');
-                    var actionType = $(this).hasClass('btn-approve') ? 'approve' : 'delete';
+            // Function to handle the action button click
+            function handleActionButtonClick() {
+                var jobId = $(this).data('job-id');
+                var actionType = $(this).hasClass('btn-approve') ? 'approve' : 'delete';
 
-                    // Call the corresponding API based on the action type
-                    var apiUrl = actionType === 'approve'
-                        ? `/api/job/togglestatus/${jobId}`
-                        : `/api/job/${jobId}`;
+                // Call the corresponding API based on the action type
+                var apiUrl = actionType === 'approve'
+                    ? `/api/job/togglestatus/${jobId}`
+                    : `/api/job/${jobId}`;
 
-                    var successCallback = function () {
-                        // Remove the row from the table on success
-                        $(`#jobTable tr[data-job-id="${jobId}"]`).remove();
-                    };
-
-                    $.ajax({
-                        type: actionType === 'approve' ? 'POST' : 'DELETE',
-                        url: apiUrl,
-                        success: successCallback,
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-                }
+                var successCallback = function () {
+                    // Remove the row from the table on success
+                    $(`#jobTable tr[data-job-id="${jobId}"]`).remove();
+                };
 
                 $.ajax({
-                    type: 'GET',
-                    url: '/api/job',
-                    success: function (data) {
-                        $.each(data, function (index, job) {
-                            var row = `
-                                <tr data-job-id="${job.jobId}">
-                                    <td>${job.title}</td>
-                                    <td>${job.position}</td>
-                                    <td>${job.company}</td>
-                                    <td><img src="${job.image}" alt="Company Image" width="50"></td>
-                                    <td>
-                                        ${createActionButton(job.jobId, 'approve', 'Duyệt')}
-                                        ${createActionButton(job.jobId, 'delete', 'Xóa')}
-                                    </td>
-                                </tr>`;
-
-                            $('#jobTable tbody').append(row);
-                        });
-
-                        // Attach click event to the action buttons
-                        $('.btn-approve, .btn-delete').on('click', handleActionButtonClick);
-                    },
+                    type: actionType === 'approve' ? 'POST' : 'DELETE',
+                    url: apiUrl,
+                    success: successCallback,
                     error: function (error) {
                         console.log(error);
                     }
                 });
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/job',
+                success: function (data) {
+                    $.each(data, function (index, job) {
+                        var row = `
+                                                <tr data-job-id="${job.jobId}">
+                                                    <td>${job.title}</td>
+                                                    <td>${job.position}</td>
+                                                    <td>${job.company}</td>
+                                                    <td><img src="${job.image}" alt="Company Image" width="50"></td>
+                                                    <td>
+                                                        ${createActionButton(job.jobId, 'approve', 'Duyệt')}
+                                                        ${createActionButton(job.jobId, 'delete', 'Xóa')}
+                                                    </td>
+                                                </tr>`;
+
+                        $('#jobTable tbody').append(row);
+                    });
+
+                    // Attach click event to the action buttons
+                    $('.btn-approve, .btn-delete').on('click', handleActionButtonClick);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
             });
-        </script>
+        });
+
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("GetRevenueData", "ManageDashbroad")',
+                type: 'GET',
+                success: function (data) {
+                    var dates = [];
+                    var amounts = [];
+                    data.forEach(function (item) {
+                        dates.push(item.date); // Sửa "Date" thành "date"
+                        amounts.push(item.amount); // Sửa "Amount" thành "amount"
+                    });
+
+                    var ctx = document.getElementById('revenueChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: dates,
+                            datasets: [{
+                                label: 'Revenue',
+                                data: amounts,
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    type: 'category',
+                                    labels: dates
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+    </script>
     <script src="~/js/manage/chart/chart-pie-demo.js"></script>
-  
+
 }
