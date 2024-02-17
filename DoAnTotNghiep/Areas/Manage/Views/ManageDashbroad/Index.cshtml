@@ -97,10 +97,22 @@
                     <h6 class="m-0 font-weight-bold text-primary">Thống kê doanh thu</h6>
                 </div>
                 <div class="card-body">
-                    <div class="chart-area">
-                            <canvas id="revenueChart"></canvas>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <select class="form-control" id="yearSelect">
+                                    <option value="@ViewBag.CurrentYear">Năm: @ViewBag.CurrentYear</option>
+                                    <option value="2023">Năm: 2023</option>
+                                    <option value="2022">Năm: 2022</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -205,50 +217,70 @@
                 }
             });
         });
-
+        // chart thống kê doanh thu
         $(document).ready(function () {
-            $.ajax({
-                url: '@Url.Action("GetRevenueData", "ManageDashbroad")',
-                type: 'GET',
-                success: function (data) {
-                    var dates = [];
-                    var amounts = [];
-                    data.forEach(function (item) {
-                        dates.push(item.date); // Sửa "Date" thành "date"
-                        amounts.push(item.amount); // Sửa "Amount" thành "amount"
-                    });
+            var currentChart = null; // Biến để lưu trữ biểu đồ hiện tại
 
-                    var ctx = document.getElementById('revenueChart').getContext('2d');
-                    var chart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: dates,
-                            datasets: [{
-                                label: 'Revenue',
-                                data: amounts,
-                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                xAxes: [{
-                                    type: 'category',
-                                    labels: dates
-                                }],
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
-                                }]
-                            }
-                        }
-                    });
+            // Hàm để cập nhật biểu đồ với năm được chọn
+            function updateChart(selectedYear) {
+                if (currentChart) {
+                    currentChart.destroy(); // Hủy biểu đồ hiện tại nếu tồn tại
                 }
-            });
-        });
 
+                $.ajax({
+                    url: '@Url.Action("GetRevenueData", "ManageDashbroad")',
+                    type: 'GET',
+                    data: { selectedYear: selectedYear },
+                    success: function (data) {
+                        var dates = [];
+                        var amounts = [];
+                        data.forEach(function (item) {
+                            dates.push(item.date);
+                            amounts.push(item.amount);
+                        });
+
+                        var ctx = document.getElementById('revenueChart').getContext('2d');
+                        currentChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: dates,
+                                datasets: [{
+                                    label: 'Doanh Thu',
+                                    data: amounts,
+                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    xAxes: [{
+                                        type: 'category',
+                                        labels: dates
+                                    }],
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Sự kiện để cập nhật biểu đồ khi người dùng thay đổi năm
+            $('#yearSelect').change(function () {
+                var selectedYear = $(this).val();
+                updateChart(selectedYear);
+            });
+
+            // Lấy năm hiện tại và cập nhật biểu đồ ban đầu
+            var currentYear = (new Date()).getFullYear();
+            $('#yearSelect').val(currentYear);
+            updateChart(currentYear);
+        });
     </script>
     <script src="~/js/manage/chart/chart-pie-demo.js"></script>
 

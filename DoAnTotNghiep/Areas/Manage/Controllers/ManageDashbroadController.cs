@@ -14,6 +14,8 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
         }
         public IActionResult Index()
         {
+            int currentYear = DateTime.Now.Year;
+            ViewBag.CurrentYear = currentYear;
             ViewBag.Employer = _dataContext.Employers.Count();
             ViewBag.Cadidates = _dataContext.Candidates.Count();
             ViewBag.Job = _dataContext.JobPostings.Count();
@@ -21,14 +23,16 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
             return View();
         }
 
-        public IActionResult GetRevenueData()
+        public IActionResult GetRevenueData(int selectedYear)
         {
             var revenueData = _dataContext.RevenueStatistics
+                .Where(r => r.Date.Year == selectedYear)
                 .OrderBy(r => r.Date)
                 .Select(r => new { Date = r.Date.ToString("yyyy-MM-dd"), Amount = r.Amount })
                 .ToList();
 
             return Json(revenueData);
         }
+
     }
 }
