@@ -1,8 +1,10 @@
 ﻿using DoAnTotNghiep.Common;
+using DoAnTotNghiep.Models.DTO;
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.CandidatesRepo;
 using DoAnTotNghiep.Services.ImageServices;
 using DoAnTotNghiep.Services.PaymentServices;
+using DoAnTotNghiep.Services.VNpayServices;
 using Microsoft.AspNetCore.Mvc;
 using PayPal.Api;
 
@@ -11,8 +13,10 @@ namespace DoAnTotNghiep.Controllers.MvcController
     public class PaymentController : BaseController
     {
         private readonly IPaymentService  _paymentService;
-        public PaymentController(IPaymentService paymentService)
+        private readonly IVnPayService _vnPayService;
+        public PaymentController(IPaymentService paymentService, IVnPayService vnPayService)
         {
+            _vnPayService= vnPayService;
            _paymentService= paymentService;
         }
         public IActionResult PaymentWithPaypal()
@@ -87,7 +91,24 @@ namespace DoAnTotNghiep.Controllers.MvcController
 
         public IActionResult PaymentWithVNPay() 
         {
-            return View();
+            // Tạo đối tượng VnPaymentRequestModel với giá trị mặc định cho đơn hàng là 50000 VND
+            var paymentRequest = new VnPaymentRequestModel
+            {
+                Amount = 50000, // Đơn vị là VNĐ
+                CreatedDate = DateTime.Now, // Ngày tạo đơn hàng
+                OrderId = 123456 
+            };
+            var paymentUrl = _vnPayService.CreatePaymentUrl(HttpContext, paymentRequest);
+            return Redirect(paymentUrl);
         }
-     }
+
+        [HttpPost]
+        public IActionResult PaymentCallback()
+        {
+            var userId = GetUserIdFromClaim();
+            var responseModel = _vnPayService.PaymentExecute(Request.Query);
+            _paymentService.ProcessPayment(Guid.Parse(userId));
+            return Ok();
+        }
+    }
 }
