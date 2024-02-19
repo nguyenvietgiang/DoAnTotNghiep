@@ -1,4 +1,5 @@
 ﻿using DNTCaptcha.Core;
+using DoAnTotNghiep.Middleware;
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.AccountRepo;
 using DoAnTotNghiep.Repository.BaseRepo;
@@ -16,6 +17,7 @@ using DoAnTotNghiep.Repository.SurveyRepo;
 using DoAnTotNghiep.Services.EmailServices;
 using DoAnTotNghiep.Services.ExportServices;
 using DoAnTotNghiep.Services.ImageServices;
+using DoAnTotNghiep.Services.OnlineCountServices;
 using DoAnTotNghiep.Services.PaymentServices;
 using DoAnTotNghiep.Services.VNpayServices;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +35,8 @@ builder.Services.AddScoped<IEmailServices, EmailServices>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IExcelExportService, ExcelExportService>();
 builder.Services.AddSingleton<IVnPayService, VnPayService>();
+builder.Services.AddScoped<IOnlineUsersService, OnlineUsersService>();
+
 //repo
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
@@ -51,6 +55,7 @@ builder.Services.AddScoped<ISurveyRepo<Question>, QuestionRepo>();
 builder.Services.AddScoped<ISurveyRepo<Option>, OptionRepo>();
 // khai báo mã syncfusion phục vụ nhập/xuất file-extend
 SyncfusionLicenseProvider.RegisterLicense("MTQwNUAzMTM4MmUzNDJlMzBGT29sdENza2kyME1jUHpPNVd5enVXY1AvNVZ1SVdPQlVMNUE4R1c1M0FvPQ==");
+
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -79,7 +84,7 @@ builder.Services.AddControllers()
                 options.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
             });
 var app = builder.Build();
-
+app.UseMiddleware<OnlineUsersMiddleware>();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

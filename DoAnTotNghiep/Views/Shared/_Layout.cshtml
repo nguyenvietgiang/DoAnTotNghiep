@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using DoAnTotNghiep.Services.OnlineCountServices
+@inject IOnlineUsersService OnlineUsersService
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -181,6 +185,7 @@
                                 <p>
                                     Create By: <a href="https://vietgiangblog.blogspot.com/">Nguyễn Việt Giang</a> | Đồ Án Tốt Nghiệp 2024 | <a asp-area="Manage" asp-controller="ManageDashbroad" asp-action="Index">Trang Quản Trị</a>
                                 </p>
+                                <p>Số lượng người đang truy cập: @OnlineUsersService.GetOnlineUsersCount()</p>
                             </div>
                         </div>
 

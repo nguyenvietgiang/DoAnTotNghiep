@@ -141,7 +141,7 @@ namespace DoAnTotNghiep.Controllers.ApisController
             }
         }
 
-        [HttpPost("{id}")]
+        [HttpPost("togglestatus/{id}")]
         public async Task<IActionResult> ToggleJobStatus(Guid id)
         {
             try
@@ -155,6 +155,7 @@ namespace DoAnTotNghiep.Controllers.ApisController
                 return StatusCode(500, "Internal server error");
             }
         }
+
 
         [HttpGet("positions/count")]
         public async Task<IActionResult> GetJobPositionsCount()

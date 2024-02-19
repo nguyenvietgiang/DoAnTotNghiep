@@ -195,16 +195,16 @@
                 success: function (data) {
                     $.each(data, function (index, job) {
                         var row = `
-                                                <tr data-job-id="${job.jobId}">
-                                                    <td>${job.title}</td>
-                                                    <td>${job.position}</td>
-                                                    <td>${job.company}</td>
-                                                    <td><img src="${job.image}" alt="Company Image" width="50"></td>
-                                                    <td>
-                                                        ${createActionButton(job.jobId, 'approve', 'Duyệt')}
-                                                        ${createActionButton(job.jobId, 'delete', 'Xóa')}
-                                                    </td>
-                                                </tr>`;
+                            <tr data-job-id="${job.jobId}">
+                                <td>${job.title}</td>
+                                <td>${job.position}</td>
+                                <td>${job.company}</td>
+                                <td><img src="${job.image}" alt="Company Image" width="50"></td>
+                                <td>
+                                    ${createActionButton(job.jobId, 'approve', 'Duyệt')}
+                                    
+                                </td>
+                            </tr>`;
 
                         $('#jobTable tbody').append(row);
                     });
