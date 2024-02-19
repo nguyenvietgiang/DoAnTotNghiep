@@ -1,5 +1,6 @@
 ﻿using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.SurveyRepo;
+using DoAnTotNghiep.Services.ExportServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.XlsIO;
@@ -13,10 +14,12 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
         private readonly ISurveyRepo<Survey> _surveyRepo;
         private readonly ISurveyRepo<Question> _questionRepo;
         private readonly ISurveyRepo<Option> _optionRepo;
+        private readonly IExcelExportService _excelExportService;
         private readonly DataContext _dataContext;
 
-        public ManageSurveyController(ISurveyRepo<Survey> surveyRepo, ISurveyRepo<Question> questionRepo, ISurveyRepo<Option> optionRepo, DataContext dataContext)
+        public ManageSurveyController(ISurveyRepo<Survey> surveyRepo, ISurveyRepo<Question> questionRepo, ISurveyRepo<Option> optionRepo, DataContext dataContext, IExcelExportService excelExportService)
         {
+            _excelExportService = excelExportService;
             _surveyRepo = surveyRepo;
             _questionRepo = questionRepo;
             _optionRepo = optionRepo;
@@ -54,6 +57,12 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
             ViewBag.QuestionsInSurvey = questionsInSurvey;
 
             return View(survey);
+        }
+
+        public IActionResult DownloadExcelTemplate()
+        {
+            byte[] templateBytes = _excelExportService.GetExcelTemplate("Question");
+            return File(templateBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Question.xlsx");
         }
 
         [HttpPost]

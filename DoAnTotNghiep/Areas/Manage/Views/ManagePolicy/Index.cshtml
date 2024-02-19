@@ -16,7 +16,7 @@
             <th>
                 Chính sách
             </th>
-            <th>Action</th>
+            <th>Thao tác</th>
         </tr>
     </thead>
     <tbody>
@@ -27,8 +27,7 @@
                     @Html.DisplayFor(modelItem => item.PolicyTitle)
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.PolicyID" class="btn btn-info">Chi tiết</a> |
-                    <a asp-action="Edit" asp-route-id="@item.PolicyID" class="btn btn-warning">Sửa</a> |
+                    <a asp-action="Details" asp-route-id="@item.PolicyID" class="btn btn-info">Chi tiết</a>|
                     <a asp-action="Delete" asp-route-id="@item.PolicyID" class="btn btn-danger">Xóa</a>
                 </td>
             </tr>

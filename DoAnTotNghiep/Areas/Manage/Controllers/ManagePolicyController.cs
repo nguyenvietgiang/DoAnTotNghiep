@@ -47,5 +47,25 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
             }
             return View(policy);
         }
+
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var policy = await _policyRepository.GetPolicyByIdAsync(id);
+            if (policy == null)
+            {
+                return NotFound();
+            }
+
+            return View(policy);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            await _policyRepository.DeletePolicyAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

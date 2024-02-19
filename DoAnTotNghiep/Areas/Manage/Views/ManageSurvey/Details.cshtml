@@ -32,7 +32,11 @@
 <form asp-action="ImportQuestionsFromExcel" method="post" enctype="multipart/form-data">
     <input type="hidden" name="surveyId" value="@Model.SurveyId" />
     <div class="form-group">
-        <label for="excelFile">Upload Excel File:</label>
+        <div class="d-flex align-items-center">
+    <p class="mr-2 mb-0">Có thể lấy file mẫu tại</p>
+    <a class="btn btn-primary" asp-action="DownloadExcelTemplate">Đây</a>
+</div>
+        <label for="excelFile">Sau khi tải file mẫu và điền đủ thông tin, có thể import ở đây:</label>
         <input type="file" name="excelFile" class="form-control-file" />
     </div>
     <button type="submit" class="btn btn-primary">Thêm câu hỏi</button>
