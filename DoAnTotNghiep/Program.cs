@@ -83,6 +83,7 @@ builder.Services.AddControllers()
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
             });
+
 var app = builder.Build();
 app.UseMiddleware<OnlineUsersMiddleware>();
 // Configure the HTTP request pipeline.
@@ -117,7 +118,7 @@ app.UseEndpoints(endpoints =>
     // Default route for Home/Index
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}"
+        pattern: "{language=vie}/{controller=Home}/{action=Index}/{id?}"
     );
 });
 

@@ -23,6 +23,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+    @{
+        string language = ViewContext.RouteData.Values["language"].ToString();
+        Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(language);
+        Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+    }
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
@@ -33,6 +38,7 @@
             </div>
         </div>
     </div>
+    <partial name="_top_header" />
     <!-- Preloader Start -->
     <header>
         <!-- Header Start -->
@@ -52,7 +58,7 @@
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a asp-controller="Home" asp-action="index">Trang Chủ</a></li>
+                                            <li><a asp-controller="Home" asp-action="index">@DoAnTotNghiep.Resource.Language.Trang_chủ</a></li>
                                             <li><a asp-controller="Home" asp-action="Hiring">Tuyển Dụng </a></li>
                                             <li>
                                                 <a href="#">Danh sách</a>
@@ -61,8 +67,8 @@
                                                     <li><a asp-controller="Home" asp-action="CandidatesList">Danh sách ứng viên</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a asp-controller="Home" asp-action="Forum">Diễn Đàn</a></li>
-                                            <li><a asp-controller="Home" asp-action="Contact">Liên Hệ</a></li>
+                                            <li><a asp-controller="Home" asp-action="Forum">@DoAnTotNghiep.Resource.Language.Diễn_đàn</a></li>
+                                            <li><a asp-controller="Home" asp-action="Contact">@DoAnTotNghiep.Resource.Language.Liên_hệ</a></li>
                                             @{
                                                 if (@Context.Session.GetString("EmployerName") != null)
                                                 {
@@ -103,8 +109,8 @@
                                                 }
                                                 else
                                                 {
-                                                    <li><a asp-controller="Auth" asp-action="Login">Đăng Nhập</a></li>
-                                                    <li><a asp-controller="Auth" asp-action="Register">Đăng Ký</a></li>
+                                                    <li><a asp-controller="Auth" asp-action="Login">@DoAnTotNghiep.Resource.Language.Đăng_nhập</a></li>
+                                                    <li><a asp-controller="Auth" asp-action="Register">@DoAnTotNghiep.Resource.Language.Đăng_ký</a></li>
                                                 }
                                             }
                                         </ul>

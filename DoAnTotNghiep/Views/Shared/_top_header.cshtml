@@ -1,0 +1,19 @@
+﻿<div class="language-copyright-section" style="background-color: #28395a;">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-6 text-center" style="padding-bottom: 5px; padding-top: 5px;">
+                <div class="single-element-widget">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            @Html.ActionLink("Vietnamese", ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["controller"].ToString(), new { language = "vie" }, new { @style = "color: #fff;" })
+                                    ||
+                            @Html.ActionLink("English", ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["controller"].ToString(), new { language = "en" }, new { @style = "color: #fff;" })
+                                    ||
+                            @Html.ActionLink("French", ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["controller"].ToString(), new { language = "fr" }, new { @style = "color: #fff;" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
