@@ -70,7 +70,7 @@
             // Hàm để hiển thị bình luận
             function getComments() {
                 $.ajax({
-                    url: 'https://localhost:7235/Home/GetCommentsForDiscuss?discussId=@Model.DiscussID',
+                    url: 'https://localhost:7235/vie/Home/GetCommentsForDiscuss?discussId=@Model.DiscussID',
                     type: 'GET',
                     dataType: 'json',
                     success: function (data) {
@@ -113,7 +113,7 @@
                     content: $('#content').val() // Lấy nội dung bình luận từ textarea
                 };
                 $.ajax({
-                    url: 'https://localhost:7235/Forum/AddCommentAndAccount',
+                    url: 'https://localhost:7235/vie/Forum/AddCommentAndAccount',
                     type: 'POST',
                     dataType: 'json',
                     contentType: 'application/json',

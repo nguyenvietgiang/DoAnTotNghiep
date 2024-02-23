@@ -79,8 +79,8 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 transactions = transactions,
                 redirect_urls = new RedirectUrls
                 {
-                    cancel_url = "https://localhost:7235/Home/NoPermistion", // Đường dẫn khi hủy thanh toán
-                    return_url = "https://localhost:7235/Home/Sucess" // Đường dẫn khi thanh toán thành công
+                    cancel_url = "https://localhost:7235/vie/Home/NoPermistion", // Đường dẫn khi hủy thanh toán
+                    return_url = "https://localhost:7235/vie/Home/Sucess" // Đường dẫn khi thanh toán thành công
                 }
             };
             // để tạm thế này nhưng nên maintaint lại phòng khi thanh toán ko thành công

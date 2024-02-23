@@ -11,7 +11,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
 
             if (HttpContext.Session.GetString("Accountid") == null)
             {
-                context.Result = new RedirectResult("/Auth/Login");
+                context.Result = RedirectToAction("Login", "Auth");
             }
 
         }

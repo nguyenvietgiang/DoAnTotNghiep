@@ -117,19 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Danh sách" xml:space="preserve">
+    <value>Danh sách</value>
+  </data>
+  <data name="Danh sách công ty" xml:space="preserve">
+    <value>Danh sách công ty</value>
+  </data>
+  <data name="Danh sách ứng viên" xml:space="preserve">
+    <value>Danh sách ứng viên</value>
+  </data>
   <data name="Diễn đàn" xml:space="preserve">
     <value>Diễn đàn</value>
   </data>
   <data name="Liên hệ" xml:space="preserve">
     <value>Liên hệ</value>
   </data>
+  <data name="Số lượng người đang truy cập:" xml:space="preserve">
+    <value>Số lượng người đang truy cập:</value>
+  </data>
   <data name="Trang chủ" xml:space="preserve">
     <value>Trang chủ</value>
+  </data>
+  <data name="Trao cơ hội kết nối ước mơ" xml:space="preserve">
+    <value>Trao cơ hội kết nối ước mơ</value>
+  </data>
+  <data name="Tuyển dụng" xml:space="preserve">
+    <value>Tuyển dụng</value>
+  </data>
+  <data name="Tìm Kiếm" xml:space="preserve">
+    <value>Tìm Kiếm</value>
   </data>
   <data name="Đăng ký" xml:space="preserve">
     <value>Đăng ký</value>
   </data>
   <data name="Đăng nhập" xml:space="preserve">
     <value>Đăng nhập</value>
+  </data>
+  <data name="Đồ Án Tốt Nghiệp 2024" xml:space="preserve">
+    <value>Đồ Án Tốt Nghiệp 2024</value>
   </data>
 </root>

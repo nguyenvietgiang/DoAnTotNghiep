@@ -1,6 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Job Finder";
 }
+
+@{
+    string language = ViewContext.RouteData.Values["language"].ToString();
+    Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(language);
+    Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+}
 <!-- slider Area Start-->
 <div class="slider-area ">
     <!-- Mobile Menu -->
@@ -10,7 +16,7 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-9 col-md-10">
                         <div class="hero__caption">
-                            <h1>Trao cơ hội kết nối ước mơ</h1>
+                            <h1>@DoAnTotNghiep.Resource.Language.Trao_cơ_hội_kết_nối_ước_mơ</h1>
                         </div>
                     </div>
                 </div>
@@ -115,7 +121,7 @@
             searchPostInput.addEventListener("input", function () {
                 var searchText = this.value;
                 var xhr = new XMLHttpRequest();
-                xhr.open("GET", "https://localhost:7235/search/GetTitlesBySearch?searchString=" + searchText, true);
+                xhr.open("GET", "https://localhost:7235/vie/search/GetTitlesBySearch?searchString=" + searchText, true);
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         var data = JSON.parse(xhr.responseText);
@@ -124,7 +130,7 @@
                             var link = document.createElement("a");
                             link.classList.add("dropdown-item", "text-dark");
                             link.textContent = item;
-                            link.href = "https://localhost:7235/Search/SearchJob?=" + item; // Đặt đường dẫn tương ứng cho mỗi item
+                            link.href = "https://localhost:7235/vie/Search/SearchJob?=" + item; // Đặt đường dẫn tương ứng cho mỗi item
                             link.addEventListener("click", function (event) {
                                 event.preventDefault(); // Ngăn chặn chuyển hướng mặc định
                                 window.location.href = this.href; // Chuyển hướng trang web

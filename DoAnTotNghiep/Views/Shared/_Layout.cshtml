@@ -59,12 +59,12 @@
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
                                             <li><a asp-controller="Home" asp-action="index">@DoAnTotNghiep.Resource.Language.Trang_chủ</a></li>
-                                            <li><a asp-controller="Home" asp-action="Hiring">Tuyển Dụng </a></li>
+                                            <li><a asp-controller="Home" asp-action="Hiring">@DoAnTotNghiep.Resource.Language.Tuyển_dụng</a></li>
                                             <li>
-                                                <a href="#">Danh sách</a>
+                                                <a href="#">@DoAnTotNghiep.Resource.Language.Danh_sách</a>
                                                 <ul class="submenu">
-                                                    <li><a asp-controller="Home" asp-action="EmployerList">Danh sách công ty</a></li>
-                                                    <li><a asp-controller="Home" asp-action="CandidatesList">Danh sách ứng viên</a></li>
+                                                    <li><a asp-controller="Home" asp-action="EmployerList">@DoAnTotNghiep.Resource.Language.Danh_sách_công_ty</a></li>
+                                                    <li><a asp-controller="Home" asp-action="CandidatesList">@DoAnTotNghiep.Resource.Language.Danh_sách_ứng_viên</a></li>
                                                 </ul>
                                             </li>
                                             <li><a asp-controller="Home" asp-action="Forum">@DoAnTotNghiep.Resource.Language.Diễn_đàn</a></li>
@@ -189,9 +189,9 @@
                         <div class="col-xl-10 col-lg-10 ">
                             <div class="footer-copy-right">
                                 <p>
-                                    Create By: <a href="https://vietgiangblog.blogspot.com/">Nguyễn Việt Giang</a> | Đồ Án Tốt Nghiệp 2024 | <a asp-area="Manage" asp-controller="ManageDashbroad" asp-action="Index">Trang Quản Trị</a>
+                                    Create By: <a href="https://vietgiangblog.blogspot.com/">Nguyễn Việt Giang</a> | @DoAnTotNghiep.Resource.Language.Đồ_Án_Tốt_Nghiệp_2024 | <a asp-area="Manage" asp-controller="ManageDashbroad" asp-action="Index">Trang Quản Trị</a>
                                 </p>
-                                <p>Số lượng người đang truy cập: @OnlineUsersService.GetOnlineUsersCount()</p>
+                                <p>@DoAnTotNghiep.Resource.Language.Số_lượng_người_đang_truy_cập_ @OnlineUsersService.GetOnlineUsersCount()</p>
                             </div>
                         </div>
 

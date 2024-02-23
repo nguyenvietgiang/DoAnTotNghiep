@@ -1,0 +1,5 @@
+﻿ @{
+        string language = ViewContext.RouteData.Values["language"].ToString();
+        Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(language);
+        Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+    }

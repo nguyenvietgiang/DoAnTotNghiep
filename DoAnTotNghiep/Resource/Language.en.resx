@@ -117,19 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Danh sách" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="Danh sách công ty" xml:space="preserve">
+    <value>List of companies</value>
+  </data>
+  <data name="Danh sách ứng viên" xml:space="preserve">
+    <value>List of candidates</value>
+  </data>
   <data name="Diễn đàn" xml:space="preserve">
     <value>Forum</value>
   </data>
   <data name="Liên hệ" xml:space="preserve">
     <value>Contact</value>
   </data>
+  <data name="Số lượng người đang truy cập:" xml:space="preserve">
+    <value>Number of people accessing:</value>
+  </data>
   <data name="Trang chủ" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="Trao cơ hội kết nối ước mơ" xml:space="preserve">
+    <value>Give opportunities to connect dreams</value>
+  </data>
+  <data name="Tuyển dụng" xml:space="preserve">
+    <value>Hiring</value>
+  </data>
+  <data name="Tìm Kiếm" xml:space="preserve">
+    <value>Search</value>
   </data>
   <data name="Đăng ký" xml:space="preserve">
     <value>Register</value>
   </data>
   <data name="Đăng nhập" xml:space="preserve">
     <value>Login</value>
+  </data>
+  <data name="Đồ Án Tốt Nghiệp 2024" xml:space="preserve">
+    <value>Graduation Project 2024</value>
   </data>
 </root>
