@@ -61,6 +61,15 @@ namespace DoAnTotNghiep.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chúng Tôi Đem Lại Cơ Hội Thăng Tiến.
+        /// </summary>
+        public static string Chúng_Tôi_Đem_Lại_Cơ_Hội_Thăng_Tiến {
+            get {
+                return ResourceManager.GetString("Chúng Tôi Đem Lại Cơ Hội Thăng Tiến", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Đăng ký.
         /// </summary>
         public static string Đăng_ký {
@@ -174,6 +183,15 @@ namespace DoAnTotNghiep.Resource {
         public static string Tuyển_dụng {
             get {
                 return ResourceManager.GetString("Tuyển dụng", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vô Vàn Cơ Hội Đang Chờ Bạn.
+        /// </summary>
+        public static string Vô_Vàn_Cơ_Hội_Đang_Chờ_Bạn {
+            get {
+                return ResourceManager.GetString("Vô Vàn Cơ Hội Đang Chờ Bạn", resourceCulture);
             }
         }
     }

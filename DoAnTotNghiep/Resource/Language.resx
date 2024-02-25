@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Chúng Tôi Đem Lại Cơ Hội Thăng Tiến" xml:space="preserve">
+    <value>Chúng Tôi Đem Lại Cơ Hội Thăng Tiến</value>
+  </data>
   <data name="Danh sách" xml:space="preserve">
     <value>Danh sách</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="Tìm Kiếm" xml:space="preserve">
     <value>Tìm Kiếm</value>
+  </data>
+  <data name="Vô Vàn Cơ Hội Đang Chờ Bạn" xml:space="preserve">
+    <value>Vô Vàn Cơ Hội Đang Chờ Bạn</value>
   </data>
   <data name="Đăng ký" xml:space="preserve">
     <value>Đăng ký</value>

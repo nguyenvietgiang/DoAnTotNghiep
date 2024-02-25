@@ -215,29 +215,48 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 {
                     PdfPage page = document.Pages.Add();
                     PdfGraphics graphics = page.Graphics;
+                    float pageWidth = page.GetClientSize().Width;
                     float startX = 10;
                     float startY = 10;
+                    float titleFontSize = 14;
+                    float contentFontSize = 12;
                     float lineHeight = 15;
-                    graphics.DrawString(fullName, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+
+                    // Tiêu đề
+                    graphics.DrawString(fullName, new PdfStandardFont(PdfFontFamily.Helvetica, titleFontSize, PdfFontStyle.Bold), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    startY += lineHeight;
+                    // Personal page
+                    graphics.DrawString(personalPage, new PdfStandardFont(PdfFontFamily.Helvetica, contentFontSize - 2), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
                     startY += lineHeight;
 
-                    graphics.DrawString(personalPage, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    // Mô tả
+                    graphics.DrawString("Description:", new PdfStandardFont(PdfFontFamily.Helvetica, titleFontSize, PdfFontStyle.Bold), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
                     startY += lineHeight;
+                    graphics.DrawString(description, new PdfStandardFont(PdfFontFamily.Helvetica, contentFontSize), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    startY += lineHeight * 5;
 
-                    graphics.DrawString(description, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    // Học vấn
+                    graphics.DrawString("Education:", new PdfStandardFont(PdfFontFamily.Helvetica, titleFontSize, PdfFontStyle.Bold), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
                     startY += lineHeight;
+                    graphics.DrawString(education, new PdfStandardFont(PdfFontFamily.Helvetica, contentFontSize), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    startY += lineHeight * 5;
 
-                    graphics.DrawString(education, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    // Nghề nghiệp
+                    graphics.DrawString("Faculary:", new PdfStandardFont(PdfFontFamily.Helvetica, titleFontSize, PdfFontStyle.Bold), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
                     startY += lineHeight;
+                    graphics.DrawString(profession, new PdfStandardFont(PdfFontFamily.Helvetica, contentFontSize), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    startY += lineHeight * 3;
 
-                    graphics.DrawString(profession, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    // Kỹ năng
+                    graphics.DrawString("Skill:", new PdfStandardFont(PdfFontFamily.Helvetica, titleFontSize, PdfFontStyle.Bold), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
                     startY += lineHeight;
+                    graphics.DrawString(skill, new PdfStandardFont(PdfFontFamily.Helvetica, contentFontSize), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    startY += lineHeight * 3;
 
-                    graphics.DrawString("Kỹ năng: " + skill, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
+                    // Kinh nghiệm làm việc
+                    graphics.DrawString("Experience:", new PdfStandardFont(PdfFontFamily.Helvetica, titleFontSize, PdfFontStyle.Bold), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
                     startY += lineHeight;
-
-                    graphics.DrawString("Kinh nghiệm làm việc: " + personalProjects, new PdfStandardFont(PdfFontFamily.Helvetica, 12), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
-                    startY += lineHeight;
+                    graphics.DrawString(personalProjects, new PdfStandardFont(PdfFontFamily.Helvetica, contentFontSize), PdfBrushes.Black, new Syncfusion.Drawing.PointF(startX, startY));
 
                     document.Save(stream);
                 }
@@ -248,5 +267,6 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 FileDownloadName = "MyCV.pdf"
             };
         }
+
     }
 }
