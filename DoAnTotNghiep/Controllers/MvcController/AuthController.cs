@@ -22,15 +22,22 @@ namespace DoAnTotNghiep.Controllers.MvcController
 
         public IActionResult Login()
         {
+            // Kiểm tra xem đã có cookie nhớ tài khoản hay không
+            if (Request.Cookies.ContainsKey("RememberMe"))
+            {
+                ViewBag.RememberMe = true;
+                ViewBag.Email = Request.Cookies["Email"];
+                ViewBag.Password = Request.Cookies["Password"];
+            }
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(LoginModels model)
+        public IActionResult Login(LoginModels model, bool rememberMe)
         {
             if (ModelState.IsValid)
             {
-                Account rowuser = _dbContext.Accounts.Where(m => m.Email == model.Email).FirstOrDefault();
+                Account rowuser = _dbContext.Accounts.FirstOrDefault(m => m.Email == model.Email);
 
                 if (rowuser == null)
                 {
@@ -44,20 +51,27 @@ namespace DoAnTotNghiep.Controllers.MvcController
                     }
                     else if (rowuser.Password == Encrypt.MD5Hash(model.Password))
                     {
+                        if (rememberMe)
+                        {
+                            // Nếu người dùng chọn nhớ tài khoản, lưu thông tin vào cookies
+                            Response.Cookies.Append("RememberMe", "true");
+                            Response.Cookies.Append("Email", model.Email);
+                            Response.Cookies.Append("Password", model.Password);
+                        }
+
+                        HttpContext.Session.SetString("Accountid", rowuser.UserID.ToString());
+                        HttpContext.Session.SetInt32("UserRole", (int)rowuser.AccountRole);
+
                         if (rowuser.AccountRole == AccountRole.EmployerFree || rowuser.AccountRole == AccountRole.EmployerPaid)
                         {
                             HttpContext.Session.SetString("EmployerName", model.Email);
-                            HttpContext.Session.SetString("Accountid", rowuser.UserID.ToString());
-                            HttpContext.Session.SetInt32("UserRole", (int)rowuser.AccountRole);
-                            return RedirectToAction("Index", "Home");
                         }
                         else if (rowuser.AccountRole == AccountRole.CandidateFree || rowuser.AccountRole == AccountRole.CandidatePaid)
                         {
                             HttpContext.Session.SetString("CandidateName", model.Email);
-                            HttpContext.Session.SetString("Accountid", rowuser.UserID.ToString());
-                            HttpContext.Session.SetInt32("UserRole", (int)rowuser.AccountRole);
-                            return RedirectToAction("Index", "Home");
                         }
+
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
@@ -70,7 +84,6 @@ namespace DoAnTotNghiep.Controllers.MvcController
 
             return View();
         }
-
 
         public IActionResult Register() 
         {

@@ -135,6 +135,9 @@
   <data name="Liên hệ" xml:space="preserve">
     <value>Liên hệ</value>
   </data>
+  <data name="Mọi thông tin về điều khoản và chính sách của chúng tôi xin vui lòng tham khảo thông qua Chat bot hoặc:" xml:space="preserve">
+    <value>Mọi thông tin về điều khoản và chính sách của chúng tôi xin vui lòng tham khảo thông qua Chat bot hoặc:</value>
+  </data>
   <data name="Số lượng người đang truy cập:" xml:space="preserve">
     <value>Số lượng người đang truy cập:</value>
   </data>

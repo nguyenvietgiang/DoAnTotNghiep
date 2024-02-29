@@ -50,6 +50,9 @@ namespace DoAnTotNghiep.Services.EmailServices
                     </head>
                     <body>
                         <div class=""container"">
+                        <div class=""header"">
+                         <img src=""https://themewagon.github.io/jobfinderportal/assets/img/logo/logo.png"" alt=""JobFinder"" class=""logo"">
+                        </div>
                             <div class=""content"">
                                 <p>Xin chào!</p>
                                 <p>Chúng tôi là đội ngũ phát triển của Job Finder.</p>

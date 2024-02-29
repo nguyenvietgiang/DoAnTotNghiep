@@ -142,6 +142,16 @@ namespace DoAnTotNghiep.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mọi thông tin về điều khoản và chính sách của chúng tôi xin vui lòng tham khảo thông qua Chat bot hoặc:.
+        /// </summary>
+        public static string Mọi_thông_tin_về_điều_khoản_và_chính_sách_của_chúng_tôi_xin_vui_lòng_tham_khảo_thông_qua_Chat_bot_hoặc_ {
+            get {
+                return ResourceManager.GetString("Mọi thông tin về điều khoản và chính sách của chúng tôi xin vui lòng tham khảo th" +
+                        "ông qua Chat bot hoặc:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Số lượng người đang truy cập:.
         /// </summary>
         public static string Số_lượng_người_đang_truy_cập_ {
