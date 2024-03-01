@@ -38,6 +38,18 @@ namespace DoAnTotNghiep.Services.PaymentServices
                         return false;
                     }
 
+                    // Tạo mới Pay
+                    var newPay = new Pay
+                    {
+                        ID = Guid.NewGuid(),
+                        UserId = userId,
+                        Account= account,
+                        CreatedAt = DateTime.Now,
+                        PaymentGate = "Paypal"
+                    };
+
+                    _context.Pays.Add(newPay);
+
                     // Cập nhật dữ liệu thống kê
                     var today = DateTime.Today;
                     var revenueStatistic = _context.RevenueStatistics

@@ -12,6 +12,7 @@ using DoAnTotNghiep.Repository.FollowRepo;
 using DoAnTotNghiep.Repository.ImageGaleryRepo;
 using DoAnTotNghiep.Repository.JobApplyFormRepo;
 using DoAnTotNghiep.Repository.JobRepo;
+using DoAnTotNghiep.Repository.PayRepo;
 using DoAnTotNghiep.Repository.PolicyRepo;
 using DoAnTotNghiep.Repository.SurveyRepo;
 using DoAnTotNghiep.Services.EmailServices;
@@ -53,6 +54,7 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<ISurveyRepo<Survey>, SurveyRepo>();
 builder.Services.AddScoped<ISurveyRepo<Question>, QuestionRepo>();
 builder.Services.AddScoped<ISurveyRepo<Option>, OptionRepo>();
+builder.Services.AddScoped<IPayRepository, PayRepository>();
 // khai báo mã syncfusion phục vụ nhập/xuất file-extend
 SyncfusionLicenseProvider.RegisterLicense("MTQwNUAzMTM4MmUzNDJlMzBGT29sdENza2kyME1jUHpPNVd5enVXY1AvNVZ1SVdPQlVMNUE4R1c1M0FvPQ==");
 

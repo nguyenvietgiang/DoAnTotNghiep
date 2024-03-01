@@ -28,5 +28,6 @@ namespace DoAnTotNghiep.Models.EntityModels
         public List<Comment> Comments { get; set; }
         public List<Like> Likes { get; set; }
         public List<Follow> Follows { get; set; }
+        public List<Pay> Pays { get; set; }
     }
 }

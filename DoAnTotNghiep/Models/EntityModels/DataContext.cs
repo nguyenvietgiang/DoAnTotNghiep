@@ -27,6 +27,7 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<ImageGalery> ImageGaleries { get; set; }
         public DbSet<Follow> Follows { get; set; }
         public DbSet<Policy> Policies { get; set; }
+        public DbSet<Pay> Pays { get; set; }
 
     }
 }

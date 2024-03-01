@@ -1,4 +1,5 @@
 ﻿using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Repository.PayRepo;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DoAnTotNghiep.Areas.Manage.Controllers
@@ -7,10 +8,11 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
     public class ManageDashbroadController : ManageBaseController
     {
         private readonly DataContext _dataContext;
-
-        public ManageDashbroadController(DataContext dataContext)
+        private readonly IPayRepository _payRepository;
+        public ManageDashbroadController(DataContext dataContext, IPayRepository payRepository)
         {
             _dataContext= dataContext;
+            _payRepository= payRepository;
         }
         public IActionResult Index()
         {
@@ -32,6 +34,12 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
                 .ToList();
 
             return Json(revenueData);
+        }
+         
+        public async Task<IActionResult> PaymentDashbroad()
+        {
+            var allPayments = await _payRepository.GetAllPaymentsAsync();
+            return View(allPayments);
         }
 
     }

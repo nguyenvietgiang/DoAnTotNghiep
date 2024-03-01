@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @addTagHelper *, AuthoringTagHelpers
 }
 <div class="row">
 
@@ -98,7 +100,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <div class="form-group">
                                 <select class="form-control" id="yearSelect">
                                     <option value="@ViewBag.CurrentYear">Năm: @ViewBag.CurrentYear</option>
@@ -106,6 +108,9 @@
                                     <option value="2022">Năm: 2022</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-md-4">
+                            <a asp-action="PaymentDashbroad" class="btn btn-primary" id="viewDetailsBtn">Xem chi tiết</a>
                         </div>
                     </div>
                     <div class="row">

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<DoAnTotNghiep.Models.EntityModels.Pay>
+
+@{
+    ViewData["Title"] = "Payment";
+    Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên tài khoản</th>
+            <th>Ngày thanh toán</th>
+            <th>Cổng thanh toán</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var payment in Model)
+        {
+                <tr>
+                    <td>@payment.Account.Email</td>
+                    <td>@payment.CreatedAt.ToString("dd/MM/yyyy")</td>
+                    <td>@payment.PaymentGate</td>
+                </tr>
+        }
+    </tbody>
+</table>
