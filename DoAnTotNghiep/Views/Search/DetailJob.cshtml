@@ -15,10 +15,10 @@
                 <div class="single-job-items mb-50">
                     <div class="job-items">
                         <div class="company-img company-img-details">
-                            <a ><img src="@Model.Employer.UrlImage"></a>
+                            <a href="@Url.Action("Conpany", "Home", new { @id = Model.EmployerID })"><img src="@Model.Employer.UrlImage"></a>
                         </div>
                         <div class="job-tittle">
-                            <a href="">
+                            <a>
                                 <h4>@Model.Title</h4>
                             </a>
                             <ul>
@@ -115,10 +115,10 @@
                     <div class="single-job-items mb-30">
                         <div class="job-items">
                             <div class="company-img">
-                                <a href="#"><img src="@similarJob.Employer.UrlImage" alt=""></a>
+                                <a href="@Url.Action("Conpany", "Home", new { @id = similarJob.EmployerID })"><img src="@similarJob.Employer.UrlImage" alt=""></a>
                             </div>
                             <div class="job-tittle">
-                                <a href="#">
+                                <a href="@Url.Action("DetailJob", "Search", new { @id = similarJob.JobPostingID })">
                                     <h4>@similarJob.Title</h4>
                                 </a>
                                 <ul>

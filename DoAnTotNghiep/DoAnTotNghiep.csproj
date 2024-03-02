@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Areas\Manage\Data\" />
     <Folder Include="Areas\Manage\Models\" />
+    <Folder Include="logs\" />
     <Folder Include="wwwroot\cvFile\" />
     <Folder Include="wwwroot\template\excel-template\" />
     <Folder Include="wwwroot\template\word-template\" />
@@ -32,6 +33,9 @@
     <PackageReference Include="MimeKit" Version="4.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="PayPal" Version="1.9.1" />
+    <PackageReference Include="Serilog" Version="2.12.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Syncfusion.Licensing" Version="18.4.0.30" />
     <PackageReference Include="Syncfusion.Pdf.Net.Core" Version="18.4.0.30" />
     <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="18.4.0.30" />

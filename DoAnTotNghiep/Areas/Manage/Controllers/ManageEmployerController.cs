@@ -33,6 +33,18 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
             return View(pagedList);
         }
 
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var employer = await _context.Employers.FirstOrDefaultAsync(e => e.EmployerID == id);
+
+            if (employer == null)
+            {
+                return NotFound();
+            }
+
+            return View(employer);
+        }
+
         public async Task<IActionResult> ToggleAccountStatus(Guid Id)
         {
             await _accountRepository.UpdateAccountStatusAsync(Id);

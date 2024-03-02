@@ -22,10 +22,19 @@ using DoAnTotNghiep.Services.OnlineCountServices;
 using DoAnTotNghiep.Services.PaymentServices;
 using DoAnTotNghiep.Services.VNpayServices;
 using Microsoft.EntityFrameworkCore;
+using Serilog.Events;
+using Serilog;
 using Syncfusion.Licensing;
+using Serilog.Formatting.Json;
 
 var builder = WebApplication.CreateBuilder(args);
- 
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.File(new JsonFormatter(), "logs/log.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
 builder.Services.AddDbContext<DataContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("Connect")));

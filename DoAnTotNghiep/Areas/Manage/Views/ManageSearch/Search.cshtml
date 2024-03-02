@@ -20,7 +20,7 @@
             {
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">@result.Name</h5>
+                        <h5 class="card-title"><a asp-area="Manage" asp-controller="ManageCandidate" asp-action="Details" asp-route-id="@result.ID"> @result.Name </a></h5>
                         <!-- Hiển thị các thông tin khác của result -->
                     </div>
                 </div>
@@ -32,7 +32,7 @@
             {
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">@result.Name</h5>
+                        <h5 class="card-title"><a asp-area="Manage" asp-controller="ManageEmployer" asp-action="Details" asp-route-id="@result.ID"> @result.Name </a></h5>
                         <!-- Hiển thị các thông tin khác của result -->
                     </div>
                 </div>

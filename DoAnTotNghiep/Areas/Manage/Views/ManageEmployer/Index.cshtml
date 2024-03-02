@@ -20,7 +20,7 @@
         @foreach (var employer in Model)
         {
             <tr>
-                <td>@employer.CompanyName</td>
+                <td><a href="@Url.Action("Details", new { @id = employer.EmployerID })">@employer.CompanyName</a></td>
                 <td>
                     <img src="@employer.UrlImage" alt="Logo" class="img-thumbnail" style="width: 70px; height: 70px;" />
                 </td>

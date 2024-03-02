@@ -1,0 +1,37 @@
+﻿@model DoAnTotNghiep.Models.EntityModels.Employer
+
+@{
+    ViewData["Title"] = "Chi Tiết Doanh nghiệp";
+    Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">@Model.CompanyName</h1>
+                    <hr />
+
+                    <dl class="row">
+                        <dt class="col-sm-4">Địa Chỉ:</dt>
+                        <dd class="col-sm-8">@Model.Location</dd>
+
+                        <dt class="col-sm-4">Số điện thoại:</dt>
+                        <dd class="col-sm-8">@Model.PhoneNumber</dd>
+
+                        <dt class="col-sm-4">Lĩnh vực:</dt>
+                        <dd class="col-sm-8"> @Model.Industry</dd>
+
+                        <dt class="col-sm-4">Số Lượng nhân viên:</dt>
+                        <dd class="col-sm-8">@Model.CompanySize</dd>
+
+                        <dt class="col-sm-4">Mô tả:</dt>
+                        <dd class="col-sm-8"> @Html.Raw(Model.Descrpitons)</dd>
+                    </dl>
+                </div>
+                <a class="btn btn-primary" href="@Url.Action("Index")">Trở về</a>
+            </div>
+        </div>
+    </div>
+</div>

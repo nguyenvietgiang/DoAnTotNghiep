@@ -130,7 +130,6 @@
                             var link = document.createElement("a");
                             link.classList.add("dropdown-item", "text-dark");
                             link.textContent = item;
-                            link.href = "https://localhost:7235/vie/Search/SearchJob?=" + item; // Đặt đường dẫn tương ứng cho mỗi item
                             link.addEventListener("click", function (event) {
                                 event.preventDefault(); // Ngăn chặn chuyển hướng mặc định
                                 window.location.href = this.href; // Chuyển hướng trang web

@@ -1,14 +1,40 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewData["Title"] - Login</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        /* Thêm CSS cho header và footer nếu cần */
+        .header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .footer {
+            background-color: #0d6efd;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
+    <div class="header">
+        <h1>JobFinder</h1>
+    </div>
+
     <div>
         @RenderBody()
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 JobFinder. All rights reserved.</p>
     </div>
 </body>
 </html>
