@@ -3,8 +3,39 @@
 @{
     ViewData["Title"] = "Payment";
     Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @addTagHelper *, AuthoringTagHelpers
 }
 
+@using (Html.BeginForm("PaymentDashbroad", "ManageDashbroad", FormMethod.Get))
+{
+<div class="row mb-3">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>Email của tài khoản:</label>
+            @Html.TextBox("emailSearch", ViewBag.EmailSearch as string, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>Ngày thanh toán:</label>
+            @Html.TextBox("dateSearch", ViewBag.DateSearch as string, new { @class = "form-control", type = "date" })
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label style="visibility: hidden;">Tìm kiếm:</label>
+            <button type="submit" class="btn btn-primary d-block">Tìm kiếm</button>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            <label style="visibility: hidden;">Xuất:</label>
+            <a class="btn btn-success d-block">Xuất file</a>
+        </div>
+    </div>
+</div>
+}
 <table class="table">
     <thead>
         <tr>
@@ -16,11 +47,11 @@
     <tbody>
         @foreach (var payment in Model)
         {
-                <tr>
-                    <td>@payment.Account.Email</td>
-                    <td>@payment.CreatedAt.ToString("dd/MM/yyyy")</td>
-                    <td>@payment.PaymentGate</td>
-                </tr>
+            <tr>
+                <td>@payment.Account.Email</td>
+                <td>@payment.CreatedAt.ToString("dd/MM/yyyy")</td>
+                <td>@payment.PaymentGate</td>
+            </tr>
         }
     </tbody>
 </table>

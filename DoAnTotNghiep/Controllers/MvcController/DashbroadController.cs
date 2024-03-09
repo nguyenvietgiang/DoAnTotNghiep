@@ -1,5 +1,6 @@
 ﻿using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Models.Enum;
+using DoAnTotNghiep.Repository.EmployerRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,10 +10,12 @@ namespace DoAnTotNghiep.Controllers.MvcController
     public class DashbroadController : BaseController
     {
         private readonly DataContext _dataContext;
+        private readonly IEmployerRepository _employerRepository;
 
-        public DashbroadController(DataContext dataContext)
+        public DashbroadController(DataContext dataContext,IEmployerRepository employerRepository)
         {
             _dataContext= dataContext;
+            _employerRepository= employerRepository;
         }
         public async Task<IActionResult> Index()
         {
@@ -42,6 +45,10 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 .FirstOrDefault()
         })
         .ToListAsync();
+
+            var topEmployers = await _employerRepository.GetTop3EmployersWithJobPostCounts();
+            ViewBag.TopEmployers = topEmployers;
+
             return View(topFiveJobs);
         }
     }

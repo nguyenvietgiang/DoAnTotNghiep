@@ -1,4 +1,5 @@
 ﻿using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Models.ResponseDTO;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.XlsIO.Implementation.Security;
 
@@ -34,6 +35,20 @@ namespace DoAnTotNghiep.Repository.EmployerRepo
                 .ToListAsync();
 
             return top5Employers;
+        }
+
+        public async Task<List<EmployerJobPostCount>> GetTop3EmployersWithJobPostCounts()
+        {
+            return await _context.Employers
+                .Include(e => e.JobPostings)
+                .OrderByDescending(e => e.JobPostings.Count)
+                .Take(3)
+                .Select(e => new EmployerJobPostCount
+                {
+                    CompanyName = e.CompanyName,
+                    JobPostCount = e.JobPostings.Count
+                })
+                .ToListAsync();
         }
 
     }

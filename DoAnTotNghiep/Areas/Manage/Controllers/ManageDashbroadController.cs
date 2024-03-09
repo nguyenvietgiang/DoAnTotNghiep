@@ -35,11 +35,38 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
 
             return Json(revenueData);
         }
-         
-        public async Task<IActionResult> PaymentDashbroad()
+
+
+        public async Task<IActionResult> PaymentDashbroad(string? emailSearch, DateTime? dateSearch)
         {
             var allPayments = await _payRepository.GetAllPaymentsAsync();
-            return View(allPayments);
+
+            // Lọc theo email nếu có
+            var filteredPayments = allPayments.ToList();
+            if (!string.IsNullOrEmpty(emailSearch))
+            {
+                var searchEmail = emailSearch; // Gán biến vào một biến mới
+                filteredPayments = filteredPayments.Where(p => p.Account.Email.Contains(searchEmail)).ToList();
+                ViewBag.EmailSearch = emailSearch;
+            }
+            else
+            {
+                ViewBag.EmailSearch = "";
+            }
+
+            // Lọc theo ngày nếu có
+            if (dateSearch.HasValue)
+            {
+                var searchDate = dateSearch.Value.Date; // Gán biến vào một biến mới
+                filteredPayments = filteredPayments.Where(p => p.CreatedAt.Date == searchDate).ToList();
+                ViewBag.DateSearch = dateSearch.Value.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                ViewBag.DateSearch = "";
+            }
+
+            return View(filteredPayments);
         }
 
     }
