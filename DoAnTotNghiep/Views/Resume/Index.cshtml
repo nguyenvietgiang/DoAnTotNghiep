@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+@model DoAnTotNghiep.Models.EntityModels.OnlineResume
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        .cv-section .card {
+            border: 3px solid #3498db;
+            margin: 10px;
+            height: 700px;
+            width: 550px;
+        }
+
+            .cv-section .card img.profile-img {
+                max-width: 80px;
+            }
+    </style>
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center"
+         style="height: 100vh">
+        <div class="col-md-6">
+            <div class="cv-section" id="cvSection">
+                <div class="card bg-white shadow-lg">
+                    <article class="resume-wrapper text-center position-relative">
+                        <div class="resume-wrapper-inner mx-auto text-start">
+                            <header class="resume-header pt-4 pt-md-0">
+                                <div class="row">
+                                    <div class="col-block col-md-auto resume-picture-holder text-center text-md-start"></div>
+                                    <div class="col">
+                                        <div class="row p-4 justify-content-center justify-content-md-between">
+                                            <div class="primary-info col-auto">
+                                                <h4 class="name mt-0 mb-1 text-black text-uppercase text-uppercase"
+                                                    id="cvName">
+                                                    @Model.Name
+                                                </h4>
+                                                <div class="title mb-3" id="cvPosition">
+                                                    @Model.poisition
+                                                </div>
+                                                <ul class="list-unstyled">
+                                                    <li class="mb-2" id="cvEmail">@Model.email</li>
+                                                </ul>
+                                            </div>
+                                            <!--//primary-info-->
+                                        </div>
+                                        <!--//row-->
+                                    </div>
+                                    <!--//col-->
+                                </div>
+                                <!--//row-->
+                            </header>
+                            <div class="resume-body p-2">
+                                <section class="resume-section summary-section mb-2">
+                                    <div class="resume-section-content">
+                                        <h5 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                                            Mô Tả
+                                        </h5>
+                                        <p id="cvDescription">@Model.descpription</p>
+                                    </div>
+                                </section>
+                                <section class="resume-section summary-section mb-2">
+                                    <h5 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                                        Học vấn
+                                    </h5>
+                                    <div class="resume-section-content">
+                                        <p id="cvEducation">@Model.education</p>
+                                    </div>
+                                </section>
+                                <section class="resume-section summary-section mb-2">
+                                    <h5 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                                        Kỹ năng
+                                    </h5>
+                                    <div class="resume-section-content">
+                                        <p id="cvSkill">@Model.skill</p>
+                                    </div>
+                                </section>
+                                <section class="resume-section summary-section mb-2">
+                                    <h5 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                                        Kinh nghiệm làm việc
+                                    </h5>
+                                    <div class="resume-section-content">
+                                        <p id="cvExperience">@Model.experience</p>
+                                    </div>
+                                </section>
+                            </div>
+                            <!--//resume-body-->
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

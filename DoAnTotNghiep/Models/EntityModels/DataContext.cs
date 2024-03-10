@@ -28,6 +28,7 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<Follow> Follows { get; set; }
         public DbSet<Policy> Policies { get; set; }
         public DbSet<Pay> Pays { get; set; }
+        public DbSet<OnlineResume> OnlineResumes { get; set;}
 
     }
 }

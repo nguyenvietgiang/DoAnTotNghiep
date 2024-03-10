@@ -26,6 +26,7 @@ using Serilog.Events;
 using Serilog;
 using Syncfusion.Licensing;
 using Serilog.Formatting.Json;
+using DoAnTotNghiep.Repository.OnlineResumeRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,6 +65,7 @@ builder.Services.AddScoped<ISurveyRepo<Survey>, SurveyRepo>();
 builder.Services.AddScoped<ISurveyRepo<Question>, QuestionRepo>();
 builder.Services.AddScoped<ISurveyRepo<Option>, OptionRepo>();
 builder.Services.AddScoped<IPayRepository, PayRepository>();
+builder.Services.AddScoped<IOnlineResumeRepository, OnlineResumeRepository>();
 // khai báo mã syncfusion phục vụ nhập/xuất file-extend
 SyncfusionLicenseProvider.RegisterLicense("MTQwNUAzMTM4MmUzNDJlMzBGT29sdENza2kyME1jUHpPNVd5enVXY1AvNVZ1SVdPQlVMNUE4R1c1M0FvPQ==");
 

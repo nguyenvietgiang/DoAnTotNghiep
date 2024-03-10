@@ -11,6 +11,7 @@ using X.PagedList;
 using System.Drawing.Drawing2D;
 using Microsoft.EntityFrameworkCore;
 using DoAnTotNghiep.Middleware;
+using DoAnTotNghiep.Repository.OnlineResumeRepo;
 
 namespace DoAnTotNghiep.Controllers.MvcController
 {
@@ -22,13 +23,15 @@ namespace DoAnTotNghiep.Controllers.MvcController
         private readonly IFileService _fileService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IDiscussRepository _discussRepository;
+        private readonly IOnlineResumeRepository _onlineResumeRepository;
 
-        public CandidatesController(ICandidatesRepo candidateRepository, DataContext dataContext, IFileService fileService, IWebHostEnvironment webHostEnvironment)
+        public CandidatesController(ICandidatesRepo candidateRepository, DataContext dataContext, IFileService fileService, IWebHostEnvironment webHostEnvironment, IOnlineResumeRepository onlineResumeRepository)
         {
             _candidateRepository = candidateRepository;
             _dataContext = dataContext;
             _fileService = fileService;
             _webHostEnvironment = webHostEnvironment;
+            _onlineResumeRepository = onlineResumeRepository;
         }
         public IActionResult Profile()
         {
@@ -52,6 +55,13 @@ namespace DoAnTotNghiep.Controllers.MvcController
         public IActionResult Survey()
         {
             return View();
+        }
+
+        public async Task<IActionResult> MyCvOnline()
+        {
+            var userId = GetUserIdFromClaim();
+            var resumes = await _onlineResumeRepository.GetByUserIdAsync(Guid.Parse(userId));
+            return View(resumes);
         }
 
         public IActionResult CreateCV(int? page)
@@ -205,7 +215,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
 
 
         // tải file CV đang bị lỗi Font tiếng việt, dùng tiếng anh tạm
-        public IActionResult DownloadPDF(string fullName, string personalPage, string description, string education, string profession, string skill, string personalProjects)
+        public async Task<IActionResult> DownloadPDF(string fullName, string personalPage, string description, string education, string profession, string skill, string personalProjects)
         {
             byte[] pdfBytes;
 
@@ -262,6 +272,24 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 }
                 pdfBytes = stream.ToArray();
             }
+
+            var userId = GetUserIdFromClaim();
+            // Tạo một bản cv online mới
+            var newResume = new OnlineResume
+            {
+                ID = Guid.NewGuid(), 
+                UserId = Guid.Parse(userId),
+                Name = fullName,
+                email = personalPage,
+                poisition = "Developer",
+                education = education,
+                descpription = description,
+                skill= skill,
+                experience = personalProjects
+            };
+            // Gọi phương thức thêm mới của repository
+            await _onlineResumeRepository.AddAsync(newResume);
+
             return new FileContentResult(pdfBytes, "application/pdf")
             {
                 FileDownloadName = "MyCV.pdf"
