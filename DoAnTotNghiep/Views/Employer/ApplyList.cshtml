@@ -28,19 +28,21 @@
                             <td>@jobApplyForm.Name</td>
                             <td>@jobApplyForm.Email</td>
                             <td>@jobApplyForm.PhoneNumber</td>
-                            <td>
+                            <td style="width: 150px;">
                                 <button type="button" class="genric-btn success radius" data-toggle="modal" data-target="#exampleModal-@jobApplyForm.JobApplyID">
                                     Xem CV
                                 </button>
                             </td>
-                            <td>
-                                <button type="button" class="genric-btn warning radius" data-toggle="modal" data-target="#contactModal-@jobApplyForm.JobApplyID">
-                                    Liên hệ
-                                </button>
-                                <form asp-action="DeleteApply" asp-route-jobApplyID="@jobApplyForm.JobApplyID" method="post">
-                                    <button type="submit" class="genric-btn danger radius" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</button>
-                                </form>
-                            </td>
+                            <td style="width: 300px;">
+    <div class="d-flex justify-content-between align-items-center">
+        <button type="button" class="genric-btn warning radius" data-toggle="modal" data-target="#contactModal-@jobApplyForm.JobApplyID">
+            Liên hệ
+        </button>
+        <form asp-action="DeleteApply" asp-route-jobApplyID="@jobApplyForm.JobApplyID" method="post">
+            <button type="submit" class="genric-btn danger radius" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</button>
+        </form>
+    </div>
+</td>
                         </tr>
                         <!-- CV Modal -->
                         <div class="modal fade" id="exampleModal-@jobApplyForm.JobApplyID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

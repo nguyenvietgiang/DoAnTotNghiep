@@ -138,6 +138,9 @@
   <data name="Mọi thông tin về điều khoản và chính sách của chúng tôi xin vui lòng tham khảo thông qua Chat bot hoặc:" xml:space="preserve">
     <value>For more information about our terms and policies, please refer to Chat bot or:</value>
   </data>
+  <data name="Mọi thắc mắc hoặc vấn đề cần giải quyết xin vui lòng gửi về tại form liên hệ hoặc thông qua email : vietgiang111001@gmail.com" xml:space="preserve">
+    <value>If you have any questions or problems that need to be resolved, please send them to the contact form or via email: vietgiang111001@gmail.com</value>
+  </data>
   <data name="Số lượng người đang truy cập:" xml:space="preserve">
     <value>Number of people accessing:</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="Tìm Kiếm" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="Tại Đây" xml:space="preserve">
+    <value>Here</value>
   </data>
   <data name="Vô Vàn Cơ Hội Đang Chờ Bạn" xml:space="preserve">
     <value>Countless Opportunities Are Waiting For You</value>

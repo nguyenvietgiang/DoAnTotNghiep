@@ -142,6 +142,16 @@ namespace DoAnTotNghiep.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mọi thắc mắc hoặc vấn đề cần giải quyết xin vui lòng gửi về tại form liên hệ hoặc thông qua email : vietgiang111001@gmail.com.
+        /// </summary>
+        public static string Mọi_thắc_mắc_hoặc_vấn_đề_cần_giải_quyết_xin_vui_lòng_gửi_về_tại_form_liên_hệ_hoặc_thông_qua_email___vietgiang111001_gmail_com {
+            get {
+                return ResourceManager.GetString("Mọi thắc mắc hoặc vấn đề cần giải quyết xin vui lòng gửi về tại form liên hệ hoặc" +
+                        " thông qua email : vietgiang111001@gmail.com", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mọi thông tin về điều khoản và chính sách của chúng tôi xin vui lòng tham khảo thông qua Chat bot hoặc:.
         /// </summary>
         public static string Mọi_thông_tin_về_điều_khoản_và_chính_sách_của_chúng_tôi_xin_vui_lòng_tham_khảo_thông_qua_Chat_bot_hoặc_ {
@@ -157,6 +167,15 @@ namespace DoAnTotNghiep.Resource {
         public static string Số_lượng_người_đang_truy_cập_ {
             get {
                 return ResourceManager.GetString("Số lượng người đang truy cập:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tại Đây.
+        /// </summary>
+        public static string Tại_Đây {
+            get {
+                return ResourceManager.GetString("Tại Đây", resourceCulture);
             }
         }
         
