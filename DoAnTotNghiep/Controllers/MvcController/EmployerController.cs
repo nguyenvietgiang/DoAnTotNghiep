@@ -296,6 +296,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
             {
                 var jobcontact = await _jobApplyFormRepository.GetJobApplyFormById(id);
                 await _emailServices.SendEmailAsync(jobcontact.Email, repcontent);
+                await _jobApplyFormRepository.UpdateStatusAsync(id);
                 TempData["SuccessMessage"] = "Gửi email thành công!";
             }
             catch (Exception ex)

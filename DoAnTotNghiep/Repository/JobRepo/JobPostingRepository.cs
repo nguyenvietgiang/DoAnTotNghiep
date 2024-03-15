@@ -174,5 +174,12 @@ namespace DoAnTotNghiep.Repository.JobRepo
             return query;
         }
 
+        public async Task<List<JobPosting>> GetJobPostingsByApplicantEmailAsync(string applicantEmail)
+        {
+            return await _context.JobPostings.Include(jp => jp.Employer)
+                .Include(j => j.JobApplyForms)
+                .Where(j => j.JobApplyForms.Any(a => a.Email == applicantEmail))
+                .ToListAsync();
+        }
     }
 }

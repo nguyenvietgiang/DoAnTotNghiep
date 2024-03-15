@@ -19,6 +19,7 @@
                         <th>Số điện thoại</th>
                         <th>Bản CV</th>
                         <th>Thao tác</th>
+                        <th>Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,13 +37,14 @@
                             <td style="width: 300px;">
     <div class="d-flex justify-content-between align-items-center">
         <button type="button" class="genric-btn warning radius" data-toggle="modal" data-target="#contactModal-@jobApplyForm.JobApplyID">
-            Liên hệ
+            Duyệt
         </button>
         <form asp-action="DeleteApply" asp-route-jobApplyID="@jobApplyForm.JobApplyID" method="post">
             <button type="submit" class="genric-btn danger radius" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</button>
         </form>
     </div>
 </td>
+                            <td>@(jobApplyForm.Status ? "Đã duyệt" : "Chưa duyệt")</td>
                         </tr>
                         <!-- CV Modal -->
                         <div class="modal fade" id="exampleModal-@jobApplyForm.JobApplyID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

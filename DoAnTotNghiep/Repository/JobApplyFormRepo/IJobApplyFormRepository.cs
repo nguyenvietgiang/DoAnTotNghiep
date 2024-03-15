@@ -9,5 +9,6 @@ namespace DoAnTotNghiep.Repository.JobApplyFormRepo
         Task<IEnumerable<JobApplyForm>> GetJobApplyFormsByJobPostingID(Guid jobPostingID);
         Task<JobApplyForm> GetJobApplyFormById(Guid jobApplyID);
         Task DeleteJobApplyForm(Guid jobApplyID);
+        Task UpdateStatusAsync(Guid id);
     }
 }

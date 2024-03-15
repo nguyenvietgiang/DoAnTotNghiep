@@ -1,6 +1,7 @@
 ﻿using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Repository.PayRepo;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DoAnTotNghiep.Areas.Manage.Controllers
 {
@@ -11,10 +12,10 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
         private readonly IPayRepository _payRepository;
         public ManageDashbroadController(DataContext dataContext, IPayRepository payRepository)
         {
-            _dataContext= dataContext;
-            _payRepository= payRepository;
+            _dataContext = dataContext;
+            _payRepository = payRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             int currentYear = DateTime.Now.Year;
             ViewBag.CurrentYear = currentYear;
@@ -22,6 +23,8 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
             ViewBag.Cadidates = _dataContext.Candidates.Count();
             ViewBag.Job = _dataContext.JobPostings.Count();
             ViewBag.Disscus = _dataContext.Discusses.Count();
+            var successRate = await GetSuccessRateAsync();
+            ViewBag.SuccessRate = successRate;
             return View();
         }
 
@@ -69,5 +72,18 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
             return View(filteredPayments);
         }
 
+        public async Task<double> GetSuccessRateAsync()
+        {
+            var totalCount = await _dataContext.JobApplyForms.CountAsync();
+            var successCount = await _dataContext.JobApplyForms.CountAsync(j => j.Status);
+
+            if (totalCount == 0)
+            {
+                return 0; // Tránh chia cho 0
+            }
+
+            return (double)successCount / totalCount * 100;
+
+        }
     }
-}
+ }

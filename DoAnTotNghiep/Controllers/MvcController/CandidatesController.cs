@@ -12,6 +12,7 @@ using System.Drawing.Drawing2D;
 using Microsoft.EntityFrameworkCore;
 using DoAnTotNghiep.Middleware;
 using DoAnTotNghiep.Repository.OnlineResumeRepo;
+using DoAnTotNghiep.Repository.JobRepo;
 
 namespace DoAnTotNghiep.Controllers.MvcController
 {
@@ -24,14 +25,16 @@ namespace DoAnTotNghiep.Controllers.MvcController
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IDiscussRepository _discussRepository;
         private readonly IOnlineResumeRepository _onlineResumeRepository;
+        private readonly IJobPostingRepository _jobPostingRepository;
 
-        public CandidatesController(ICandidatesRepo candidateRepository, DataContext dataContext, IFileService fileService, IWebHostEnvironment webHostEnvironment, IOnlineResumeRepository onlineResumeRepository)
+        public CandidatesController(ICandidatesRepo candidateRepository, DataContext dataContext, IFileService fileService, IWebHostEnvironment webHostEnvironment, IOnlineResumeRepository onlineResumeRepository, IJobPostingRepository jobPostingRepository)
         {
             _candidateRepository = candidateRepository;
             _dataContext = dataContext;
             _fileService = fileService;
             _webHostEnvironment = webHostEnvironment;
             _onlineResumeRepository = onlineResumeRepository;
+            _jobPostingRepository = jobPostingRepository;
         }
         public IActionResult Profile()
         {
@@ -84,6 +87,15 @@ namespace DoAnTotNghiep.Controllers.MvcController
         public IActionResult CreateCvOnline()
         {
             return View();
+        }
+
+
+        public async Task<IActionResult> MyApply()
+        {
+            var userId = GetUserIdFromClaim();
+            var account = _dataContext.Accounts.Where(m => m.UserID == Guid.Parse(userId)).FirstOrDefault();
+            List<JobPosting> jobPostings = await _jobPostingRepository.GetJobPostingsByApplicantEmailAsync(account.Email);
+            return View(jobPostings);
         }
 
         public async Task<IActionResult> DownloadCv(Guid cvId)
@@ -295,6 +307,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 FileDownloadName = "MyCV.pdf"
             };
         }
+
 
     }
 }

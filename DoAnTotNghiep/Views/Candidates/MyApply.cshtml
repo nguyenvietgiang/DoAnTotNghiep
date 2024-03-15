@@ -1,0 +1,39 @@
+﻿@model IEnumerable<DoAnTotNghiep.Models.EntityModels.JobPosting>
+
+@{
+    ViewData["Title"] = "Danh sách ứng tuyển của tôi";
+}
+
+@if (Model.Any())
+{
+    foreach (var job in Model)
+    {
+        <h3>Danh sách công việc đang ứng tuyển</h3>
+        <div class="single-job-items mb-30">
+            <div class="job-items">
+                <div class="company-img">
+                        <img src="@job.Employer.UrlImage" alt="">
+                </div>
+                <div class="job-tittle job-tittle2">
+                    <a href="@Url.Action("DetailJob", "Search", new { @id = job.JobPostingID })">
+                        <h4>@job.Title</h4>
+                    </a>
+                    <ul>
+                        <li>Vị Trí Tuyển Dụng: @job.position</li>
+                        <li>Địa Điểm Làm Việc: @job.Location</li>
+                        <li>Mức Lương Cơ Bản: @job.Salary VND</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="items-link items-link2 f-right">
+                <a>@job.WorkingTime</a>
+                <span>@job.CreateAt</span>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <partial name="_emty_search" />
+}
+

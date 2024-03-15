@@ -58,6 +58,16 @@ namespace DoAnTotNghiep.Repository.JobApplyFormRepo
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateStatusAsync(Guid id)
+        {
+            var jobApplyForm = await _context.JobApplyForms.FindAsync(id);
+            if (jobApplyForm != null)
+            {
+                jobApplyForm.Status = !jobApplyForm.Status; 
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 
 }
