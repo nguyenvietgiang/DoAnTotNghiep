@@ -1,0 +1,72 @@
+﻿@model DoAnTotNghiep.Models.EntityModels.JobPosting
+@{
+    ViewData["Title"] = "Chỉnh sửa tin tuyển dụng";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Chỉnh sửa tin tuyển dụng</h2>
+
+                    <form asp-action="EditJob">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="JobPostingID" />
+
+                        <div class="form-group">
+                            <label asp-for="Title" class="control-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Location" class="control-label"></label>
+                            <input asp-for="Location" class="form-control" />
+                            <span asp-validation-for="Location" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Requirements" class="control-label"></label>
+                            <textarea asp-for="Requirements" class="form-control"></textarea>
+                            <span asp-validation-for="Requirements" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Number" class="control-label"></label>
+                            <input asp-for="Number" class="form-control" />
+                            <span asp-validation-for="Number" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Salary" class="control-label"></label>
+                            <input asp-for="Salary" class="form-control" />
+                            <span asp-validation-for="Salary" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="position" class="control-label"></label>
+                            <input asp-for="position" class="form-control" />
+                            <span asp-validation-for="position" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="benefits" class="control-label"></label>
+                            <textarea asp-for="benefits" class="form-control"></textarea>
+                            <span asp-validation-for="benefits" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="WorkingTime" class="control-label"></label>
+                            <input asp-for="WorkingTime" class="form-control" />
+                            <span asp-validation-for="WorkingTime" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Lưu thay đổi" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

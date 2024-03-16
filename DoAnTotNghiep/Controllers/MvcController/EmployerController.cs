@@ -10,7 +10,10 @@ using DoAnTotNghiep.Repository.JobRepo;
 using DoAnTotNghiep.Services.EmailServices;
 using DoAnTotNghiep.Services.ExportServices;
 using DoAnTotNghiep.Services.ImageServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SkiaSharp;
 using Syncfusion.XlsIO;
 
 namespace DoAnTotNghiep.Controllers.MvcController
@@ -328,5 +331,69 @@ namespace DoAnTotNghiep.Controllers.MvcController
             return View(imageGaleryDTO);
         }
 
+        // Action để hiển thị form chỉnh sửa
+        public async Task<IActionResult> EditJob(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var jobPosting = await _dataContext.JobPostings.FindAsync(id);
+            if (jobPosting == null)
+            {
+                return NotFound();
+            }
+            // Kiểm tra quyền truy cập của người dùng
+            var userId = GetUserIdFromClaim();
+            if (jobPosting.EmployerID != Guid.Parse(userId))
+            {
+                return RedirectToAction("Index", "Error");
+            }
+            return View(jobPosting);
+        }
+
+        // POST: JobPosting/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditJob(Guid id, [Bind("JobPostingID,Title,Description,Location,Requirements,Number,Salary,position,benefits,WorkingTime")] JobPosting jobPosting)
+        {
+            if (id != jobPosting.JobPostingID)
+            {
+                return NotFound();
+            }
+                try
+                {
+                // Lấy giá trị của trường EmployerID từ cơ sở dữ liệu
+                var existingJobPosting = await _dataContext.JobPostings.AsNoTracking().FirstOrDefaultAsync(j => j.JobPostingID == id);
+                if (existingJobPosting == null)
+                {
+                    return NotFound();
+                }
+
+                // Gán lại giá trị của trường EmployerID
+                jobPosting.EmployerID = existingJobPosting.EmployerID;
+
+                _dataContext.Update(jobPosting);
+                await _dataContext.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Đã thay đổi thông tin thành công và đang đợi duyệt lại!";
+                return RedirectToAction(nameof(CompanyJobList));
+            }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!JobPostingExists(jobPosting.JobPostingID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+            }
+        }
+
+        private bool JobPostingExists(Guid id)
+        {
+            return _dataContext.JobPostings.Any(e => e.JobPostingID == id);
+        }
     }
 }

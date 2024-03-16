@@ -24,6 +24,8 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
             ViewBag.Job = _dataContext.JobPostings.Count();
             ViewBag.Disscus = _dataContext.Discusses.Count();
             var successRate = await GetSuccessRateAsync();
+            var revenueCount = _dataContext.Pays.Count();
+            ViewBag.revenue = revenueCount * 50000;
             ViewBag.SuccessRate = successRate;
             return View();
         }

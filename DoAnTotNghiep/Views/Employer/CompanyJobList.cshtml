@@ -15,7 +15,6 @@
                         <tr>
                             <th>Ảnh</th>
                             <th>Tiêu đề</th>
-                            <th>Chức vụ</th>
                             <th>Địa điểm</th>
                             <th>Lương</th>
                             <th>DS Ứng tuyển</th>
@@ -33,19 +32,21 @@
                                 </td>
                                 <td>
                                     <a href="@Url.Action("DetailJob", "Search", new { @id = jobPosting.JobId })">
-                                        <h4>@jobPosting.Title</h4>
+                                        <h6>@jobPosting.Title</h6>
                                     </a>
                                 </td>
-                                <td>@jobPosting.Position</td>
                                 <td><i class="fas fa-map-marker-alt"></i> @jobPosting.Location</td>
                                 <td>@jobPosting.Salary VND</td>
                                 <td>
                                     <a class="genric-btn info radius" href="@Url.Action("ApplyList", "Employer", new { @JobId = jobPosting.JobId })">DS Ứng tuyển</a>
                                 </td>
-                                <td>
-                                    <form asp-action="Delete" asp-route-id="@jobPosting.JobId" method="post">
-                                        <input type="submit" value="Xóa" class="genric-btn danger radius" onclick="return confirm('Bạn có muốn xóa tin này không?');" />
-                                    </form>
+                                <td style="width:250px">
+                                    <div class="d-flex">
+                                        <form asp-action="Delete" asp-route-id="@jobPosting.JobId" method="post" class="mr-2">
+                                            <input type="submit" value="Xóa" class="genric-btn danger radius" onclick="return confirm('Bạn có muốn xóa tin này không?');" />
+                                        </form>
+                                        <a asp-action="EditJob" asp-route-id="@jobPosting.JobId" class="genric-btn success radius">Sửa</a>
+                                    </div>
                                 </td>
                             </tr>
                         }
