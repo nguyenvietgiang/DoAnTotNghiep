@@ -137,6 +137,10 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 Salary = jp.Salary,
                 CompanyId = jp.EmployerID,
             });
+
+            var unapprovedJobPostings = await _jobPostingRepository.GetUnApprovedJobPostingsByEmployerAsync(Guid.Parse(userId));
+            ViewBag.UnApproved = unapprovedJobPostings;
+
             return View(result);
         } 
 

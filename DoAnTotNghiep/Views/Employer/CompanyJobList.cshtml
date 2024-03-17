@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Danh sách tuyển dụng của tôi";
+    var UnApproved = (List<DoAnTotNghiep.Models.EntityModels.JobPosting>)ViewBag.UnApproved;
 }
 <div class="card mb-4 rounded">
     <div class="card-body">
@@ -56,6 +57,45 @@
             else
             {
                 <p>Bạn chưa đăng tin tuyển dụng nào.</p>
+            }
+        </div>
+        <div class="card-deck">
+            <h2 class="card-title">Tin đang đợi duyệt</h2>
+            @if (UnApproved.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Ảnh</th>
+                            <th>Vị trí tuyển dụng</th>
+                            <th>Địa điểm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var similarJob in UnApproved)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="company-img">
+                                        <img src="@similarJob.Employer.UrlImage" alt="">
+                                    </div>
+                                </td>
+                                <td>
+                                        <h4>@similarJob.Title</h4>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li><i class="fas fa-map-marker-alt"></i>@similarJob.Location</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Chưa có tin nào đang chờ duyệt.</p>
             }
         </div>
         <a class="btn btn-success" asp-controller="Employer" asp-action="CreateJobPosting">Đăng tin tuyển dụng</a>

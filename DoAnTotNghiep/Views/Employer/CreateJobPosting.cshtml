@@ -81,16 +81,15 @@
     </div>
 </div>
 
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-        <script>
-            CKEDITOR.replace('editor1');
-            CKEDITOR.replace('editor2');
-            CKEDITOR.replace('editor3');
-        </script>
+    <script>
+        CKEDITOR.replace('editor1');
+        CKEDITOR.replace('editor2');
+        CKEDITOR.replace('editor3');
+    </script>
 }
 
 

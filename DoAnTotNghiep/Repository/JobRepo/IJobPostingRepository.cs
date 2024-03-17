@@ -13,6 +13,7 @@ namespace DoAnTotNghiep.Repository.JobRepo
         Task<IEnumerable<JobPosting>> GetUnapprovedJobPostingsAsync();
         Task<IEnumerable<JobPosting>> GetApprovedJobPostingsAsync();
         Task<IEnumerable<JobPosting>> GetApprovedJobPostingsByEmployerAsync(Guid employerId);
+        Task<IEnumerable<JobPosting>> GetUnApprovedJobPostingsByEmployerAsync(Guid employerId);
         Task<IEnumerable<JobPosting>> SearchJobPostingsAsync(string searchTerm, string location);
         Task<IDictionary<string, int>> GetJobPositionsCountAsync();
         Task<IEnumerable<JobPosting>> GetSimilarJobsAsync(Guid jobId);

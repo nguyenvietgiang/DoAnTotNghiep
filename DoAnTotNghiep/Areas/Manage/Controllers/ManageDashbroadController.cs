@@ -23,6 +23,8 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
             ViewBag.Cadidates = _dataContext.Candidates.Count();
             ViewBag.Job = _dataContext.JobPostings.Count();
             ViewBag.Disscus = _dataContext.Discusses.Count();
+            ViewBag.Contact = _dataContext.Contacts.Count();
+            ViewBag.Survey = _dataContext.Surveys.Count();
             var successRate = await GetSuccessRateAsync();
             var revenueCount = _dataContext.Pays.Count();
             ViewBag.revenue = revenueCount * 50000;

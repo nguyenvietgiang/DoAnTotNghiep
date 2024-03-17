@@ -181,5 +181,13 @@ namespace DoAnTotNghiep.Repository.JobRepo
                 .Where(j => j.JobApplyForms.Any(a => a.Email == applicantEmail))
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<JobPosting>> GetUnApprovedJobPostingsByEmployerAsync(Guid employerId)
+        {
+            return await _context.JobPostings
+                .Include(jp => jp.Employer)
+                .Where(jp => jp.EmployerID == employerId && !jp.Status)
+                .ToListAsync();
+        }
     }
 }
