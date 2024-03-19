@@ -53,23 +53,35 @@
                     </table>
                 </div>
                 <div>
-                        @if (surveysWithMostCommonOptions != null)
-                        {
-                            @foreach (dynamic item in surveysWithMostCommonOptions)
-                            {
-                                <h2>@item.Survey.Title</h2>
-                                <ul>
-                                    <li>Câu hỏi: @item.QuestionWithMostCommonOption.Question.QuestionText</li>
-                                    <li>Đáp án được chọn nhiều nhất: @item.QuestionWithMostCommonOption.MostCommonOption.OptionText</li>
-                                    <li>Số lần xuất hiện: @item.QuestionWithMostCommonOption.MostCommonOption.AnswerCounts.Count</li>
-                                </ul>
-                            }
-                        }
-                        else
-                        {
-                            <p>Danh sách trống.</p>
-                        }
-
+                    <h2>Thống kê khảo sát</h2>
+                    @if (ViewBag.SurveysWithMostCommonOptions != null && ViewBag.SurveysWithMostCommonOptions.Count > 0)
+                    {
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Khảo sát</th>
+                                    <th>Câu hỏi</th>
+                                    <th>Đáp án</th>
+                                    <th>Bình chọn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.SurveysWithMostCommonOptions)
+                                {
+                                    <tr>
+                                        <td>@item.Survey.Title</td>
+                                        <td>@(item.QuestionWithMostCommonOption?.Question?.QuestionText ?? "N/A")</td>
+                                        <td>@(item.QuestionWithMostCommonOption?.MostCommonOption?.OptionText ?? "N/A")</td>
+                                        <td>@(item.QuestionWithMostCommonOption?.MostCommonOption?.AnswerCounts?.Count ?? 0)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>Danh sách trống.</p>
+                    }
                 </div>
             </div>
         </div>
