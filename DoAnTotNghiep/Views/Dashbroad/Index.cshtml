@@ -61,18 +61,16 @@
                                 <tr>
                                     <th>Khảo sát</th>
                                     <th>Câu hỏi</th>
-                                    <th>Đáp án</th>
-                                    <th>Bình chọn</th>
+                                    <th>Lựa chọn</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in ViewBag.SurveysWithMostCommonOptions)
                                 {
                                     <tr>
-                                        <td>@item.Survey.Title</td>
+                                        <td><a class="black-color" asp-action="Detail" asp-route-id="@item.Survey.SurveyId">@item.Survey.Title</a></td>
                                         <td>@(item.QuestionWithMostCommonOption?.Question?.QuestionText ?? "N/A")</td>
                                         <td>@(item.QuestionWithMostCommonOption?.MostCommonOption?.OptionText ?? "N/A")</td>
-                                        <td>@(item.QuestionWithMostCommonOption?.MostCommonOption?.AnswerCounts?.Count ?? 0)</td>
                                     </tr>
                                 }
                             </tbody>

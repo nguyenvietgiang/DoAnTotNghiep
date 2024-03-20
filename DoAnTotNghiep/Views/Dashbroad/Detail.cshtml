@@ -1,0 +1,32 @@
+﻿@model DoAnTotNghiep.Models.ResponseDTO.SurveyDetailViewModel
+
+@{
+    ViewData["Title"] = "Chi tiết cuộc khảo sát";
+}
+
+<h1>@Model.Survey.Title</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Câu hỏi</th>
+            <th>Số lượng lựa chọn</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var questionWithOptionCounts in Model.QuestionsWithOptionCounts)
+        {
+            <tr>
+                <td>@questionWithOptionCounts.Question.QuestionText</td>
+                <td>
+                    <ul>
+                        @foreach (var optionCount in questionWithOptionCounts.OptionCounts)
+                        {
+                            <li>@optionCount.Option.OptionText: Số lượng lựa chọn: @optionCount.Count vote</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

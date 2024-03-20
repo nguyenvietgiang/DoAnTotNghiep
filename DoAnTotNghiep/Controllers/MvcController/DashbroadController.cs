@@ -4,6 +4,7 @@ using DoAnTotNghiep.Models.ResponseDTO;
 using DoAnTotNghiep.Repository.EmployerRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SkiaSharp;
 
 
 namespace DoAnTotNghiep.Controllers.MvcController
@@ -54,6 +55,38 @@ namespace DoAnTotNghiep.Controllers.MvcController
             ViewBag.TopEmployers = topEmployers;
 
             return View(topFiveJobs);
+        }
+
+        public IActionResult Detail(Guid id)
+        {
+            // Lấy thông tin bài khảo sát theo ID
+            var survey = _dataContext.Surveys.FirstOrDefault(s => s.SurveyId == id);
+
+            if (survey == null)
+            {
+                return NotFound();
+            }
+
+            // Lấy danh sách câu hỏi và số lần xuất hiện của mỗi lựa chọn
+            var questionsWithOptionCounts = _dataContext.Questions
+                .Where(q => q.SurveyId == id)
+                .Select(q => new QuestionWithOptionCountsViewModel
+                {
+                    Question = q,
+                    OptionCounts = q.Options.Select(o => new OptionCountViewModel
+                    {
+                        Option = o,
+                        Count = _dataContext.AnswerCounts.Count(ac => ac.OptionId == o.OptionId)
+                    }).ToList()
+                }).ToList();
+
+            var model = new SurveyDetailViewModel
+            {
+                Survey = survey,
+                QuestionsWithOptionCounts = questionsWithOptionCounts
+            };
+
+            return View(model);
         }
     }
 }
