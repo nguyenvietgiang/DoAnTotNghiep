@@ -22,7 +22,7 @@
                     <ul>
                         @foreach (var optionCount in questionWithOptionCounts.OptionCounts)
                         {
-                            <li>@optionCount.Option.OptionText: Số lượng lựa chọn: @optionCount.Count vote</li>
+                            <li><strong>@optionCount.Option.OptionText: </strong>Số lượng lựa chọn: @optionCount.Count vote</li>
                         }
                     </ul>
                 </td>

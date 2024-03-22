@@ -26,26 +26,29 @@
                             <form asp-action="Register" asp-controller="Auth" method="post">
                                 <!-- Name input -->
                                 <div class="form-outline mb-4">
-                                    <input asp-for="Name" placeholder="Tên tài khoản" class="form-control" />
+                                    <input asp-for="Name" id="name" placeholder="Tên tài khoản" class="form-control" />
                                     <span asp-validation-for="Name" class="text-danger"></span>
+                                    <div id="nameError" class="text-danger"></div>
                                 </div>
 
                                 <!-- Email input -->
                                 <div class="form-outline mb-4">
-                                    <input asp-for="Email" placeholder="Địa chỉ Email" class="form-control" />
+                                    <input asp-for="Email" id="email" placeholder="Địa chỉ Email" class="form-control" />
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
 
                                 <!-- Password input -->
                                 <div class="form-outline mb-4">
-                                    <input asp-for="Password" type="password" placeholder="Mật khẩu" class="form-control" />
+                                    <input asp-for="Password" id="password" type="password" placeholder="Mật khẩu" class="form-control" />
                                     <span asp-validation-for="Password" class="text-danger"></span>
+                                    <div id="passwordError" class="text-danger"></div>
                                 </div>
 
                                 <!-- Password Confirm input -->
                                 <div class="form-outline mb-4">
-                                    <input asp-for="ConfirmPassword" type="password" placeholder="Xác nhận mật khẩu" class="form-control" />
+                                    <input asp-for="ConfirmPassword" id="confirmPassword" type="password" placeholder="Xác nhận mật khẩu" class="form-control" />
                                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                    <div id="confirmPasswordError" class="text-danger"></div>
                                 </div>
 
                                 <div class="row mb-4">
@@ -85,7 +88,7 @@
                                 </div>
 
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
+                                <button type="button" id="submitButton" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
                                     Đăng Ký Ngay
                                 </button>
 
@@ -130,3 +133,68 @@
     <!-- Jumbotron -->
 </section>
 <!-- Section: Design Block -->
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var submitButton = document.getElementById("submitButton");
+            submitButton.disabled = true; // Vô hiệu hóa nút submit khi tải trang
+
+            var nameInput = document.getElementById("name");
+            var passwordInput = document.getElementById("password");
+            var confirmPasswordInput = document.getElementById("confirmPassword");
+
+            nameInput.addEventListener("input", validateName);
+            passwordInput.addEventListener("input", validatePassword);
+            confirmPasswordInput.addEventListener("input", validateConfirmPassword);
+
+            function validateName() {
+                var name = nameInput.value;
+                var nameError = document.getElementById("nameError");
+
+                // Kiểm tra độ dài tên người dùng
+                if (name.length < 5) {
+                    nameError.textContent = "Tên phải có tối thiểu 5 ký tự.";
+                    submitButton.disabled = true; // Vô hiệu hóa nút submit nếu tên không hợp lệ
+                } else {
+                    nameError.textContent = ""; // Xóa thông báo lỗi nếu hợp lệ
+                    validateForm(); // Kiểm tra tất cả các trường khi tên hợp lệ
+                }
+            }
+
+            function validatePassword() {
+                var password = passwordInput.value;
+                var passwordError = document.getElementById("passwordError");
+
+                // Kiểm tra độ dài mật khẩu
+                if (password.length < 6) {
+                    passwordError.textContent = "Mật khẩu phải có ít nhất 6 ký tự.";
+                } else {
+                    passwordError.textContent = ""; // Xóa thông báo lỗi nếu hợp lệ
+                    validateForm(); // Kiểm tra tất cả các trường khi mật khẩu hợp lệ
+                }
+            }
+
+            function validateConfirmPassword() {
+                var confirmPassword = confirmPasswordInput.value;
+                var confirmPasswordError = document.getElementById("confirmPasswordError");
+
+                // Kiểm tra mật khẩu nhập lại có trùng khớp không
+                if (confirmPassword !== passwordInput.value) {
+                    confirmPasswordError.textContent = "Mật khẩu nhập lại không trùng khớp.";
+                } else {
+                    confirmPasswordError.textContent = ""; // Xóa thông báo lỗi nếu hợp lệ
+                    validateForm(); // Kiểm tra tất cả các trường khi mật khẩu nhập lại hợp lệ
+                }
+            }
+
+            function validateForm() {
+                // Kích hoạt nút submit chỉ khi tất cả các điều kiện đều được thỏa mãn
+                if (nameInput.checkValidity() && passwordInput.checkValidity() && confirmPasswordInput.checkValidity() && confirmPasswordInput.value === passwordInput.value) {
+                    submitButton.disabled = false; // Kích hoạt nút submit nếu tất cả điều kiện hợp lệ
+                } else {
+                    submitButton.disabled = true; // Vô hiệu hóa nút submit nếu có ít nhất một điều kiện không hợp lệ
+                }
+            }
+        });
+    </script>
+}

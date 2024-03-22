@@ -56,12 +56,11 @@
                     <h2>Thống kê khảo sát</h2>
                     @if (ViewBag.SurveysWithMostCommonOptions != null && ViewBag.SurveysWithMostCommonOptions.Count > 0)
                     {
-                        <table>
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>Khảo sát</th>
-                                    <th>Câu hỏi</th>
-                                    <th>Lựa chọn</th>
+                                    <th class="text-right">Số người tham gia</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -69,8 +68,7 @@
                                 {
                                     <tr>
                                         <td><a class="black-color" asp-action="Detail" asp-route-id="@item.Survey.SurveyId">@item.Survey.Title</a></td>
-                                        <td>@(item.QuestionWithMostCommonOption?.Question?.QuestionText ?? "N/A")</td>
-                                        <td>@(item.QuestionWithMostCommonOption?.MostCommonOption?.OptionText ?? "N/A")</td>
+                                        <td class="text-right">3 người</td>
                                     </tr>
                                 }
                             </tbody>

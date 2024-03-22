@@ -172,7 +172,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
             if (rowuser != null)
             {
                 Random r = new Random();
-                int i = r.Next();
+                int i = r.Next(1, 99999);
                 rowuser.Password = Encrypt.MD5Hash(i.ToString());
                 _dbContext.Update(rowuser);
                 await _dbContext.SaveChangesAsync();
