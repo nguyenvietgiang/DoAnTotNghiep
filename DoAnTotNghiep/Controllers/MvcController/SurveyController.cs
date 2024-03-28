@@ -19,7 +19,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
 
         public IActionResult Index()
         {
-            var surveys = _surveyRepo.GetAll();
+            var surveys = _dataContext.Surveys.Where(s => s.Status).ToList();
             return View(surveys);
         }
 

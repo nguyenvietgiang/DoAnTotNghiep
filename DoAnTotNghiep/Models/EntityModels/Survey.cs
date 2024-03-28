@@ -10,6 +10,8 @@ namespace DoAnTotNghiep.Models.EntityModels
         [Required]
         public string Title { get; set; }
 
+        public bool Status { get; set; } = true;
+
         public List<Question> Questions { get; set; }
     }
 }

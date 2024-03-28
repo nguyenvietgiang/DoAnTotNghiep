@@ -3,6 +3,7 @@ using DoAnTotNghiep.Repository.SurveyRepo;
 using DoAnTotNghiep.Services.ExportServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SkiaSharp;
 using Syncfusion.XlsIO;
 using System.Linq;
 
@@ -122,5 +123,19 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
             return RedirectToAction("Details", new { id = surveyId });
         }
 
+
+        public IActionResult ToggleStatus(Guid id)
+        {
+            var survey = _dataContext.Surveys.Find(id);
+            if (survey == null)
+            {
+                return NotFound();
+            }
+
+            survey.Status = !survey.Status;
+            _dataContext.SaveChanges();
+
+            return RedirectToAction("Index"); 
+        }
     }
 }

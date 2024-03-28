@@ -7,27 +7,39 @@
     @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
     @addTagHelper *, AuthoringTagHelpers
 }
+
 <div class="container">
     <div class="row">
-        @foreach (var survey in Model)
-        {
-            <div class="col-md-6">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">@survey.Title</h5>
-                        <a href="@Url.Action("Details", "ManageSurvey", new { id = survey.SurveyId })" class="btn btn-primary">Chi tiết</a>
-                    </div>
-                </div>
-            </div>
-        }
-
-        <div class="col-md-6">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Tạo mới</h5>
-                    <a href="@Url.Action("Create", "ManageSurvey")" class="btn btn-success">Tạo mới</a>
-                </div>
-            </div>
+        <div class="col-md-12">
+            <h3>Danh sách các cuộc khảo sát</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tiêu đề</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var survey in Model)
+                    {
+                        <tr>
+                            <td>@survey.Title</td>
+                            <td>@(survey.Status ? "Đang khảo sát" : "Đóng khảo sát")</td>
+                            <td>
+                                <a href="@Url.Action("Details", "ManageSurvey", new { id = survey.SurveyId })" class="btn btn-primary">Chi tiết</a>
+                                <a href="@Url.Action("ToggleStatus", "ManageSurvey", new { id = survey.SurveyId })" class="btn btn-info">Chuyển trạng thái</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="@Url.Action("Create", "ManageSurvey")" class="btn btn-success">Tạo mới</a>
         </div>
     </div>
 </div>
+
