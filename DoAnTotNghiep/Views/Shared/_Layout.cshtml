@@ -254,11 +254,10 @@
                   language-code="vi"></df-messenger>
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v15.0&appId=5546284648741227&autoLogAppEvents=1" nonce="pHaCsEiK"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode"></script>
     <script>
-        // tạo QR code đến trang hiện tại
         var previousPageUrl = window.location.href;
-        var url = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(previousPageUrl);
+        var url = 'https://zxing.org/w/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(previousPageUrl);
         document.getElementById("qrcode").src = url;
         // chia sẻ với facebook (pushlish lên mới được nha)
         function shareOnFacebook() {
