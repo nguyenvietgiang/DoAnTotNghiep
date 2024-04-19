@@ -1,4 +1,7 @@
 ﻿@model DoAnTotNghiep.Models.EntityModels.JobPosting
+@using DoAnTotNghiep.Models.EntityModels
+@using Microsoft.EntityFrameworkCore
+@inject DataContext _dbContext
 
 @{
     ViewData["Title"] = "Chi tiết công việc";
@@ -77,7 +80,7 @@
                     </div>
                 </div>
                 <div class="post-details4  mb-50">
-                    <!-- Small Section Tittle --> 
+                    <!-- Small Section Tittle -->
                     <div class="small-section-tittle">
                         <h4>Công ty tuyển dụng</h4>
                     </div>
@@ -88,17 +91,17 @@
                         <li>Số điện thoại: <span>@Model.Employer.PhoneNumber</span></li>
                     </ul>
                     <div class="d-flex pt-2">
-                <p class="text-dark font-weight-medium mb-0 mr-2">Chia sẻ với:</p>
-                <div class="d-inline-flex">
+                        <p class="text-dark font-weight-medium mb-0 mr-2">Chia sẻ với:</p>
+                        <div class="d-inline-flex">
                             <button class="genric-btn primary small" onclick="shareOnFacebook()">
-                        <i class="fab fa-facebook-f"></i>
-                    </button>
-                    |
-                    <button class="genric-btn primary small" onclick="shareOnTwitter()">
-                        <i class="fab fa-twitter"></i>
-                    </button>
-                </div>
-            </div>
+                                <i class="fab fa-facebook-f"></i>
+                            </button>
+                            |
+                            <button class="genric-btn primary small" onclick="shareOnTwitter()">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -132,44 +135,80 @@
             }
         </div>
     </div>
-</div> 
+</div>
 
 <div class="modal fade" id="RecruitmentModal" tabindex="-1" role="dialog" aria-labelledby="RecruitmentModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="RecruitmentModalTitle">Ứng tuyển vị trí</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-                        <input type="hidden" id="jobPostingID" value="@Model.JobPostingID">
-            <label for="userName">Tên người dùng:</label>
-            <input type="text" class="form-control" id="userName" placeholder="Nhập tên của bạn">
-          </div>
-          <div class="form-group">
-            <label for="userEmail">Email:</label>
-            <input type="email" class="form-control" id="userEmail" placeholder="Nhập địa chỉ email của bạn">
-          </div>
-          <div class="form-group">
-            <label for="userPhone">Số điện thoại:</label>
-            <input type="tel" class="form-control" id="userPhone" placeholder="Nhập số điện thoại của bạn">
-          </div>
-          <div class="form-group">
-            <label for="userFile">Chọn file CV:</label>
-            <input type="file" class="form-control-file" id="userFile">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="genric-btn danger radius" data-dismiss="modal">Hủy</button>
-        <button type="button" class="genric-btn success radius" id="btnApply">Ứng tuyển ngay</button>
-      </div>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="RecruitmentModalTitle">Ứng tuyển vị trí</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+  
+            <div class="modal-body">
+                <form>
+                    @{
+                        if (@Context.Session.GetString("CandidateName") == null)
+                        {
+                            <div class="form-group">
+                                <input type="hidden" id="jobPostingID" value="@Model.JobPostingID">
+                                <label for="userName">Tên người dùng:</label>
+                                <input type="text" class="form-control" id="userName" placeholder="Nhập tên của bạn">
+                            </div>
+                            <div class="form-group">
+                                <label for="userEmail">Email:</label>
+                                <input type="email" class="form-control" id="userEmail" placeholder="Nhập địa chỉ email của bạn">
+                            </div>
+                            <div class="form-group">
+                                <label for="userPhone">Số điện thoại:</label>
+                                <input type="tel" class="form-control" id="userPhone" placeholder="Nhập số điện thoại của bạn">
+                            </div>
+                            <div class="form-group">
+                                <label for="userFile">Chọn file CV:</label>
+                                <input type="file" class="form-control-file" id="userFile">
+                            </div>
+                        }
+                        else
+                        {
+                            var candidateIdString = @Context.Session.GetString("Accountid");
+                            Guid candidateId;
+                            if (Guid.TryParse(candidateIdString, out candidateId))
+                            {
+                                var candidate = _dbContext.Candidates.Include(c => c.Account).FirstOrDefault(c => c.CandidateID == candidateId);
+                                if (candidate != null)
+                                {
+                                    <div class="form-group">
+                                        <input type="hidden" id="jobPostingID" value="@Model.JobPostingID">
+                                        <label for="userName">Tên người dùng:</label>
+                                        <input type="text" class="form-control" id="userName" value="@candidate.Name" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="userEmail">Email:</label>
+                                        <input type="email" class="form-control" id="userEmail" value="@candidate.Account.Email" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="userPhone">Số điện thoại:</label>
+                                        <input type="tel" class="form-control" id="userPhone" value="@candidate.PhoneNumber" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="userFile">Chọn file CV:</label>
+                                        <input type="file" class="form-control-file" id="userFile">
+                                    </div>
+                                }
+                            }
+                        }
+                    }
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="genric-btn danger radius" data-dismiss="modal">Hủy</button>
+                <button type="button" class="genric-btn success radius" id="btnApply">Ứng tuyển ngay</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- Khối script -->
