@@ -214,11 +214,13 @@ namespace DoAnTotNghiep.Controllers.MvcController
                     _dataContext.Discusses.Add(newDiscussion);
                     await _dataContext.SaveChangesAsync();
 
-                    return RedirectToAction("Index", "Home");
+                    TempData["SuccessMessage"] = "Bài thảo luận đã được lưu thành công và đang chờ được duyệt!";
+                    return RedirectToAction("Forum", "Home");
                 }
                 else
                 {
-                    // Xử lý khi không tìm thấy tài khoản
+                    TempData["SuccessMessage"] = "Bài thảo luận đã được lưu thành công và đang chờ được duyệt!";
+                    return RedirectToAction("Forum", "Home");
                 }
             }
             return View(model);

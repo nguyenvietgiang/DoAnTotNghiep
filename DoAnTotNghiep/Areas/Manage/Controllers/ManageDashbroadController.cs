@@ -85,9 +85,8 @@ namespace DoAnTotNghiep.Areas.Manage.Controllers
             {
                 return 0; // Tránh chia cho 0
             }
-
-            return (double)successCount / totalCount * 100;
-
+            var successRate = (double)successCount / totalCount * 100;
+            return Math.Round(successRate, 3);
         }
     }
  }
