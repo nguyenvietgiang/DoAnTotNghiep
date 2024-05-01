@@ -286,15 +286,14 @@ namespace DoAnTotNghiep.Controllers.MvcController
             try
             {
                 await _jobApplyFormRepository.DeleteJobApplyForm(jobApplyID);
-                TempData["SuccessMessage"] = "Tin tuyển dụng đã xóa thành công!";
-                return View();
+                return Json(new { success = true, message = "Đã xóa thành công!" });
             }
             catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Đã có lỗi sảy ra, không thể xóa: " + ex.Message;
-                return View();
+                return Json(new { success = false, message = "Đã có lỗi sảy ra, không thể xóa: " + ex.Message });
             }
         }
+
 
         [HttpPost]
         public async Task<IActionResult> JobContactResponse(Guid id, string repcontent)

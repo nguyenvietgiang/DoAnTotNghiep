@@ -7,7 +7,7 @@
 <div class="card">
     <div class="card-body">
         <h4 class="card-title">Số lượng ứng tuyển (@ViewBag.NumberOfForms)</h4>
-        <button class="genric-btn info radius mb-3">Xuất file thống kê</button>
+       @*  <button class="genric-btn info radius mb-3">Xuất file thống kê</button> *@
         <partial name="_Message_area" />
         @if (Model.Any())
         {
@@ -39,9 +39,9 @@
         <button type="button" class="genric-btn warning radius" data-toggle="modal" data-target="#contactModal-@jobApplyForm.JobApplyID">
             Duyệt
         </button>
-        <form asp-action="DeleteApply" asp-route-jobApplyID="@jobApplyForm.JobApplyID" method="post">
+     @*    <form asp-action="DeleteApply" asp-route-jobApplyID="@jobApplyForm.JobApplyID" method="post">
             <button type="submit" class="genric-btn danger radius" onclick="return confirm('Bạn có muốn xóa không?');">Xóa</button>
-        </form>
+        </form> *@
     </div>
 </td>
                             <td>@(jobApplyForm.Status ? "Đã duyệt" : "Chưa duyệt")</td>

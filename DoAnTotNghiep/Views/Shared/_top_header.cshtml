@@ -5,11 +5,18 @@
                 <div class="single-element-widget">
                     <div class="row justify-content-center">
                         <div class="col-md-6">
-                            @Html.ActionLink("Vietnamese", ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["controller"].ToString(), new { language = "vie" }, new { @style = "color: #fff;" })
-                                    ||
-                            @Html.ActionLink("English", ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["controller"].ToString(), new { language = "en" }, new { @style = "color: #fff;" })
-                                    ||
-                            @Html.ActionLink("French", ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["controller"].ToString(), new { language = "fr" }, new { @style = "color: #fff;" })
+                            @{
+                                var routeValues = ViewContext.RouteData.Values;
+                                var action = routeValues["action"].ToString();
+                                var controller = routeValues["controller"].ToString();
+                                var id = routeValues["id"]?.ToString();
+                            }
+
+                            @Html.ActionLink("Vietnamese", action, controller, new { language = "vie", id }, new { @style = "color: #fff;" })
+                            ||
+                            @Html.ActionLink("English", action, controller, new { language = "en", id }, new { @style = "color: #fff;" })
+                            ||
+                            @Html.ActionLink("French", action, controller, new { language = "fr", id }, new { @style = "color: #fff;" })
                         </div>
                     </div>
                 </div>
