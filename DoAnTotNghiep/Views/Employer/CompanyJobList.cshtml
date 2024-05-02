@@ -46,7 +46,7 @@
                                         <form asp-action="Delete" asp-route-id="@jobPosting.JobId" method="post" class="mr-2">
                                             <input type="submit" value="Xóa" class="genric-btn danger radius" onclick="return confirm('Bạn có muốn xóa tin này không?');" />
                                         </form>
-                                        <a asp-action="EditJob" asp-route-id="@jobPosting.JobId" class="genric-btn success radius">Sửa</a>
+                                       @*  <a asp-action="EditJob" asp-route-id="@jobPosting.JobId" class="genric-btn success radius">Sửa</a> *@
                                     </div>
                                 </td>
                             </tr>
