@@ -1,0 +1,29 @@
+﻿@model DoAnTotNghiep.Models.DTO.ConfirmationViewModel
+
+@{
+    ViewData["Title"] = "Xác thực tài khoản";
+}
+
+<div class="card">
+    <h5 class="card-header">Xác nhận tài khoản</h5>
+    <div class="card-body">
+        <form asp-action="ConfirmAccount" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input asp-for="Email" type="email" class="form-control" id="Email" name="Email">
+            </div>
+            <div class="form-group">
+                <label for="UserID">Mã xác thực</label>
+                <input asp-for="UserID" type="text" class="form-control" id="UserID" name="UserID">
+            </div>
+            <button type="submit" class="btn btn-primary">Xác nhận</button>
+        </form>
+        @if (!string.IsNullOrEmpty(ViewBag.thongbao))
+        {
+            <p style="color: red">@ViewBag.thongbao</p>
+        }
+    </div>
+</div>
+

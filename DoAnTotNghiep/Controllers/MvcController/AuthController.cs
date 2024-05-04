@@ -47,7 +47,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 {
                     if (!rowuser.Status)
                     {
-                        ViewBag.thongbao = "Tài khoản của bạn đã bị khóa, hãy liên hệ với chúng tôi để biết thêm thông tin";
+                        ViewBag.thongbao = "Tài khoản của bạn đã bị khóa, hoặc chưa được xác thực hãy liên hệ với chúng tôi để biết thêm thông tin";
                     }
                     else if (rowuser.Password == Encrypt.MD5Hash(model.Password))
                     {
@@ -92,7 +92,7 @@ namespace DoAnTotNghiep.Controllers.MvcController
 
         [HttpPost]
         [ValidateDNTCaptcha(ErrorMessage ="Mã Captcha không chính xác")]
-        public IActionResult Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
             Account rowuser = _dbContext.Accounts.Where(m => m.Email == model.Email).FirstOrDefault();
             if (rowuser != null)
@@ -124,10 +124,12 @@ namespace DoAnTotNghiep.Controllers.MvcController
                         Password = hashedPassword,
                         AccountRole = model.AccountRole,
                         Candidate = candidate,
-                        Status = true
+                        Status = false
                     };
 
                     _dbContext.Accounts.Add(account);
+                    string message = string.Format("Mã kích hoạt tài khoản của bạn là: {0}", account.UserID);
+                    await _emailServices.SendEmailAsync(model.Email, message);
                 }
                 else if(model.AccountRole == AccountRole.EmployerFree)
                 {
@@ -148,13 +150,16 @@ namespace DoAnTotNghiep.Controllers.MvcController
                         Password = hashedPassword,
                         AccountRole = model.AccountRole,
                         Employer = employer,
-                        Status = true
+                        Status = false
                     };
 
                     _dbContext.Accounts.Add(account);
+                    string message = string.Format("Mã kích hoạt tài khoản của bạn là: {0}", account.UserID);
+                    await _emailServices.SendEmailAsync(model.Email, message);
+
                 }
                 _dbContext.SaveChanges();
-                ViewBag.thongbao = "Tài khoản đã được đăng ký thành công!!!";
+                ViewBag.thongbao = "Hãy kiểm tra email của bạn để kích hoạt tài khoản!!!";
             }
             return View(model);
         }
@@ -241,6 +246,38 @@ namespace DoAnTotNghiep.Controllers.MvcController
                 ViewBag.thongbao = "Mật Khẩu Cũ Không Chính Xác !!!";
             }
             return View();
+        }
+
+
+        [HttpGet]
+        public IActionResult ConfirmAccount()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ConfirmAccount(ConfirmationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Tìm tài khoản trong cơ sở dữ liệu dựa trên email và ID
+                var account = _dbContext.Accounts.FirstOrDefault(m => m.Email == model.Email && m.UserID == model.UserID);
+
+                if (account != null)
+                {
+                    // Xác nhận tài khoản bằng cách đặt trạng thái thành true
+                    account.Status = true;
+                    _dbContext.SaveChanges();
+
+                    ViewBag.thongbao = "Tài khoản của bạn đã được kích hoạt thành công!";
+                    return View();
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Email hoặc ID không đúng.");
+                }
+            }
+            return View(model);
         }
 
     }
