@@ -2,17 +2,18 @@
 
 @{
     ViewData["Title"] = "Danh sách ứng tuyển của tôi";
+    var userEmail = ViewBag.UserEmail as string; 
 }
 
 @if (Model.Any())
 {
+    <h3>Danh sách công việc đang ứng tuyển</h3>
     foreach (var job in Model)
     {
-        <h3>Danh sách công việc đang ứng tuyển</h3>
         <div class="single-job-items mb-30">
             <div class="job-items">
                 <div class="company-img">
-                        <img src="@job.Employer.UrlImage" alt="">
+                    <img src="@job.Employer.UrlImage" alt="">
                 </div>
                 <div class="job-tittle job-tittle2">
                     <a href="@Url.Action("DetailJob", "Search", new { @id = job.JobPostingID })">
@@ -28,6 +29,19 @@
             <div class="items-link items-link2 f-right">
                 <a>@job.WorkingTime</a>
                 <span>@job.CreateAt</span>
+                @foreach (var application in job.JobApplyForms.Where(a => a.Email == userEmail))
+                {
+                    <div>
+                        @if (application.Status)
+                        {
+                            <span style="color: green;">Đã duyệt</span>
+                        }
+                        else
+                        {
+                            <span style="color: red;">Đang chờ</span>
+                        }
+                    </div>
+                }
             </div>
         </div>
     }
@@ -36,4 +50,3 @@ else
 {
     <partial name="_emty_search" />
 }
-

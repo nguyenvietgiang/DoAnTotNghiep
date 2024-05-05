@@ -1,4 +1,5 @@
 ﻿using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Models.Enum;
 using DoAnTotNghiep.Repository.SurveyRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,7 @@ using SkiaSharp;
 
 namespace DoAnTotNghiep.Controllers.MvcController
 {
-    public class SurveyController : Controller
+    public class SurveyController : BaseController
     {
         private readonly ISurveyRepo<Survey> _surveyRepo;
         private readonly DataContext _dataContext;
@@ -19,9 +20,24 @@ namespace DoAnTotNghiep.Controllers.MvcController
 
         public IActionResult Index()
         {
-            var surveys = _dataContext.Surveys.Where(s => s.Status).ToList();
-            return View(surveys);
+            var userId = GetUserIdFromClaim();
+            var account = _dataContext.Accounts.Where(m => m.UserID == Guid.Parse(userId)).FirstOrDefault();
+            if (account != null)
+            {
+                if (account.AccountRole == AccountRole.CandidateFree || account.AccountRole == AccountRole.CandidatePaid)
+                {
+                    var surveys = _dataContext.Surveys.Where(s => s.Status && s.surveyTarget == SurveyTarget.Candidate).ToList();
+                    return View(surveys);
+                }
+                else if (account.AccountRole == AccountRole.EmployerFree || account.AccountRole == AccountRole.EmployerPaid)
+                {
+                    var surveys = _dataContext.Surveys.Where(s => s.Status && s.surveyTarget == SurveyTarget.Employer).ToList();
+                    return View(surveys);
+                }
+            }
+            return View();
         }
+
 
         public IActionResult Survey(Guid id)
         {

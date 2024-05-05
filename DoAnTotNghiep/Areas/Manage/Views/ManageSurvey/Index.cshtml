@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<DoAnTotNghiep.Models.EntityModels.Survey>
-
+@using DoAnTotNghiep.Models.EntityModels
 
 @{
     ViewData["Title"] = "Index";
@@ -16,6 +16,7 @@
                 <thead>
                     <tr>
                         <th>Tiêu đề</th>
+                        <th>Đối tượng thực hiện</th>
                         <th>Trạng thái</th>
                         <th>Hành động</th>
                     </tr>
@@ -25,6 +26,7 @@
                     {
                         <tr>
                             <td>@survey.Title</td>
+                           <td>@(survey.surveyTarget == SurveyTarget.Candidate ? "Ứng viên" : "Doanh nghiệp")</td>
                             <td>@(survey.Status ? "Đang khảo sát" : "Đóng khảo sát")</td>
                             <td>
                                 <a href="@Url.Action("Details", "ManageSurvey", new { id = survey.SurveyId })" class="btn btn-primary">Chi tiết</a>

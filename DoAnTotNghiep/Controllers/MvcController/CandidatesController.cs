@@ -93,10 +93,17 @@ namespace DoAnTotNghiep.Controllers.MvcController
         public async Task<IActionResult> MyApply()
         {
             var userId = GetUserIdFromClaim();
-            var account = _dataContext.Accounts.Where(m => m.UserID == Guid.Parse(userId)).FirstOrDefault();
+            var account = _dataContext.Accounts.FirstOrDefault(m => m.UserID == Guid.Parse(userId));
+            if (account == null)
+            {
+                return NotFound();
+            }
+
             List<JobPosting> jobPostings = await _jobPostingRepository.GetJobPostingsByApplicantEmailAsync(account.Email);
+            ViewBag.UserEmail = account.Email;
             return View(jobPostings);
         }
+
 
         public async Task<IActionResult> DownloadCv(Guid cvId)
         {
