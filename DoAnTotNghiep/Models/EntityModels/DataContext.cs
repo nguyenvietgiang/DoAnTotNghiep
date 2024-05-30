@@ -29,6 +29,7 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<Policy> Policies { get; set; }
         public DbSet<Pay> Pays { get; set; }
         public DbSet<OnlineResume> OnlineResumes { get; set;}
+        public DbSet<Message> Messages { get; set; }
 
     }
 }

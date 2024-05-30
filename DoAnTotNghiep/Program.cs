@@ -27,6 +27,7 @@ using Serilog;
 using Syncfusion.Licensing;
 using Serilog.Formatting.Json;
 using DoAnTotNghiep.Repository.OnlineResumeRepo;
+using DoAnTotNghiep.RealTime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -96,9 +97,11 @@ builder.Services.AddControllers()
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
             });
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 app.UseMiddleware<OnlineUsersMiddleware>();
+//app.UseMiddleware<SessionToClaimsPrincipalMiddleware>();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -134,7 +137,7 @@ app.UseEndpoints(endpoints =>
         pattern: "{language=vie}/{controller=Home}/{action=Index}/{id?}"
     );
 });
-
+app.MapHub<ChatHub>("/chathub");
 // Remove the previous MapControllerRoute for the default route
 
 app.Run();
