@@ -1,0 +1,20 @@
+﻿CREATE PROCEDURE BackupDatabase
+    @BackupPath NVARCHAR(255)
+AS
+BEGIN
+    DECLARE @BackupFile NVARCHAR(255)
+    SET @BackupFile = @BackupPath + N'\DatabaseBackup_' + CONVERT(NVARCHAR, GETDATE(), 112) + N'_' + REPLACE(CONVERT(NVARCHAR, GETDATE(), 108), ':', '') + N'.bak'
+
+    BACKUP DATABASE [GoldenJobDB] TO DISK = @BackupFile
+    WITH FORMAT, MEDIANAME = 'SQLServerBackups', NAME = 'Full Backup of GoldenJobDB';
+END
+
+
+CREATE PROCEDURE RestoreDatabase
+    @BackupFilePath NVARCHAR(255)
+AS
+BEGIN
+    ALTER DATABASE [GoldenJobDB] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    RESTORE DATABASE [GoldenJobDB] FROM DISK = @BackupFilePath WITH REPLACE;
+    ALTER DATABASE [GoldenJobDB] SET MULTI_USER;
+END

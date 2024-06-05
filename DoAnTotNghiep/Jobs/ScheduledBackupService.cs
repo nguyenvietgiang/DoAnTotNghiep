@@ -14,9 +14,7 @@ namespace DoAnTotNghiep.Jobs
         {
             _serviceScopeFactory = serviceScopeFactory;
             _logger = logger;
-            // chạy mùng 5 hàng tháng
-            _cronExpression = CronExpression.Parse("0 0 0 5 * *");
-            //_cronExpression = CronExpression.Parse("*/10 * * * *"); // Chạy cứ mỗi 10 phút
+            _cronExpression = CronExpression.Parse("*/10 * * * *"); // Chạy cứ mỗi 10 phút đã test
             _timeZoneInfo = TimeZoneInfo.Local; // Sử dụng múi giờ cục bộ
         }
 
