@@ -28,6 +28,8 @@ using Syncfusion.Licensing;
 using Serilog.Formatting.Json;
 using DoAnTotNghiep.Repository.OnlineResumeRepo;
 using DoAnTotNghiep.RealTime;
+using DoAnTotNghiep.Common;
+using DoAnTotNghiep.Jobs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -98,6 +100,9 @@ builder.Services.AddControllers()
                 options.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
             });
 builder.Services.AddSignalR();
+
+builder.Services.AddScoped<BackupRestoreService>();
+builder.Services.AddHostedService<ScheduledBackupService>();
 
 var app = builder.Build();
 app.UseMiddleware<OnlineUsersMiddleware>();
