@@ -1,7 +1,8 @@
 # ĐỒ ÁN TỐT NGHIỆP - 2024
 
-- SVTH: Nguyễn Việt Giang - 1910A04 
+- SVTH: Nguyễn Việt Giang - 1910A04
 - GVHD: TS. Trương Tiến Tùng (Đại học Mở Hà Nội)
+
 ---
 
 **Sàn giao dịch việc làm trực tuyến JobFinder**
@@ -19,6 +20,10 @@
 - Thực hiện migrate data
 
 ## Các tính năng chính
+
+![Overview](chucnang.jfif)
+
+## ------------------
 
 1. Đăng ký tài khoản.
 2. Đăng nhập.
