@@ -16,3 +16,14 @@ html {
 body {
   margin-bottom: 60px;
 }
+/* Đảm bảo div chứa chiếm toàn bộ không gian mong muốn */
+.viewer-container {
+    width: 100%;
+    height: 100vh; /* Hoặc chiều cao tùy chỉnh mà bạn muốn */
+}
+
+spline-viewer {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Giúp nội dung fit vào container */
+}
