@@ -19,7 +19,7 @@ body {
 /* Đảm bảo div chứa chiếm toàn bộ không gian mong muốn */
 .viewer-container {
     width: 100%;
-    height: 100vh; /* Hoặc chiều cao tùy chỉnh mà bạn muốn */
+    height: 70vh; /* Hoặc chiều cao tùy chỉnh mà bạn muốn */
 }
 
 spline-viewer {
