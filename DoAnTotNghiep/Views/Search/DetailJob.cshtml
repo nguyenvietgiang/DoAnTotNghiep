@@ -223,6 +223,12 @@
                 var userPhone = $("#userPhone").val();
                 var userFile = $("#userFile")[0].files[0];
 
+                // Kiểm tra xem các trường thông tin đã được điền đầy đủ chưa
+                if (!jobPostingID || !userName || !userEmail || !userPhone || !userFile) {
+                    alert("Vui lòng điền đầy đủ thông tin.");
+                    return; // Ngừng xử lý nếu có trường bị thiếu
+                }
+
                 // Tạo FormData để chứa dữ liệu form
                 var formData = new FormData();
                 formData.append("JobPostingID", jobPostingID);

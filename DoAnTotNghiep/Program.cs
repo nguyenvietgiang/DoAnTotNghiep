@@ -35,7 +35,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
     .Enrich.FromLogContext()
     .WriteTo.File(new JsonFormatter(), "logs/log.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
@@ -99,8 +99,7 @@ builder.Services.AddControllers()
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
             });
-builder.Services.AddSignalR();
-
+builder.Logging.AddSerilog();
 builder.Services.AddScoped<BackupRestoreService>();
 builder.Services.AddHostedService<ScheduledBackupService>();
 
