@@ -30,6 +30,7 @@ using DoAnTotNghiep.Repository.OnlineResumeRepo;
 using DoAnTotNghiep.RealTime;
 using DoAnTotNghiep.Common;
 using DoAnTotNghiep.Jobs;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,9 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Services.AddDbContext<DataContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("Connect")));
+
+// seeddata
+builder.Services.AddScoped<SeedData>();
 
 //services
 builder.Services.AddScoped<IFileService, FileService>();
@@ -104,6 +108,7 @@ builder.Services.AddScoped<BackupRestoreService>();
 builder.Services.AddHostedService<ScheduledBackupService>();
 
 var app = builder.Build();
+app.AddAutoMigration<DataContext>();
 app.UseMiddleware<OnlineUsersMiddleware>();
 //app.UseMiddleware<SessionToClaimsPrincipalMiddleware>();
 // Configure the HTTP request pipeline.
