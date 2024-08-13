@@ -1,0 +1,26 @@
+﻿Quản lý concurrency để tránh xung đột khi đồng thời nhiều user thao tác trên cùng một bản ghi
+(Ví dụ trong dự án này là quản lý sự kiện - event trong admin page)
+
+Optimistic Concurrency
+Đặc điểm:
+Không khóa dữ liệu: Phương pháp này không khóa dữ liệu khi đọc. 
+Thay vào đó, nó giả định rằng các xung đột ít xảy ra và kiểm tra xung đột khi ghi dữ liệu.
+Kiểm tra đồng thời: Khi bạn cập nhật dữ liệu,hệ thống kiểm tra xem dữ liệu có bị thay đổi bởi một giao dịch khác không.
+Nếu có, việc cập nhật sẽ bị từ chối và bạn phải xử lý xung đột (thường là yêu cầu người dùng xác nhận và gửi lại dữ liệu).
+Khi nào nên sử dụng:
+Tính khả dụng cao: Khi bạn cần hệ thống có khả năng xử lý đồng thời cao mà không bị khóa dữ liệu, 
+ví dụ trong các ứng dụng web với nhiều người dùng.
+Tần suất xung đột thấp: Nếu xung đột cập nhật dữ liệu là hiếm khi xảy ra,
+phương pháp này có thể tiết kiệm tài nguyên và tăng hiệu suất.
+
+Pessimistic Concurrency (Lock)
+Đặc điểm:
+Khóa dữ liệu: Phương pháp này khóa dữ liệu khi bạn đọc hoặc ghi, 
+để đảm bảo rằng không có giao dịch nào khác có thể thay đổi dữ liệu trong khi bạn đang làm việc với nó.
+Khóa bản ghi: Các bản ghi bị khóa cho đến khi giao dịch hoàn tất, giúp ngăn chặn các giao dịch khác thay đổi hoặc đọc dữ liệu bị khóa.
+Khi nào nên sử dụng:
+Xung đột dữ liệu cao: Khi bạn dự đoán rằng có thể xảy ra nhiều xung đột đồng thời
+việc khóa dữ liệu có thể giảm thiểu các vấn đề và đảm bảo tính nhất quán.
+Các giao dịch dài: Nếu giao dịch của bạn mất thời gian dài để hoàn tất và cần đảm bảo dữ liệu không bị thay đổi trong suốt thời gian đó.
+
+Cách triển khai

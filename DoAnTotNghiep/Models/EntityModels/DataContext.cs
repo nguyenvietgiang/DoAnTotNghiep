@@ -30,6 +30,13 @@ namespace DoAnTotNghiep.Models.EntityModels
         public DbSet<Pay> Pays { get; set; }
         public DbSet<OnlineResume> OnlineResumes { get; set;}
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Event> Events { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Event>()
+                .Property(e => e.RowVersion)
+                .IsRowVersion(); // Cấu hình RowVersion cho việc theo dõi xung đột
+        }
     }
 }

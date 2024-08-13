@@ -1,0 +1,47 @@
+﻿@model DoAnTotNghiep.Models.EntityModels.Event
+
+@{
+     ViewData["Title"] = "Edit event";
+    Layout = "~/Areas/Manage/Views/Shared/_AdminLayout.cshtml";
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @addTagHelper *, AuthoringTagHelpers
+}
+
+<h1>Chỉnh sửa sự kiện</h1>
+
+<!-- Hiển thị thông báo lỗi nếu có -->
+@if (ViewData["ConcurrencyError"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>@ViewData["ConcurrencyError"]</strong>
+    </div>
+}
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="RowVersion" />
+
+    <div class="form-group">
+        <label>Sự kiện</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Bắt đầu </label>
+        <input asp-for="StartTime" class="form-control" type="datetime-local" />
+        <span asp-validation-for="StartTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Kết thúc</label>
+        <input asp-for="EndTime" class="form-control" type="datetime-local" />
+        <span asp-validation-for="EndTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Lưu" class="btn btn-primary" />
+    </div>
+</form>
+
+<a asp-action="Index" class="btn btn-secondary">Hủy bỏ</a>
