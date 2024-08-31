@@ -40,3 +40,14 @@ canvas {
 .user-name {
     color: blue; /* Thay đổi màu của tên người dùng thành màu xanh */
 }
+.qr-code {
+
+    text-align: center;
+    margin-top: 20px;
+}
+
+.qr-code img {
+    width: 100px;
+    height: 100px;
+}
+
