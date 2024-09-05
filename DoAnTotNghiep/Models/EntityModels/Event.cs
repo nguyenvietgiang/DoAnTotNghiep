@@ -6,6 +6,7 @@ namespace DoAnTotNghiep.Models.EntityModels
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string? Detail { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
