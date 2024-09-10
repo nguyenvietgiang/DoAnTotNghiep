@@ -36,6 +36,8 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using DoAnTotNghiep.Models.Enum;
 using Syncfusion.XlsIO.Implementation.Security;
 using System.Security.Claims;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -86,50 +88,52 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
 })
-    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+.AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+{
+    options.Authority = "https://localhost:5001"; // Địa chỉ của IdentityServer
+    options.ClientId = "mvc_client";
+    options.ClientSecret = "mvc_secret";
+    options.ResponseType = "code";
+    options.SaveTokens = true;
+
+    options.Scope.Add("openid");
+    options.Scope.Add("profile");
+    options.Scope.Add("email");
+
+    options.GetClaimsFromUserInfoEndpoint = true;
+    options.ClaimActions.MapJsonKey("email", "email");
+
+    options.Events = new OpenIdConnectEvents
     {
-        options.Authority = "https://localhost:5001"; // Địa chỉ của IdentityServer
-        options.ClientId = "mvc_client";
-        options.ClientSecret = "mvc_secret";
-        options.ResponseType = "code";
-        options.SaveTokens = true;
-
-        // Thêm các scopes cần thiết
-        options.Scope.Add("openid");
-        options.Scope.Add("profile");
-        options.Scope.Add("email"); // lấy thêm email
-
-        // Đảm bảo lấy claims từ UserInfo endpoint
-        options.GetClaimsFromUserInfoEndpoint = true;
-
-        // Xử lý sự kiện sau khi đăng nhập thành công
-        options.Events = new OpenIdConnectEvents
+        OnUserInformationReceived = async context =>
         {
-            OnTokenValidated = async context =>
+            var identity = (ClaimsIdentity)context.Principal.Identity;
+
+            foreach (var claim in identity.Claims)
             {
-                var claimsIdentity = (ClaimsIdentity)context.Principal.Identity;
+                Console.WriteLine($"Claim Type: {claim.Type}, Claim Value: {claim.Value}");
+            }
 
-                // Log tất cả các claims để kiểm tra thông tin có trong token
-                var claims = context.Principal.Claims;
-                foreach (var claim in claims)
+            var userEmail = identity.FindFirst("email")?.Value ??
+                            identity.FindFirst(ClaimTypes.Email)?.Value ??
+                            context.User.RootElement.GetString("email");
+
+            Console.WriteLine($"User Email: {userEmail}");
+
+            if (!string.IsNullOrEmpty(userEmail))
+            {
+                try
                 {
-                    Console.WriteLine($"Claim Type: {claim.Type}, Claim Value: {claim.Value}");
-                }
+                    using var scope = context.HttpContext.RequestServices.CreateScope();
+                    var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
 
-                var userEmail = claimsIdentity.FindFirst(ClaimTypes.Email)?.Value; // Lấy email từ claims
-
-                // Log user email
-                Console.WriteLine($"User Email: {userEmail}");
-
-                using (var dbContext = context.HttpContext.RequestServices.GetRequiredService<DataContext>())
-                {
                     var user = await dbContext.Accounts.FirstOrDefaultAsync(u => u.Email == userEmail);
-
                     if (user != null)
                     {
                         context.HttpContext.Session.SetString("Accountid", user.UserID.ToString());
                         context.HttpContext.Session.SetInt32("UserRole", (int)user.AccountRole);
+
                         if (user.AccountRole == AccountRole.EmployerFree || user.AccountRole == AccountRole.EmployerPaid)
                         {
                             context.HttpContext.Session.SetString("EmployerName", user.Email);
@@ -139,10 +143,23 @@ builder.Services.AddAuthentication(options =>
                             context.HttpContext.Session.SetString("CandidateName", user.Email);
                         }
                     }
+                    else
+                    {
+                        Console.WriteLine($"User with email {userEmail} not found in database.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred while processing user information: {ex.Message}");
                 }
             }
-        };
-    });
+            else
+            {
+                Console.WriteLine("Email not found in claims or user information.");
+            }
+        }
+    };
+});
 
 
 builder.Services.AddDistributedMemoryCache();
