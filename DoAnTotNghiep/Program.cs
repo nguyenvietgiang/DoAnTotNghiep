@@ -31,6 +31,11 @@ using DoAnTotNghiep.RealTime;
 using DoAnTotNghiep.Common;
 using DoAnTotNghiep.Jobs;
 using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using DoAnTotNghiep.Models.Enum;
+using Syncfusion.XlsIO.Implementation.Security;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,6 +80,69 @@ builder.Services.AddScoped<IPayRepository, PayRepository>();
 builder.Services.AddScoped<IOnlineResumeRepository, OnlineResumeRepository>();
 // khai báo mã syncfusion phục vụ nhập/xuất file-extend
 SyncfusionLicenseProvider.RegisterLicense("MTQwNUAzMTM4MmUzNDJlMzBGT29sdENza2kyME1jUHpPNVd5enVXY1AvNVZ1SVdPQlVMNUE4R1c1M0FvPQ==");
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+})
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+    {
+        options.Authority = "https://localhost:5001"; // Địa chỉ của IdentityServer
+        options.ClientId = "mvc_client";
+        options.ClientSecret = "mvc_secret";
+        options.ResponseType = "code";
+        options.SaveTokens = true;
+
+        // Thêm các scopes cần thiết
+        options.Scope.Add("openid");
+        options.Scope.Add("profile");
+        options.Scope.Add("email"); // lấy thêm email
+
+        // Đảm bảo lấy claims từ UserInfo endpoint
+        options.GetClaimsFromUserInfoEndpoint = true;
+
+        // Xử lý sự kiện sau khi đăng nhập thành công
+        options.Events = new OpenIdConnectEvents
+        {
+            OnTokenValidated = async context =>
+            {
+                var claimsIdentity = (ClaimsIdentity)context.Principal.Identity;
+
+                // Log tất cả các claims để kiểm tra thông tin có trong token
+                var claims = context.Principal.Claims;
+                foreach (var claim in claims)
+                {
+                    Console.WriteLine($"Claim Type: {claim.Type}, Claim Value: {claim.Value}");
+                }
+
+                var userEmail = claimsIdentity.FindFirst(ClaimTypes.Email)?.Value; // Lấy email từ claims
+
+                // Log user email
+                Console.WriteLine($"User Email: {userEmail}");
+
+                using (var dbContext = context.HttpContext.RequestServices.GetRequiredService<DataContext>())
+                {
+                    var user = await dbContext.Accounts.FirstOrDefaultAsync(u => u.Email == userEmail);
+
+                    if (user != null)
+                    {
+                        context.HttpContext.Session.SetString("Accountid", user.UserID.ToString());
+                        context.HttpContext.Session.SetInt32("UserRole", (int)user.AccountRole);
+                        if (user.AccountRole == AccountRole.EmployerFree || user.AccountRole == AccountRole.EmployerPaid)
+                        {
+                            context.HttpContext.Session.SetString("EmployerName", user.Email);
+                        }
+                        else if (user.AccountRole == AccountRole.CandidateFree || user.AccountRole == AccountRole.CandidatePaid)
+                        {
+                            context.HttpContext.Session.SetString("CandidateName", user.Email);
+                        }
+                    }
+                }
+            }
+        };
+    });
 
 
 builder.Services.AddDistributedMemoryCache();

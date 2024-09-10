@@ -4,6 +4,8 @@ using DoAnTotNghiep.Models.DTO;
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Models.Enum;
 using DoAnTotNghiep.Services.EmailServices;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -83,6 +85,13 @@ namespace DoAnTotNghiep.Controllers.MvcController
             }
 
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult LoginWithSSO()
+        {
+            // Chuyển hướng đến IdentityServer để thực hiện quá trình đăng nhập
+            return Challenge(new AuthenticationProperties { RedirectUri = "/" }, OpenIdConnectDefaults.AuthenticationScheme);
         }
 
         public IActionResult Register() 
