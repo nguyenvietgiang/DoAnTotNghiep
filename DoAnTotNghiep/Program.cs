@@ -91,7 +91,7 @@ builder.Services.AddAuthentication(options =>
 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
 .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
 {
-    options.Authority = "https://localhost:5001"; // Địa chỉ của IdentityServer
+    options.Authority = "https://localhost:5000"; // Địa chỉ của IdentityServer
     options.ClientId = "mvc_client";
     options.ClientSecret = "mvc_secret";
     options.ResponseType = "code";
