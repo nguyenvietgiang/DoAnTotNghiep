@@ -10,7 +10,6 @@ using DoAnTotNghiep.Repository.JobRepo;
 using DoAnTotNghiep.Services.EmailServices;
 using DoAnTotNghiep.Services.ExportServices;
 using DoAnTotNghiep.Services.ImageServices;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SkiaSharp;

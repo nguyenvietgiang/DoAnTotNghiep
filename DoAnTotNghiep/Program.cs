@@ -30,13 +30,10 @@ using DoAnTotNghiep.Repository.OnlineResumeRepo;
 using DoAnTotNghiep.RealTime;
 using DoAnTotNghiep.Common;
 using DoAnTotNghiep.Jobs;
-using System;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using DoAnTotNghiep.Models.Enum;
-using Syncfusion.XlsIO.Implementation.Security;
 using System.Security.Claims;
-using System.Security.Principal;
 using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);

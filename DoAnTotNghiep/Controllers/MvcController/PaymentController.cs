@@ -1,8 +1,5 @@
 ﻿using DoAnTotNghiep.Common;
 using DoAnTotNghiep.Models.DTO;
-using DoAnTotNghiep.Models.EntityModels;
-using DoAnTotNghiep.Repository.CandidatesRepo;
-using DoAnTotNghiep.Services.ImageServices;
 using DoAnTotNghiep.Services.PaymentServices;
 using DoAnTotNghiep.Services.VNpayServices;
 using Microsoft.AspNetCore.Mvc;

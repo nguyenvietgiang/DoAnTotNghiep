@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
 using X.PagedList;
-using System.Drawing.Drawing2D;
 using Microsoft.EntityFrameworkCore;
 using DoAnTotNghiep.Middleware;
 using DoAnTotNghiep.Repository.OnlineResumeRepo;

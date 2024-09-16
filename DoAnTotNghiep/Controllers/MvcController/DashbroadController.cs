@@ -4,8 +4,6 @@ using DoAnTotNghiep.Models.ResponseDTO;
 using DoAnTotNghiep.Repository.EmployerRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SkiaSharp;
-
 
 namespace DoAnTotNghiep.Controllers.MvcController
 {
