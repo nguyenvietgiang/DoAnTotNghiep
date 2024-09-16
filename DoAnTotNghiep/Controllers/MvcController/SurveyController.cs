@@ -3,7 +3,6 @@ using DoAnTotNghiep.Models.Enum;
 using DoAnTotNghiep.Repository.SurveyRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SkiaSharp;
 
 namespace DoAnTotNghiep.Controllers.MvcController
 {
