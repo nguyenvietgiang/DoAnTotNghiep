@@ -25,20 +25,32 @@ public class JobPostingApprovalService
     // Huấn luyện mô hình
     public void TrainModel()
     {
-        IDataView dataView = _mlContext.Data.LoadFromTextFile<JobPostingData>("jobpostings.csv", separatorChar: ',', hasHeader: true);
+        // In ra đường dẫn tệp CSV
+        var csvPath = Path.Combine(Environment.CurrentDirectory, "jobpostings.csv");
+        Console.WriteLine("CSV Path: " + csvPath);
+
+        // Kiểm tra xem tệp có tồn tại không
+        if (!File.Exists(csvPath))
+        {
+            Console.WriteLine("CSV file not found!");
+            return; // Kết thúc sớm nếu không tìm thấy tệp
+        }
+
+        // Tiếp tục quá trình huấn luyện nếu tệp tồn tại
+        IDataView dataView = _mlContext.Data.LoadFromTextFile<JobPostingData>(csvPath, separatorChar: ',', hasHeader: true);
 
         var pipeline = _mlContext.Transforms.Text.FeaturizeText("TitleFeaturized", nameof(JobPostingData.Title))
-            .Append(_mlContext.Transforms.Text.FeaturizeText("DescriptionFeaturized", nameof(JobPostingData.Description)))
-            .Append(_mlContext.Transforms.Text.FeaturizeText("LocationFeaturized", nameof(JobPostingData.Location)))
-            .Append(_mlContext.Transforms.Text.FeaturizeText("RequirementsFeaturized", nameof(JobPostingData.Requirements)))
-            .Append(_mlContext.Transforms.Text.FeaturizeText("PositionFeaturized", nameof(JobPostingData.Position)))
-            .Append(_mlContext.Transforms.Text.FeaturizeText("BenefitsFeaturized", nameof(JobPostingData.Benefits)))
-            .Append(_mlContext.Transforms.Concatenate("Features", "TitleFeaturized", "DescriptionFeaturized",
-                                                     "LocationFeaturized", "RequirementsFeaturized",
-                                                     "PositionFeaturized", "BenefitsFeaturized",
-                                                     nameof(JobPostingData.Number), nameof(JobPostingData.Salary)))
-            .Append(_mlContext.Transforms.Conversion.MapValueToKey("Label", nameof(JobPostingData.Status)))
-            .Append(_mlContext.BinaryClassification.Trainers.SdcaLogisticRegression());
+     .Append(_mlContext.Transforms.Text.FeaturizeText("DescriptionFeaturized", nameof(JobPostingData.Description)))
+     .Append(_mlContext.Transforms.Text.FeaturizeText("LocationFeaturized", nameof(JobPostingData.Location)))
+     .Append(_mlContext.Transforms.Text.FeaturizeText("RequirementsFeaturized", nameof(JobPostingData.Requirements)))
+     .Append(_mlContext.Transforms.Text.FeaturizeText("PositionFeaturized", nameof(JobPostingData.Position)))
+     .Append(_mlContext.Transforms.Text.FeaturizeText("BenefitsFeaturized", nameof(JobPostingData.Benefits)))
+     .Append(_mlContext.Transforms.Concatenate("Features", "TitleFeaturized", "DescriptionFeaturized",
+                                              "LocationFeaturized", "RequirementsFeaturized",
+                                              "PositionFeaturized", "BenefitsFeaturized",
+                                              nameof(JobPostingData.Number), nameof(JobPostingData.Salary)))
+     .Append(_mlContext.BinaryClassification.Trainers.SdcaLogisticRegression(labelColumnName: "Status"));
+
 
         _model = pipeline.Fit(dataView);
 

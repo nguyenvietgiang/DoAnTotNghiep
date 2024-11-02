@@ -1,17 +1,35 @@
-﻿namespace DoAnTotNghiep.Models.MLDataTrainningModel
+﻿using Microsoft.ML.Data;
+
+namespace DoAnTotNghiep.Models.MLDataTrainningModel
 {
     public class JobPostingData
     {
+        [LoadColumn(0)]
         public string Title { get; set; }
+
+        [LoadColumn(1)]
         public string Description { get; set; }
+
+        [LoadColumn(2)]
         public string Location { get; set; }
+
+        [LoadColumn(3)]
         public string Requirements { get; set; }
-        public int Number { get; set; }
-        public int Salary { get; set; }
+
+        [LoadColumn(4)]
         public string Position { get; set; }
+
+        [LoadColumn(5)]
         public string Benefits { get; set; }
-        public string WorkingTime { get; set; }
-        public bool Status { get; set; } // Nhãn (label) cho việc huấn luyện
+
+        [LoadColumn(6)]
+        public float Number { get; set; }
+
+        [LoadColumn(7)]
+        public float Salary { get; set; }
+
+        [LoadColumn(8)]
+        public bool Status { get; set; }
     }
 
 }

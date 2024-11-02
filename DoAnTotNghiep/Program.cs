@@ -1,6 +1,7 @@
 ﻿using DNTCaptcha.Core;
 using DoAnTotNghiep.Common;
 using DoAnTotNghiep.Jobs;
+using DoAnTotNghiep.MachineLearningModelTest;
 using DoAnTotNghiep.Middleware;
 using DoAnTotNghiep.Models.EntityModels;
 using DoAnTotNghiep.Models.Enum;
@@ -192,6 +193,7 @@ builder.Services.AddScoped<BackupRestoreService>();
 builder.Services.AddHostedService<ScheduledBackupService>();
 // đăng ký huấn luyện mô hình machine learning dùng Singleton 
 builder.Services.AddSingleton<JobPostingApprovalService>();
+
 var app = builder.Build();
 app.AddAutoMigration<DataContext>();
 app.UseMiddleware<OnlineUsersMiddleware>();
@@ -206,7 +208,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+// quá trình huấn luyện để tạo file model zip (đã có rồi ) mất khá lâu để chạy nên commnet tạm
+//var jobPostingApprovalService = app.Services.GetRequiredService<JobPostingApprovalService>();
+//jobPostingApprovalService.TrainModel();
 
+// Đăng ký lớp JobPostingApprovalTester để testModel sau khi trainning
+var jobPostingApprovalTester = new JobPostingApprovalTester();
+jobPostingApprovalTester.TestPrediction();
 
 app.UseRouting();
 app.UseSession();
