@@ -1,6 +1,10 @@
 ﻿using DNTCaptcha.Core;
+using DoAnTotNghiep.Common;
+using DoAnTotNghiep.Jobs;
 using DoAnTotNghiep.Middleware;
 using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Models.Enum;
+using DoAnTotNghiep.RealTime;
 using DoAnTotNghiep.Repository.AccountRepo;
 using DoAnTotNghiep.Repository.BaseRepo;
 using DoAnTotNghiep.Repository.CandidatesRepo;
@@ -12,6 +16,7 @@ using DoAnTotNghiep.Repository.FollowRepo;
 using DoAnTotNghiep.Repository.ImageGaleryRepo;
 using DoAnTotNghiep.Repository.JobApplyFormRepo;
 using DoAnTotNghiep.Repository.JobRepo;
+using DoAnTotNghiep.Repository.OnlineResumeRepo;
 using DoAnTotNghiep.Repository.PayRepo;
 using DoAnTotNghiep.Repository.PolicyRepo;
 using DoAnTotNghiep.Repository.SurveyRepo;
@@ -21,20 +26,15 @@ using DoAnTotNghiep.Services.ImageServices;
 using DoAnTotNghiep.Services.OnlineCountServices;
 using DoAnTotNghiep.Services.PaymentServices;
 using DoAnTotNghiep.Services.VNpayServices;
-using Microsoft.EntityFrameworkCore;
-using Serilog.Events;
-using Serilog;
-using Syncfusion.Licensing;
-using Serilog.Formatting.Json;
-using DoAnTotNghiep.Repository.OnlineResumeRepo;
-using DoAnTotNghiep.RealTime;
-using DoAnTotNghiep.Common;
-using DoAnTotNghiep.Jobs;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using DoAnTotNghiep.Models.Enum;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Json;
+using Syncfusion.Licensing;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -175,7 +175,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 
 
-builder.Services.AddDNTCaptcha(options => { options.UseCookieStorageProvider().ShowThousandsSeparators(false);
+builder.Services.AddDNTCaptcha(options =>
+{
+    options.UseCookieStorageProvider().ShowThousandsSeparators(false);
     options.WithEncryptionKey("JobFinder2024");
 });
 
@@ -188,7 +190,8 @@ builder.Services.AddControllers()
 builder.Logging.AddSerilog();
 builder.Services.AddScoped<BackupRestoreService>();
 builder.Services.AddHostedService<ScheduledBackupService>();
-
+// đăng ký huấn luyện mô hình machine learning dùng Singleton 
+builder.Services.AddSingleton<JobPostingApprovalService>();
 var app = builder.Build();
 app.AddAutoMigration<DataContext>();
 app.UseMiddleware<OnlineUsersMiddleware>();
