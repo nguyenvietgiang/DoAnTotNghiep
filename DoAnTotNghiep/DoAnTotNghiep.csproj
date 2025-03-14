@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="Cronos" Version="0.8.0" />
     <PackageReference Include="DNTCaptcha.Core" Version="4.9.2" />
+    <PackageReference Include="ElectronNET.API" Version="23.6.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.8" />
     <PackageReference Include="MimeKit" Version="4.2.0" />

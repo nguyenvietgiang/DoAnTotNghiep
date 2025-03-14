@@ -1,6 +1,10 @@
 ﻿using DNTCaptcha.Core;
+using DoAnTotNghiep.Common;
+using DoAnTotNghiep.Jobs;
 using DoAnTotNghiep.Middleware;
 using DoAnTotNghiep.Models.EntityModels;
+using DoAnTotNghiep.Models.Enum;
+using DoAnTotNghiep.RealTime;
 using DoAnTotNghiep.Repository.AccountRepo;
 using DoAnTotNghiep.Repository.BaseRepo;
 using DoAnTotNghiep.Repository.CandidatesRepo;
@@ -12,6 +16,7 @@ using DoAnTotNghiep.Repository.FollowRepo;
 using DoAnTotNghiep.Repository.ImageGaleryRepo;
 using DoAnTotNghiep.Repository.JobApplyFormRepo;
 using DoAnTotNghiep.Repository.JobRepo;
+using DoAnTotNghiep.Repository.OnlineResumeRepo;
 using DoAnTotNghiep.Repository.PayRepo;
 using DoAnTotNghiep.Repository.PolicyRepo;
 using DoAnTotNghiep.Repository.SurveyRepo;
@@ -21,23 +26,17 @@ using DoAnTotNghiep.Services.ImageServices;
 using DoAnTotNghiep.Services.OnlineCountServices;
 using DoAnTotNghiep.Services.PaymentServices;
 using DoAnTotNghiep.Services.VNpayServices;
-using Microsoft.EntityFrameworkCore;
-using Serilog.Events;
-using Serilog;
-using Syncfusion.Licensing;
-using Serilog.Formatting.Json;
-using DoAnTotNghiep.Repository.OnlineResumeRepo;
-using DoAnTotNghiep.RealTime;
-using DoAnTotNghiep.Common;
-using DoAnTotNghiep.Jobs;
-using System;
+using ElectronNET.API;
+using ElectronNET.API.Entities;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using DoAnTotNghiep.Models.Enum;
-using Syncfusion.XlsIO.Implementation.Security;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Json;
+using Syncfusion.Licensing;
 using System.Security.Claims;
-using System.Security.Principal;
-using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -178,7 +177,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 
 
-builder.Services.AddDNTCaptcha(options => { options.UseCookieStorageProvider().ShowThousandsSeparators(false);
+builder.Services.AddDNTCaptcha(options =>
+{
+    options.UseCookieStorageProvider().ShowThousandsSeparators(false);
     options.WithEncryptionKey("JobFinder2024");
 });
 
@@ -235,3 +236,22 @@ app.MapHub<ChatHub>("/chathub");
 // Remove the previous MapControllerRoute for the default route
 
 app.Run();
+
+if (HybridSupport.IsElectronActive)
+{
+    Electron.App.Ready += async () =>
+    {
+        var mainWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+        {
+            Width = 1200,
+            Height = 800,
+            Show = true
+        });
+
+        // Mở đúng URL của web app
+        var url = $"http://localhost:5000/"; // port đang chạy là 5000
+        mainWindow.LoadURL(url);
+
+        mainWindow.OnClosed += () => Electron.App.Quit();
+    };
+}
