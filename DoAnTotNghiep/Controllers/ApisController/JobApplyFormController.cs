@@ -29,7 +29,7 @@ namespace DoAnTotNghiep.Controllers.ApisController
                 return BadRequest($"Failed to add JobApplyForm. {ex.Message}");
             }
         }
-
+        // test git from Traphaco
         [HttpGet("jobPosting/{jobPostingID}")]
         public async Task<IActionResult> GetJobApplyFormsByJobPostingID(Guid jobPostingID)
         {
